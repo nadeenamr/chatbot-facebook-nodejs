@@ -195,11 +195,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					responseText = "Thank you for using AA, "+user_name+". Hope studying "+major+" at the GUC is bringing you closer to your future path. Any concerns regarding any courses or inquiries about semester " + semester + " feel free to ask."
 					setTimeout(function(){
 						let buttons = [
-							{
+							/*{
 								type: "web_url",
 								url: "https://www.google.com",
 								title: "Go to Google"
-							},
+							},*/
 							{
 								type: "phone_number",
 								payload: "+2016482",
