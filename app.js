@@ -192,10 +192,31 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let semester = (isDefined(contexts[0].parameters['semester']) && contexts[0].parameters['semester']!='') ? contexts[0].parameters['semester'] : '';
 				let major = (isDefined(contexts[0].parameters['major']) && contexts[0].parameters['major']!='') ? contexts[0].parameters['major'] : '';
 				if(user_name!='' && id!='' && semester!='' && major!=''){
-					responseText = "Thank you for using AA, "+user_name+". <br> Hope studying "+major+" at the GUC is bringing you closer to your future path. <br> Any concerns regarding any courses or inquiries about semester " + semester + " feel free to ask."
+					responseText = "Thank you for using AA, "+user_name+". Hope studying "+major+" at the GUC is bringing you closer to your future path. Any concerns regarding any courses or inquiries about semester " + semester + " feel free to ask."
 				}
 			}
 			sendTextMessage(sender, responseText);
+			setTimeout(function(){
+				let buttons = [
+					{
+						type: "web_urls",
+						url: "https://www.google.com",
+						title: "Go to Google"
+					},
+					{
+						type: "phone_number",
+						payload: "16482",
+						title: "Call Hotline"
+					},
+					{
+						type: "postback",
+						title: "Keep on Chatting",
+						payload: "CHAT"
+
+					}
+				];
+				sendButtonMessage(sender, "What would you like to do next?", buttons);
+			}, 3000)
 			break;
 		default:
 			//unhandled action, just send back the text
