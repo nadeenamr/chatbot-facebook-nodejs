@@ -755,6 +755,10 @@ function receivedPostback(event) {
 	var payload = event.postback.payload;
 
 	switch (payload) {
+		case "CHAT": 
+			//user wants to chat
+			sendTextMessage(senderID, "I love chatting too. Do you have any other questions for me?");
+			break;
 		default:
 			//unindentified payload
 			sendTextMessage(senderID, "I'm not sure what you want. Can you be more specific?");
