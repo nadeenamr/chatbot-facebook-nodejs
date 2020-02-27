@@ -199,7 +199,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			setTimeout(function(){
 				let buttons = [
 					{
-						type: "web_urls",
+						type: "web_url",
 						url: "https://www.google.com",
 						title: "Go to Google"
 					},
