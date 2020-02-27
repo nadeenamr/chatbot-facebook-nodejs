@@ -213,6 +213,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						title: "Keep on Chatting",
 						payload: "CHAT"
 
+					},
+					{
+						type: "postback",
+						title: "Get Started",
+						payload: "GET_STARTED"
+
 					}
 				];
 				sendButtonMessage(sender, "What would you like to do next?", buttons);
@@ -254,9 +260,7 @@ function handleMessage(message, sender) {
 				message: message.payload.facebook
 
 			};
-
 			callSendAPI(messageData);
-
 			break;
 	}
 }
@@ -286,7 +290,6 @@ function handleCardMessages(messages, sender) {
 			}
 			buttons.push(button);
 		}
-
 
 		let element = {
 			"title": message.title,
@@ -318,7 +321,6 @@ function handleApiAiResponse(sender, response) {
 		for (var i = 0; i < messages.length; i++) {
 
 			if ( previousType == 1 && (messages[i].type != 1 || i == messages.length - 1)) {
-
 				timeout = (i - 1) * timeoutInterval;
 				setTimeout(handleCardMessages.bind(null, cardTypes, sender), timeout);
 				cardTypes = [];
