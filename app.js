@@ -205,7 +205,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					},
 					{
 						type: "phone_number",
-						payload: "+0216482",
+						payload: "+216482",
 						title: "Call Hotline"
 					},
 					{
