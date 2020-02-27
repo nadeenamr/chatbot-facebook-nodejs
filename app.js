@@ -692,10 +692,11 @@ function greetUserText(userId) {
 				console.log("FB user: %s %s, %s",
 					user.first_name, user.last_name, user.gender);
 
-				sendTextMessage(userId, "Welcome " + user.first_name + '!');
+				sendTextMessage(userId, "Welcome " + user.first_name + '!' + 
+				'I can answer any of your questions concerning the advising system' + 
+				'and I can help you create a graducation plan. What can I help you with?');
 			} else {
-				console.log("Cannot get data for fb user with id",
-					userId);
+				console.log("Cannot get data for fb user with id", userId);
 			}
 		} else {
 			console.error(response.error);
@@ -755,6 +756,9 @@ function receivedPostback(event) {
 	var payload = event.postback.payload;
 
 	switch (payload) {
+		case "GET_STARTED": 
+			greetUserText(senderID);
+			break;
 		case "CHAT": 
 			//user wants to chat
 			sendTextMessage(senderID, "I love chatting too. Do you have any other questions for me?");
