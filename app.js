@@ -184,6 +184,19 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		// video no.35
+		case "detailed_applications": 
+			if(isDefined(contexts[0]) && contexts[0].parameters['user_name'] && contexts[0].parameters['id'] && contexts[0].parameters['semester'] && contexts[0].parameters['major'] && contexts[0].parameters){
+				let user_name = (isDefined(contexts[0].parameters['user_name']) && contexts[0].parameters['user_name']!='') ? contexts[0].parameters['user_name'] : '';
+				let id = (isDefined(contexts[0].parameters['id']) && contexts[0].parameters['id']!='') ? contexts[0].parameters['id'] : '';
+				let semester = (isDefined(contexts[0].parameters['semester']) && contexts[0].parameters['semester']!='') ? contexts[0].parameters['semester'] : '';
+				let major = (isDefined(contexts[0].parameters['major']) && contexts[0].parameters['major']!='') ? contexts[0].parameters['major'] : '';
+				if(user_name!='' && id!='' && semester!='' && major!=''){
+					responseText = "Thank you for using AA, "+user_name+". <br> Hope studying "+major+" at the GUC is bringing you closer to your future path. <br> Any concerns regarding any courses or inquiries about semester " + semester + " feel free to ask."
+				}
+			}
+			sendTextMessage(sender, responseText);
+			break;
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
