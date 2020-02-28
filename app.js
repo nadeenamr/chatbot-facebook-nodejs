@@ -191,36 +191,20 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				
 				if(user_name!='' && id!='' && semester!='' && major==''){
 					let replies = [
-						{content_type: "text", title: "CS", payload: "CS"},
-						{content_type: "text", title: "DMET", payload: "DMET"}
+						{ "content_type": "text", "title": "CS", "payload": "CS"},
+						{ "content_type": "text", "title": "DMET", "payload": "DMET"}
 					];
 					sendQuickReply(sender, responseText, replies);
-					sendTextMessage(sender, responseText);
+					//sendTextMessage(sender, responseText);
 				}else{
 					if(user_name!='' && id!='' && semester!='' && major!=''){
 						responseText = "Thank you for using AA, "+user_name+". Hope studying "+major+" at the GUC is bringing you closer to your future path. Any concerns regarding any courses or inquiries about semester " + semester + " feel free to ask."
 						setTimeout(function(){
 							let buttons = [
-								/*{
-									type: "web_url",
-									url: "https://www.google.com",
-									title: "Go to Google"
-								},*/
-								{
-									type: "phone_number",
-									payload: "+2016482",
-									title: "Call Hotline"
-								},
-								{
-									type: "postback",
-									title: "Keep on Chatting",
-									payload: "CHAT"
-								},
-								{
-									type: "postback",
-									title: "Get Started",
-									payload: "GET_STARTED"	
-								}
+								/*{ type: "web_url", url: "https://www.google.com", title: "Go to Google" },*/
+								{ type: "phone_number", payload: "+2016482", title: "Call Hotline" },
+								{ type: "postback", title: "Keep on Chatting", payload: "CHAT" },
+								{ type: "postback", title: "Get Started", payload: "GET_STARTED" }
 							];
 							sendButtonMessage(sender, "What would you like to do next?", buttons);
 						}, 3000);
@@ -228,9 +212,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					}else{
 						sendTextMessage(sender, responseText);
 					}
-
-				}
-				
+				}				
 			}else{
 				sendTextMessage(sender, responseText);
 			}
@@ -591,11 +573,8 @@ function sendReceiptMessage(recipientId, recipient_name, currency, payment_metho
 	callSendAPI(messageData);
 }
 
-/*
- * Send a message with Quick Reply buttons.
- *
- */
-function sendQuickReply(recipientId, text, replies, metadata) {
+
+function sendQuickReply(recipientId, text, replies, metadata) { // Send a message with Quick Reply buttons.
 	var messageData = {
 		recipient: {
 			id: recipientId
@@ -610,11 +589,7 @@ function sendQuickReply(recipientId, text, replies, metadata) {
 	callSendAPI(messageData);
 }
 
-/*
- * Send a read receipt to indicate the message has been read
- *
- */
-function sendReadReceipt(recipientId) {
+function sendReadReceipt(recipientId) { // Send a read receipt to indicate the message has been read
 
 	var messageData = {
 		recipient: {
@@ -626,12 +601,7 @@ function sendReadReceipt(recipientId) {
 	callSendAPI(messageData);
 }
 
-/*
- * Turn typing indicator on
- *
- */
-function sendTypingOn(recipientId) {
-
+function sendTypingOn(recipientId) { // Turn typing indicator on
 
 	var messageData = {
 		recipient: {
