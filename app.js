@@ -238,8 +238,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 				}
 				
+			}else{
+				sendTextMessage(sender, responseText);
 			}
-		
 			break;
 		default:
 			//unhandled action, just send back the text
