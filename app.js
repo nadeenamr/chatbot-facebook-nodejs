@@ -191,16 +191,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				
 				if(user_name!='' && id!='' && semester!='' && major==''){
 					let replies = [
-						{
-							"content_type": "text",
-							"title": "CS",
-							"payload": "CS"
-						},
-						{
-							"content_type": "text",
-							"title": "DMET",
-							"payload": "DMET"
-						}
+						{content_type: "text", title: "CS", payload: "CS"},
+						{content_type: "text", title: "DMET", payload: "DMET"}
 					];
 					sendQuickReply(sender, responseText, replies);
 				}else{
