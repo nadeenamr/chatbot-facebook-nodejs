@@ -189,22 +189,57 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let semester = (isDefined(contexts[0].parameters['semester']) && contexts[0].parameters['semester']!='') ? contexts[0].parameters['semester'] : '';
 				let major = (isDefined(contexts[0].parameters['major']) && contexts[0].parameters['major']!='') ? contexts[0].parameters['major'] : '';
 				
-				if(major=='' && user_name!='' && id!='' && semester==''){
+				if(semester=='' && user_name!='' && id!='' && major==''){
 					let replies = [
 						{
 							"content_type": "text",
-							"title": "CS",
-							"payload": "CS"
+							"title": "1",
+							"payload": "1"
 						},
 						{
 							"content_type": "text",
-							"title": "DMET",
-							"payload": "DMET"
+							"title": "2",
+							"payload": "2"
 						},
 						{
 							"content_type": "text",
-							"title": "MET",
-							"payload": "MET"
+							"title": "3",
+							"payload": "3"
+						},
+						{
+							"content_type": "text",
+							"title": "4",
+							"payload": "4"
+						},
+						{
+							"content_type": "text",
+							"title": "5",
+							"payload": "5"
+						},
+						{
+							"content_type": "text",
+							"title": "6",
+							"payload": "6"
+						},
+						{
+							"content_type": "text",
+							"title": "7",
+							"payload": "7"
+						},
+						{
+							"content_type": "text",
+							"title": "Bachelor",
+							"payload": "Bachelor"
+						},
+						{
+							"content_type": "text",
+							"title": "9",
+							"payload": "9"
+						},
+						{
+							"content_type": "text",
+							"title": "10",
+							"payload": "10"
 						}
 					];
 					sendQuickReply(sender, responseText, replies);
