@@ -28,7 +28,6 @@ if (!config.SERVER_URL) { //used for ink to static files
 }
 
 
-
 app.set('port', (process.env.PORT || 5000))
 
 //verify request came from facebook
@@ -46,8 +45,6 @@ app.use(bodyParser.urlencoded({
 
 // Process application/json
 app.use(bodyParser.json())
-
-
 
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
@@ -191,36 +188,62 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let id = (isDefined(contexts[0].parameters['id']) && contexts[0].parameters['id']!='') ? contexts[0].parameters['id'] : '';
 				let semester = (isDefined(contexts[0].parameters['semester']) && contexts[0].parameters['semester']!='') ? contexts[0].parameters['semester'] : '';
 				let major = (isDefined(contexts[0].parameters['major']) && contexts[0].parameters['major']!='') ? contexts[0].parameters['major'] : '';
-				if(user_name!='' && id!='' && semester!='' && major!=''){
-					responseText = "Thank you for using AA, "+user_name+". Hope studying "+major+" at the GUC is bringing you closer to your future path. Any concerns regarding any courses or inquiries about semester " + semester + " feel free to ask."
-					setTimeout(function(){
-						let buttons = [
-							/*{
-								type: "web_url",
-								url: "https://www.google.com",
-								title: "Go to Google"
-							},*/
-							{
-								type: "phone_number",
-								payload: "+2016482",
-								title: "Call Hotline"
-							},
-							{
-								type: "postback",
-								title: "Keep on Chatting",
-								payload: "CHAT"
-							},
-							{
-								type: "postback",
-								title: "Get Started",
-								payload: "GET_STARTED"	
-							}
-						];
-						sendButtonMessage(sender, "What would you like to do next?", buttons);
-					}, 3000);
+				
+				if(major=='' && user_name!='' && id!='' && semester==''){
+					let replies = [
+						{
+							"content_type": "text",
+							"title": "CS",
+							"payload": "CS"
+						},
+						{
+							"content_type": "text",
+							"title": "DMET",
+							"payload": "DMET"
+						},
+						{
+							"content_type": "text",
+							"title": "MET",
+							"payload": "MET"
+						}
+					];
+					sendQuickReply(sender, responseText, replies);
+				}else{
+					if(user_name!='' && id!='' && semester!='' && major!=''){
+						responseText = "Thank you for using AA, "+user_name+". Hope studying "+major+" at the GUC is bringing you closer to your future path. Any concerns regarding any courses or inquiries about semester " + semester + " feel free to ask."
+						setTimeout(function(){
+							let buttons = [
+								/*{
+									type: "web_url",
+									url: "https://www.google.com",
+									title: "Go to Google"
+								},*/
+								{
+									type: "phone_number",
+									payload: "+2016482",
+									title: "Call Hotline"
+								},
+								{
+									type: "postback",
+									title: "Keep on Chatting",
+									payload: "CHAT"
+								},
+								{
+									type: "postback",
+									title: "Get Started",
+									payload: "GET_STARTED"	
+								}
+							];
+							sendButtonMessage(sender, "What would you like to do next?", buttons);
+						}, 3000);
+						sendTextMessage(sender, responseText);
+					}else{
+						sendTextMessage(sender, responseText);
+					}
+
 				}
+				
 			}
-			sendTextMessage(sender, responseText);
 		
 			break;
 		default:
