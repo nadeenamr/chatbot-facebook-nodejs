@@ -643,7 +643,7 @@ function greetUserText(userId) {
 							} else {
 								console.log('rows: ' + result.rows.length);
 								if (result.rows.length === 0) {
-									let sql = 'INSERT INTO users (facebook_id, first_name, last_name, profile_picture, locale, timezone, gender) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+									let sql = 'INSERT INTO users (facebook_id, first_name, last_name, profile_picture, gender) VALUES ($1, $2, $3, $4, $5)';
 									console.log('sql: ' + sql);
 									client.query(sql,
 										[
@@ -651,8 +651,6 @@ function greetUserText(userId) {
 											user.first_name,
 											user.last_name,
 											user.profile_pic,
-											user.locale,
-											user.timezone,
 											user.gender
 										]);
 								}
