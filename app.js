@@ -662,17 +662,16 @@ function greetUserText(userId) {
 				});
 				pool.end();
 
-				//console.log("FB user: %s %s, %s",
-				//	user.first_name, user.last_name, user.gender);
+				console.log("FB user: %s %s, %s", user.first_name, user.last_name, user.gender);
 
-				fbService.sendTextMessage(userId, "Welcome " + user.first_name + '!' + 
+				sendTextMessage(userId, "Welcome " + user.first_name + '!' + 
 				'I can answer any of your questions concerning the advising system' + 
 				'and I can help you create a graducation plan. What can I help you with?');
-			//} else {
-			//	console.log("Cannot get data for fb user with id", userId);
+			} else {
+				console.log("Cannot get data for fb user with id", userId);
 			}
-		//} else {
-		//	console.error(response.error);
+		} else {
+			console.error(response.error);
 		}
 
 	});
