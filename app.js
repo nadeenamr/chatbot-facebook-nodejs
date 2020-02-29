@@ -6,9 +6,11 @@ const express = require('express');
 const crypto = require('crypto');
 const bodyParser = require('body-parser');
 const request = require('request');
+const pg = require('pg');
 const app = express();
 const uuid = require('uuid');
 
+pg.defaults.ssl = true;
 
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
@@ -25,6 +27,10 @@ if (!config.FB_APP_SECRET) {
 }
 if (!config.SERVER_URL) { //used for ink to static files
 	throw new Error('missing SERVER_URL');
+}
+
+if(!config.PG_CONFIG){ //postgresql config object
+	throw new Error('missing PG_CONFIG');
 }
 
 
@@ -80,8 +86,6 @@ app.post('/webhook/', function (req, res) {
 	var data = req.body;
 	console.log(JSON.stringify(data));
 
-
-
 	// Make sure this is a page subscription
 	if (data.object == 'page') {
 		// Iterate over each entry
@@ -115,10 +119,6 @@ app.post('/webhook/', function (req, res) {
 		res.sendStatus(200);
 	}
 });
-
-
-
-
 
 function receivedMessage(event) {
 
@@ -160,7 +160,6 @@ function receivedMessage(event) {
 	}
 }
 
-
 function handleMessageAttachments(messageAttachments, senderID){
 	//for now just reply
 	sendTextMessage(senderID, "Attachment received. Thank you.");	
@@ -173,8 +172,7 @@ function handleQuickReply(senderID, quickReply, messageId) {
 	sendToApiAi(senderID, quickReplyPayload);
 }
 
-//https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-echo
-function handleEcho(messageId, appId, metadata) {
+function handleEcho(messageId, appId, metadata) { //https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-echo
 	// Just logging message echoes to console
 	console.log("Received echo for message %s and app %d with metadata %s", messageId, appId, metadata);
 }
@@ -258,7 +256,6 @@ function handleMessage(message, sender) {
 	}
 }
 
-
 function handleCardMessages(messages, sender) {
 
 	let elements = [];
@@ -294,7 +291,6 @@ function handleCardMessages(messages, sender) {
 	}
 	sendGenericMessage(sender, elements);
 }
-
 
 function handleApiAiResponse(sender, response) {
 	let responseText = response.result.fulfillment.speech;
@@ -370,9 +366,6 @@ function sendToApiAi(sender, text) {
 	apiaiRequest.end();
 }
 
-
-
-
 function sendTextMessage(recipientId, text) {
 	var messageData = {
 		recipient: {
@@ -385,11 +378,7 @@ function sendTextMessage(recipientId, text) {
 	callSendAPI(messageData);
 }
 
-/*
- * Send an image using the Send API.
- *
- */
-function sendImageMessage(recipientId, imageUrl) {
+function sendImageMessage(recipientId, imageUrl) { // Send an image using the Send API.
 	var messageData = {
 		recipient: {
 			id: recipientId
@@ -407,11 +396,7 @@ function sendImageMessage(recipientId, imageUrl) {
 	callSendAPI(messageData);
 }
 
-/*
- * Send a Gif using the Send API.
- *
- */
-function sendGifMessage(recipientId) {
+function sendGifMessage(recipientId) { // Send a Gif using the Send API.
 	var messageData = {
 		recipient: {
 			id: recipientId
@@ -429,11 +414,7 @@ function sendGifMessage(recipientId) {
 	callSendAPI(messageData);
 }
 
-/*
- * Send audio using the Send API.
- *
- */
-function sendAudioMessage(recipientId) {
+function sendAudioMessage(recipientId) { // Send audio using the Send API.
 	var messageData = {
 		recipient: {
 			id: recipientId
@@ -451,11 +432,7 @@ function sendAudioMessage(recipientId) {
 	callSendAPI(messageData);
 }
 
-/*
- * Send a video using the Send API.
- * example videoName: "/assets/allofus480.mov"
- */
-function sendVideoMessage(recipientId, videoName) {
+function sendVideoMessage(recipientId, videoName) { // Send a video using the Send API --> example videoName: "/assets/allofus480.mov"
 	var messageData = {
 		recipient: {
 			id: recipientId
@@ -473,11 +450,7 @@ function sendVideoMessage(recipientId, videoName) {
 	callSendAPI(messageData);
 }
 
-/*
- * Send a video using the Send API.
- * example fileName: fileName"/assets/test.txt"
- */
-function sendFileMessage(recipientId, fileName) {
+function sendFileMessage(recipientId, fileName) { // Send a video using the Send API --> example fileName: fileName"/assets/test.txt"
 	var messageData = {
 		recipient: {
 			id: recipientId
@@ -495,13 +468,7 @@ function sendFileMessage(recipientId, fileName) {
 	callSendAPI(messageData);
 }
 
-
-
-/*
- * Send a button message using the Send API.
- *
- */
-function sendButtonMessage(recipientId, text, buttons) {
+function sendButtonMessage(recipientId, text, buttons) { // Send a button message using the Send API.
 	var messageData = {
 		recipient: {
 			id: recipientId
@@ -521,7 +488,6 @@ function sendButtonMessage(recipientId, text, buttons) {
 	callSendAPI(messageData);
 }
 
-
 function sendGenericMessage(recipientId, elements) {
 	var messageData = {
 		recipient: {
@@ -540,7 +506,6 @@ function sendGenericMessage(recipientId, elements) {
 
 	callSendAPI(messageData);
 }
-
 
 function sendReceiptMessage(recipientId, recipient_name, currency, payment_method,
 							timestamp, elements, address, summary, adjustments) {
@@ -572,7 +537,6 @@ function sendReceiptMessage(recipientId, recipient_name, currency, payment_metho
 
 	callSendAPI(messageData);
 }
-
 
 function sendQuickReply(recipientId, text, replies, metadata) { // Send a message with Quick Reply buttons.
 	var messageData = {
@@ -613,11 +577,7 @@ function sendTypingOn(recipientId) { // Turn typing indicator on
 	callSendAPI(messageData);
 }
 
-/*
- * Turn typing indicator off
- *
- */
-function sendTypingOff(recipientId) {
+function sendTypingOff(recipientId) { // Turn typing indicator off
 
 
 	var messageData = {
@@ -630,11 +590,7 @@ function sendTypingOff(recipientId) {
 	callSendAPI(messageData);
 }
 
-/*
- * Send a message with the account linking call-to-action
- *
- */
-function sendAccountLinking(recipientId) {
+function sendAccountLinking(recipientId) { // Send a message with the account linking call-to-action
 	var messageData = {
 		recipient: {
 			id: recipientId
@@ -657,7 +613,6 @@ function sendAccountLinking(recipientId) {
 	callSendAPI(messageData);
 }
 
-
 function greetUserText(userId) {
 	//first read user firstname
 	request({
@@ -670,30 +625,60 @@ function greetUserText(userId) {
 		if (!error && response.statusCode == 200) {
 
 			var user = JSON.parse(body);
-
+			console.log("getUserData:" + user);
 			if (user.first_name) {
-				console.log("FB user: %s %s, %s",
-					user.first_name, user.last_name, user.gender);
 
-				sendTextMessage(userId, "Welcome " + user.first_name + '!' + 
+				var pool = new pg.Pool(config.PG_CONFIG);
+				pool.connect(function(err, client, done) {
+					if (err) {
+						return console.error('Error acquiring client', err.stack);
+					}
+					var rows = [];
+					console.log('fetching user');
+					client.query(`SELECT id FROM users WHERE facebook-id='${userId}' LIMIT 1`,
+						function(err, result) {
+							console.log('query result ' + result);
+							if (err) {
+								console.log('Query error: ' + err);
+							} else {
+								console.log('rows: ' + result.rows.length);
+								if (result.rows.length === 0) {
+									let sql = 'INSERT INTO users (facebook-id, first-name, last-name, profile-picture, locale, timezone, gender) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+									console.log('sql: ' + sql);
+									client.query(sql,
+										[
+											userId,
+											user.first_name,
+											user.last_name,
+											user.profile_pic,
+											user.locale,
+											user.timezone,
+											user.gender
+										]);
+								}
+							}
+						});
+
+				});
+				pool.end();
+
+				//console.log("FB user: %s %s, %s",
+				//	user.first_name, user.last_name, user.gender);
+
+				fbService.sendTextMessage(userId, "Welcome " + user.first_name + '!' + 
 				'I can answer any of your questions concerning the advising system' + 
 				'and I can help you create a graducation plan. What can I help you with?');
-			} else {
-				console.log("Cannot get data for fb user with id", userId);
+			//} else {
+			//	console.log("Cannot get data for fb user with id", userId);
 			}
-		} else {
-			console.error(response.error);
+		//} else {
+		//	console.error(response.error);
 		}
 
 	});
 }
 
-/*
- * Call the Send API. The message data goes in the body. If successful, we'll 
- * get the message id in a response 
- *
- */
-function callSendAPI(messageData) {
+function callSendAPI(messageData) { // Call the Send API. The message data goes in the body. If successful, we'll get the message id in a response 
 	request({
 		uri: 'https://graph.facebook.com/v2.6/me/messages',
 		qs: {
@@ -719,8 +704,6 @@ function callSendAPI(messageData) {
 		}
 	});
 }
-
-
 
 /*
  * Postback Event
@@ -757,7 +740,6 @@ function receivedPostback(event) {
 		"at %d", senderID, recipientID, payload, timeOfPostback);
 
 }
-
 
 /*
  * Message Read Event
