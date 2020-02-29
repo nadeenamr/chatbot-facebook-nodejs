@@ -643,15 +643,14 @@ function greetUserText(userId) {
 							} else {
 								console.log('rows: ' + result.rows.length);
 								if (result.rows.length === 0) {
-									let sql = 'INSERT INTO users (facebook_id, first_name, last_name, profile_picture, gender) VALUES ($1, $2, $3, $4, $5)';
+									let sql = 'INSERT INTO users (facebook_id, first_name, last_name, profile_picture) VALUES ($1, $2, $3, $4)';
 									console.log('sql: ' + sql);
 									client.query(sql,
 										[
 											userId,
 											user.first_name,
 											user.last_name,
-											user.profile_pic,
-											user.gender
+											user.profile_pic
 										]);
 								}
 							}
@@ -660,7 +659,7 @@ function greetUserText(userId) {
 				});
 				pool.end();
 
-				console.log("FB user: %s %s, %s", user.first_name, user.last_name, user.gender);
+				console.log("FB user: %s %s", user.first_name, user.last_name);
 
 				sendTextMessage(userId, "Welcome " + user.first_name + '!' + 
 				'I can answer any of your questions concerning the advising system' + 
