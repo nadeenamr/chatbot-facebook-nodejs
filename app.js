@@ -635,7 +635,7 @@ function greetUserText(userId) {
 					}
 					var rows = [];
 					console.log('fetching user');
-					client.query(`SELECT id FROM users WHERE facebook-id='${userId}' LIMIT 1`,
+					client.query(`SELECT id FROM users WHERE facebook_id='${userId}' LIMIT 1`,
 						function(err, result) {
 							console.log('query result ' + result);
 							if (err) {
@@ -643,7 +643,7 @@ function greetUserText(userId) {
 							} else {
 								console.log('rows: ' + result.rows.length);
 								if (result.rows.length === 0) {
-									let sql = 'INSERT INTO users (facebook-id, first-name, last-name, profile-picture, locale, timezone, gender) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+									let sql = 'INSERT INTO users (facebook_id, first_name, last_name, profile_picture, locale, timezone, gender) VALUES ($1, $2, $3, $4, $5, $6, $7)';
 									console.log('sql: ' + sql);
 									client.query(sql,
 										[
