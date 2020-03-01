@@ -194,7 +194,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "iphone-colors":
 			colors.readAllColors(function(allColors){
-				let allColorsString = allColors.join(", ");
+				let allColorsString = allColors.toString();
 				console.log('HEEELLLLLLLLLOOOOOOOOOOOOO');
 				console.log(allColorsString);
 				let reply = 'IPhone 8 is available in '+allColorsString+'. What is your favorite color?';
