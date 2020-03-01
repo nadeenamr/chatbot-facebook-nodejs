@@ -11,6 +11,7 @@ const app = express();
 const uuid = require('uuid');
 const userData = require('./user');
 const colors = require('./colors');
+const courses = require('./courses');
 
 pg.defaults.ssl = true;
 
@@ -192,6 +193,13 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "course-prereq":
+			courses.readAllPrerequisites(parameters['prereq_code'], function(allCourses){
+				let allCoursesString = allCourses.join(", ");
+				let reply = `This course has the following prerequisites: ${allCoursesString}.`;
+				sendTextMessage(sender, reply);
+			});
+			break;
 		case "buy-iphone8":
 			colors.readUserColor(function(color){
 				let reply;
