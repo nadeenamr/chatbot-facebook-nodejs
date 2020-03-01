@@ -46,7 +46,7 @@ module.exports = {
                             console.log(err);
                             callback('');
                         } else {
-                            callback(result.rows[0]['color']);
+                            callback(result.rows[0].color);
                         };
                     });
         });
@@ -61,8 +61,6 @@ module.exports = {
             }
 
             let sql1 = `SELECT color FROM public.user_color WHERE fb_id='${userId}' LIMIT 1`;
-            console.log('DONE SQL!!!!')
-            console.log(sql1)
             client.query(sql1,
                     function(err, result) {
                         if (err) {
@@ -71,10 +69,8 @@ module.exports = {
                             let sql;
                             if (result.rows.length === 0) {
                                 sql = 'INSERT INTO public.user_color (color, fb_id) VALUES ($1, $2)';
-                                console.log('JUST INSERTEDDDD!!!')
                             } else {
                                 sql = 'UPDATE public.user_color SET color=$1 WHERE fb_id=$2';
-                                console.log('JUST UPDATEDDDDDD!!!')
                             }
                             client.query(sql,
                             [
