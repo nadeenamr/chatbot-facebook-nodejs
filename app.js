@@ -194,10 +194,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "iphone-colors":
 			colors.readAllColors(function(allColors){
-				let allColorsString = allColors.toString();
+				let allColorsString = allColors.join(", ");
 				console.log('HEEELLLLLLLLLOOOOOOOOOOOOO');
-				console.log(allColors);
-				let reply = 'IPhone 8 is available in '+allColors+'. What is your favorite color?';
+				console.log(allColorsString);
+				let reply = 'IPhone 8 is available in '+allColorsString+'. What is your favorite color?';
 				sendTextMessage(sender, reply);
 			})
 			break;
