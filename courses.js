@@ -30,6 +30,7 @@ module.exports = {
                             callback(prereqCourses);
                         };
                     });
+            done();
         });
         pool.end();
     }   
