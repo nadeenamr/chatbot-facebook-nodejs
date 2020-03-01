@@ -12,7 +12,7 @@ module.exports = {
             if (err) {
                 return console.error('Error acquiring client', err.stack);
             }
-            client.query(
+            const pls = await client.query(
                     `SELECT color FROM public.iphone_col`,
                     function(err, result) {
                         console.log('query result '+ result);
