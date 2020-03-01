@@ -215,7 +215,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						{ "content_type": "text", "title": "DMET", "payload": "DMET"}
 					];
 					sendQuickReply(sender, responseText, replies);
-					//sendTextMessage(sender, responseText);
 				}else{
 					if(user_name!='' && id!='' && semester!='' && major!=''){
 						responseText = "Thank you for using AA, "+user_name+". Hope studying "+major+" at the GUC is bringing you closer to your future path. Any concerns regarding any courses or inquiries about semester " + semester + " feel free to ask."
