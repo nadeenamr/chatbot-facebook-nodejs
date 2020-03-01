@@ -13,7 +13,7 @@ module.exports = {
                 return console.error('Error acquiring client', err.stack);
             }
             client.query(
-                    `SELECT color FROM public.iphone_col`,
+                    `SELECT color FROM public.iphone_colors`,
                     function(err, result) {
                         console.log('query result '+ result);
                         if (err) {
