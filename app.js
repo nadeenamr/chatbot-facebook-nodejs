@@ -196,6 +196,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "course-prereq":
 			courses.readAllPrerequisites(parameters['prereq_code'], function(allCourses){
 				let allCoursesString = allCourses.join(", ");
+				console.log('FINISHEDDDDD');
+				console.log(allCoursesString);
 				let reply = `This course has the following prerequisites: ${allCoursesString}.`;
 				sendTextMessage(sender, reply);
 			});
