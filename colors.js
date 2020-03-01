@@ -60,7 +60,7 @@ module.exports = {
                 return console.error('Error acquiring client', err.stack);
             }
 
-            let sql1 = `SELECT color FROM public.user_color WHERE facebook_id='${userId}' LIMIT 1`;
+            let sql1 = `SELECT color FROM public.user_color WHERE fb_id='${userId}' LIMIT 1`;
             console.log('DONE SQL!!!!')
             console.log(sql1)
             client.query(sql1,
@@ -70,10 +70,10 @@ module.exports = {
                         } else {
                             let sql;
                             if (result.rows.length === 0) {
-                                sql = 'INSERT INTO public.user_color (color, facebook_id) VALUES ($1, $2)';
+                                sql = 'INSERT INTO public.user_color (color, fb_id) VALUES ($1, $2)';
                                 console.log('JUST INSERTEDDDD!!!')
                             } else {
-                                sql = 'UPDATE public.user_color SET color=$1 WHERE facebook_id=$2';
+                                sql = 'UPDATE public.user_color SET color=$1 WHERE fb_id=$2';
                                 console.log('JUST UPDATEDDDDDD!!!')
                             }
                             client.query(sql,
