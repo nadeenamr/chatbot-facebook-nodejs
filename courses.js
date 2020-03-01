@@ -18,7 +18,6 @@ module.exports = {
                         console.log('query result ------------>'+ result);
                         if (err) {
                             console.log('Query error: ' + err);
-                            callback([]);
                         } else {
                             let prereqCourses;
                             if (result.rows.length === 0) {
