@@ -10,6 +10,7 @@ const pg = require('pg');
 const app = express();
 const uuid = require('uuid');
 const userData = require('./user');
+const colors = require('./colors');
 
 pg.defaults.ssl = true;
 
@@ -191,6 +192,13 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "iphone-colors":
+			colors.readAllColors(function(allColors){
+				let allColorsString = allColors.join(',');
+				let reply= 'Iphone 8 is avaiable in $allColorsString. What is your favorite color?';
+				sendTextMessage(sender, reply);
+			})
+			break;
 		// video no.35
 		case "detailed_applications": 
 			if(isDefined(contexts[0]) && contexts[0].parameters['user_name'] && contexts[0].parameters['id'] && contexts[0].parameters['semester'] && contexts[0].parameters['major'] && contexts[0].parameters){
