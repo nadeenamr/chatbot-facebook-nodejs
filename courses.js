@@ -6,82 +6,33 @@ pg.defaults.ssl = true;
 
 module.exports = {
 
-    readAllPrerequisites: function(course_code) {
+    readAllPrerequisites: function(callback, course_code) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
                 return console.error('Error acquiring client', err.stack);
             }
-            client.query(
-                    `SELECT prereq_code FROM public.prerequisites WHERE course_code='${course_code}' LIMIT 3`,
+            let sql1 = `SELECT prereq_code FROM public.prerequisites WHERE course_code='${course_code}' LIMIT 3`;
+            client.query(sql1,
                     function(err, result) {
-                        console.log('query result '+ result);
+                        console.log('query result ------------>'+ result);
                         if (err) {
-                            console.log(err);
+                            console.log('Query error: ' + err);
                             callback([]);
                         } else {
-                            let prereqCourses = [];
-                            for (let i = 0; i < result.rows.length; i++) {
-                                prereqCourses.push(result.rows[i].prereq_code);
+                            let prereqCourses;
+                            if (result.rows.length === 0) {
+                                prereqCourses = [];
+                            } else {
+                                for (let i = 0; i < result.rows.length; i++) {
+                                    prereqCourses.push(result.rows[i].prereq_code);
+                                }
                             }
                             callback(prereqCourses);
                         };
                     });
         });
         pool.end();
-    },
-
-    readUserColor: function(callback, userId) {
-        var pool = new pg.Pool(config.PG_CONFIG);
-        pool.connect(function(err, client, done) {
-            if (err) {
-                return console.error('Error acquiring client', err.stack);
-            }
-            client
-                .query(
-                    'SELECT color FROM public.user_color WHERE fb_id=$1',
-                    [userId],
-                    function(err, result) {
-                        if (err) {
-                            console.log(err);
-                            callback('');
-                        } else {
-                            callback(result.rows[0].color);
-                        };
-                    });
-        });
-        pool.end();
-    },
-
-    updateUserColor: function(color, userId) {
-        var pool = new pg.Pool(config.PG_CONFIG);
-        pool.connect(function(err, client, done) {
-            if (err) {
-                return console.error('Error acquiring client', err.stack);
-            }
-
-            let sql1 = `SELECT color FROM public.user_color WHERE fb_id='${userId}' LIMIT 1`;
-            client.query(sql1,
-                    function(err, result) {
-                        if (err) {
-                            console.log('Query error: ' + err);
-                        } else {
-                            let sql;
-                            if (result.rows.length === 0) {
-                                sql = 'INSERT INTO public.user_color (color, fb_id) VALUES ($1, $2)';
-                            } else {
-                                sql = 'UPDATE public.user_color SET color=$1 WHERE fb_id=$2';
-                            }
-                            client.query(sql,
-                            [
-                                color,
-                                userId
-                            ]);
-                        }
-                    }
-                    );
-        });
-        pool.end();
-    }
+    }   
 
 }
