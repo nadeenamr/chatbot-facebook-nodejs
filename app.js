@@ -192,11 +192,14 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "iphone8_colors.favourite":
+			colors.updateUserColor(parameters['color'], sender);
+			let reply = `Oh, I like it too! I'll remember that.`;
+			sendTextMessage(sender, reply);
+			break;
 		case "iphone-colors":
 			colors.readAllColors(function(allColors){
 				let allColorsString = allColors.join(", ");
-				console.log('HEEELLLLLLLLLOOOOOOOOOOOOO');
-				console.log(allColorsString);
 				let reply = `IPhone 8 is available in ${allColorsString}. What is your favorite color?`;
 				sendTextMessage(sender, reply);
 			});
