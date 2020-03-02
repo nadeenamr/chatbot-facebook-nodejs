@@ -4,36 +4,33 @@ const config = require('./config');
 const pg = require('pg');
 pg.defaults.ssl = true;
 
+
 module.exports = {
 
-    readAllPrerequisites: function(course_code, userId) {
+    readAllCourses: function(callback) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
                 return console.error('Error acquiring client', err.stack);
             }
-            let sql1 = `SELECT prereq_code FROM public.prerequisites WHERE course_code='${course_code}' LIMIT 3`;
-            client.query(sql1,
+            client.query(
+                    `SELECT course_code FROM public.courses`,
                     function(err, result) {
-                        console.log('query result ------------>'+ result);
+                        console.log('query result '+ result);
                         if (err) {
-                            console.log('Query error: ' + err);
+                            console.log(err);
+                            callback([]);
                         } else {
-                            let prereqCourses;
-                            if (result.rows.length === 0) {
-                                console.log('NO PREREQS')
-                                //prereqCourses = [];
-                            } else {
-                                console.log('SOME PREREQS')
-                                //for (let i = 0; i < result.rows.length; i++) {
-                                //    prereqCourses.push(result.rows[i].prereq_code);
-                                //}
+                            let codes = [];
+                            for (let i = 0; i < result.rows.length; i++) {
+                                colors.push(result.rows[i].course_code);
                             }
-                            //callback(prereqCourses);
+                            callback(codes);
                         };
                     });
         });
         pool.end();
-    }   
+    }
 
 }
+
