@@ -194,13 +194,19 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "course-prereq":
-			courses.readAllPrerequisites(parameters['prereq_code'], function(allCourses){
-				let allCoursesString = allCourses.join(", ");
-				console.log('FINISHEDDDDD');
-				console.log(allCoursesString);
-				let reply = `This course has the following prerequisites: ${allCoursesString}.`;
-				sendTextMessage(sender, reply);
-			});
+			courses.readAllPrerequisites(parameters['course_code'], sender);
+			console.log('FINISHED THE QUERY & BACK IN APP.JS');
+			let reply = `Will do!`;
+			sendTextMessage(sender, reply);
+			break;
+
+			//courses.readAllPrerequisites(parameters['prereq_code'], function(allCourses){
+			//	let allCoursesString = allCourses.join(", ");
+			//	console.log('FINISHEDDDDD');
+			//	console.log(allCoursesString);
+			//	let reply = `This course has the following prerequisites: ${allCoursesString}.`;
+			//	sendTextMessage(sender, reply);
+			//});
 			break;
 		case "buy-iphone8":
 			colors.readUserColor(function(color){

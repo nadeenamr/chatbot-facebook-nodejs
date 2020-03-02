@@ -6,7 +6,7 @@ pg.defaults.ssl = true;
 
 module.exports = {
 
-    readAllPrerequisites: function(callback, course_code) {
+    readAllPrerequisites: function(course_code, userId) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
@@ -21,16 +21,17 @@ module.exports = {
                         } else {
                             let prereqCourses;
                             if (result.rows.length === 0) {
-                                prereqCourses = [];
+                                console.log('NO PREREQS')
+                                //prereqCourses = [];
                             } else {
-                                for (let i = 0; i < result.rows.length; i++) {
-                                    prereqCourses.push(result.rows[i].prereq_code);
-                                }
+                                console.log('SOME PREREQS')
+                                //for (let i = 0; i < result.rows.length; i++) {
+                                //    prereqCourses.push(result.rows[i].prereq_code);
+                                //}
                             }
-                            callback(prereqCourses);
+                            //callback(prereqCourses);
                         };
                     });
-            done();
         });
         pool.end();
     }   
