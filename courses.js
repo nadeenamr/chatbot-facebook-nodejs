@@ -7,7 +7,7 @@ pg.defaults.ssl = true;
 
 module.exports = {
 
-    readAllSemesterCourses: function(callback, semester) {
+    readAllCSSemesterCourses: function(callback, semester) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
@@ -16,6 +16,34 @@ module.exports = {
             client
                 .query(
                     'SELECT course_code FROM public.cs_semester_courses WHERE semester=$1',
+                    [semester],
+                    function(err, result) {
+                        console.log('result is hereeee');
+                        console.log(result);
+                        if (err) {
+                            console.log(err);
+                            callback('');
+                        } else {
+                            let codes = [];
+                            for (let i = 0; i < result.rows.length; i++) {
+                                codes.push(result.rows[i].course_code);
+                            }
+                            callback(codes);
+                        };
+                    });
+        });
+        pool.end();
+    },
+
+    readAllDMETSemesterCourses: function(callback, semester) {
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }
+            client
+                .query(
+                    'SELECT course_code FROM public.dmet_semester_courses WHERE semester=$1',
                     [semester],
                     function(err, result) {
                         console.log('result is hereeee');
