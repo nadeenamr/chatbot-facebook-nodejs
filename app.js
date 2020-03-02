@@ -196,8 +196,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "ask-courses":
 			courses.readAllCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
+				console.log('DOONNNNNEEEEEE');
+				console.log(allCoursesString);
 				let reply = `Course codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply)
+				console.log('BYYYYYYEEEEEEE');
 			});
 			break;
 		case "buy-iphone8":
