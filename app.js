@@ -202,7 +202,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let reply = `Prerequisite courses' codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply)
 				console.log('BYYYYYYEEEEEEE NNOOOOWWWWWWW');
-				}, parameters['course_code']
+				}, parameters['courses']
 			)
 			break;
 
