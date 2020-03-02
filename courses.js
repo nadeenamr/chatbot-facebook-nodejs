@@ -26,7 +26,7 @@ module.exports = {
                         } else {
                             let codes = [];
                             for (let i = 0; i < result.rows.length; i++) {
-                                codes.push(result.rows[i].prereq_code);
+                                codes.push(result.rows[i].course_code);
                             }
                             callback(codes);
                         };
