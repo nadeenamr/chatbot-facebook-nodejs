@@ -202,7 +202,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			);
 			break;
 		case "cs_sem_courses":
-			courses.readAllCourses(function(allCourses){
+			courses.readAllSemesterCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
 				console.log('DOONNNNNEEEEEE');
 				console.log(allCoursesString);
