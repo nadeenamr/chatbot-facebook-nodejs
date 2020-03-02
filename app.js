@@ -193,6 +193,18 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "course_prereq":
+			courses.readCoursePrereq(function(codes){
+				let allCoursesString = codes.join(", ");
+				console.log('DOONNNNNEEEEEE');
+				console.log(allCoursesString);
+				let reply = `Prerequisite courses' codes are: ${allCoursesString}.`;
+				sendTextMessage(sender, reply)
+				console.log('BYYYYYYEEEEEEE');
+				}, 'MATH203'
+			)
+			break;
+
 		case "ask-courses":
 			courses.readAllCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
