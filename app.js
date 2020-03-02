@@ -207,7 +207,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			//	let reply = `This course has the following prerequisites: ${allCoursesString}.`;
 			//	sendTextMessage(sender, reply);
 			//});
-			break;
+			//break;
 		case "buy-iphone8":
 			colors.readUserColor(function(color){
 				let reply;
