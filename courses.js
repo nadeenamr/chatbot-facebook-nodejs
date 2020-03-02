@@ -23,7 +23,7 @@ module.exports = {
                         } else {
                             let codes = [];
                             for (let i = 0; i < result.rows.length; i++) {
-                                colors.push(result.rows[i].course_code);
+                                codes.push(result.rows[i].course_code);
                             }
                             callback(codes);
                         };
