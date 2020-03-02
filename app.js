@@ -196,11 +196,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "course_prereq":
 			courses.readCoursePrereq(function(codes){
 				let allCoursesString = codes.join(", ");
-				console.log('DOONNNNNEEEEEE');
+				console.log('DOONNNNNEEEEEE ITTT RIGHHHTTT');
 				console.log(allCoursesString);
 				let reply = `Prerequisite courses' codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply)
-				console.log('BYYYYYYEEEEEEE');
+				console.log('BYYYYYYEEEEEEE NNOOOOWWWWWWW');
 				}, parameters['course_code']
 			)
 			break;
