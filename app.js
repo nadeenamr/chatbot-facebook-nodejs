@@ -193,20 +193,15 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
-		case "course_prereq":
-			courses.readCoursePrereq(function(codes){
+		case "course_prereq": 
+			courses.readCoursePrereqs(function(codes){
 				let allCoursesString = codes.join(", ");
-				console.log('DOONNNNNEEEEEE ITTT RIGHHHTTT');
-				console.log(parameters);
-				console.log(parameters['course_code']);
 				let reply = `Prerequisite courses' codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply)
-				console.log('BYYYYYYEEEEEEE NNOOOOWWWWWWW');
 				}, parameters['courses']
-			)
+			);
 			break;
-
-		case "ask-courses":
+		case "cs_sem_courses":
 			courses.readAllCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
 				console.log('DOONNNNNEEEEEE');
@@ -214,7 +209,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let reply = `Course codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply)
 				console.log('BYYYYYYEEEEEEE');
-			});
+				}, parameters['semesters']
+			);
 			break;
 		case "buy-iphone8":
 			colors.readUserColor(function(color){
