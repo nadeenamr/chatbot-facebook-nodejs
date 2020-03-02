@@ -5,6 +5,7 @@ const engine = new swipl.Engine();
     try {
         let result;
         while (result = await query.next()) {
+            console.log('PRROOOLLLOOOGGGG IS HEEEERRRRRREEEEEE')
             console.log(`Variable X value is: ${result.X}`);
         }
     } finally {
