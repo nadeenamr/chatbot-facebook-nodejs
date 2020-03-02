@@ -204,22 +204,16 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "cs_sem_courses":
 			courses.readAllCSSemesterCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
-				console.log('DOONNNNNEEEEEE');
-				console.log(allCoursesString);
 				let reply = `Course codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply)
-				console.log('BYYYYYYEEEEEEE');
 				}, parameters['semesters']
 			);
 			break;
 		case "dmet_sem_courses":
 			courses.readAllDMETSemesterCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
-				console.log('DOONNNNNEEEEEE');
-				console.log(allCoursesString);
 				let reply = `Course codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply)
-				console.log('BYYYYYYEEEEEEE');
 				}, parameters['semesters']
 			);
 			break;

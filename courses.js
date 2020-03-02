@@ -18,8 +18,6 @@ module.exports = {
                     'SELECT course_code FROM public.cs_semester_courses WHERE semester=$1',
                     [semester],
                     function(err, result) {
-                        console.log('result is hereeee');
-                        console.log(result);
                         if (err) {
                             console.log(err);
                             callback('');
@@ -46,8 +44,6 @@ module.exports = {
                     'SELECT course_code FROM public.dmet_semester_courses WHERE semester=$1',
                     [semester],
                     function(err, result) {
-                        console.log('result is hereeee');
-                        console.log(result);
                         if (err) {
                             console.log(err);
                             callback('');
@@ -74,8 +70,6 @@ module.exports = {
                     'SELECT prereq_code FROM public.prerequisites WHERE course_code=$1',
                     [course_code],
                     function(err, result) {
-                        console.log('result is hereeee');
-                        console.log(result);
                         if (err) {
                             console.log(err);
                             callback('');
