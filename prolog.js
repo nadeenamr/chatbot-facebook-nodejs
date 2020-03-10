@@ -10,7 +10,7 @@ require( "tau-prolog/modules/lists" )( pl ); // Import and apply the lists modul
 module.exports = {
 
   getStudentNextSchedule: function(callback, studentID) {
-    var scheduleQuery = "getSchedule($1,X).";
+    var scheduleQuery = "getSchedule("+studentID+",X).";
     var outputSchedule = executeQuery(scheduleQuery);
     callback(outputSchedule);                         
   }
