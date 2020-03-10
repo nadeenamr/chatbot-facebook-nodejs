@@ -195,7 +195,8 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "schedule":
-			console.log("just entered HANDLEAPIAIACTION")
+			console.log("PARAMETERS ARE -----> "+parameters);
+			console.log("just entered HANDLEAPIAIACTION");
 			prolog.getStudentNextSchedule(function(allCourses){
 				console.log("PROLOG ANSWER IN APP.JS"+allCourses);
 				let reply = `These are your courses for the next semester: ${allCourses}.`;
