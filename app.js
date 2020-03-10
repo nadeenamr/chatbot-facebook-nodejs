@@ -227,6 +227,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let allCoursesString = allCourses.join(", ");
 				let reply = `Course codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply)
+				console.log(parameters);
 				}, parameters['semesters']
 			);
 			break;
