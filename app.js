@@ -12,6 +12,7 @@ const uuid = require('uuid');
 const userData = require('./user');
 const colors = require('./colors');
 const courses = require('./courses');
+const prolog = require('./prolog');
 
 pg.defaults.ssl = true;
 
