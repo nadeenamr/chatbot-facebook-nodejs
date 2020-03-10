@@ -1,15 +1,5 @@
 
 
-
-module.exports = {
-
-  getStudentNextSchedule: function(callback, studentID) {
-    var scheduleQuery = "getSchedule(123,X).";
-    var outputSchedule = executeQuery(scheduleQuery);
-    callback(outputSchedule);                         
-  }
-}
-
 function executeQuery(thisQuery) {
 
   var pl = require( "tau-prolog" ); // Import Tau Prolog core
@@ -418,6 +408,15 @@ function executeQuery(thisQuery) {
   
   return schedule; 
 } 
+
+module.exports = {
+
+  getStudentNextSchedule: function(callback, studentID) {
+    var scheduleQuery = "getSchedule(123,X).";
+    var outputSchedule = executeQuery(scheduleQuery);
+    callback(outputSchedule);                         
+  }
+}
 
 
 
