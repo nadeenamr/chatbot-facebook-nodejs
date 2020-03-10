@@ -1,7 +1,4 @@
 
-
-function executeQuery(thisQuery) {
-
   var pl = require("tau-prolog"); // Import Tau Prolog core
   
   require("tau-prolog/modules/lists")(pl); // Import and apply the lists module
@@ -387,14 +384,13 @@ function executeQuery(thisQuery) {
 
   session.consult(program);
 
-  session.query(thisQuery); // Query the goal
+  session.query("getSchedule(46-5295,X)."); // Query the goal
 
   var schedule;
 
   session.answers(x => { // Show answers
     var str = pl.format_answer(x);
-    console.log("QUERY ENTERED: "+thisQuery);
-    console.log("UNFORMATED PROLOG ANSWER--->"+str);
+    console.log(str);
     var res = str.split("=");
     if(str!="false."){
       str = res[1].split("[");
@@ -404,19 +400,4 @@ function executeQuery(thisQuery) {
     }
   });
 
-  console.log( "----> PROLOG ANSWER: " +schedule);
-  
-  return schedule; 
-} 
-
-module.exports = {
-
-  getStudentNextSchedule: function(callback, studentID) {
-    var scheduleQuery = "getSchedule(46-5295,X).";
-    var outputSchedule = executeQuery(scheduleQuery);
-    callback(outputSchedule);                         
-  }
-}
-
-
-
+  console.log(schedule);
