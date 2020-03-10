@@ -146,9 +146,9 @@ function executeQuery(thisQuery) {
         "prereq(dmet1003,dmet603)."+
         "prereq(dmet1003,comm401)."+
 
-        "student(43-123,ahmed,cs,5)."+
-        "student(43-456,marwan,cs,5)."+
-        "student(43-789,nada,cs,5)."+
+        "student(123,ahmed,cs,5)."+
+        "student(456,marwan,cs,5)."+
+        "student(789,nada,cs,5)."+
         "student(46-5295,mostafa,cs,3)."+
 
         "passed_course(123,csen102)."+
@@ -412,7 +412,7 @@ function executeQuery(thisQuery) {
 module.exports = {
 
   getStudentNextSchedule: function(callback, studentID) {
-    var scheduleQuery = "getSchedule(46-5295,X).";
+    var scheduleQuery = "getSchedule("+123+",X).";
     var outputSchedule = executeQuery(scheduleQuery);
     callback(outputSchedule);                         
   }
