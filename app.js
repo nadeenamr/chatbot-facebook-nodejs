@@ -193,6 +193,13 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "schedule":
+			prolog.getStudentNextSchedule(function(allCourses){
+				let reply = `These are your courses for the next semester: ${allCourses}.`;
+				sendTextMessage(sender, reply)
+				}, parameters['studentID']
+			);
+			break;
 		case "course_prereq": 
 			courses.readCoursePrereqs(function(codes){
 				let allCoursesString = codes.join(", ");
