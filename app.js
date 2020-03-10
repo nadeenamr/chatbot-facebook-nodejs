@@ -196,14 +196,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "getSchedule":
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
-				console.log("PARAMETERS ARE -----> "+context[0].parameters['studentID']);
+				console.log("PARAMETERS ARE -----> "+contexts[0].parameters['studentID']);
 				console.log("just entered HANDLEAPIAIACTION");
 				prolog.getStudentNextSchedule(function(allCourses){
 					console.log("PROLOG ANSWER IN APP.JS"+allCourses);
 					let reply = `These are your courses for the next semester: ${allCourses}.`;
 					console.log("OUT OF PROLOG FILE WITH ANSWER WOHOOOOOOO");
 					sendTextMessage(sender, reply);
-					}, context[0].parameters['studentID']
+					}, contexts[0].parameters['studentID']
 				);
 			}
 			break;
