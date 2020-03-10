@@ -146,95 +146,95 @@ function executeQuery(thisQuery) {
         "prereq(dmet1003,dmet603)."+
         "prereq(dmet1003,comm401)."+
 
-        "student(123,ahmed,cs,5)."+
-        "student(456,marwan,cs,5)."+
-        "student(789,nada,cs,5)."+
+        "student(43-1293,ahmed,cs,5)."+
+        "student(43-4861,marwan,cs,5)."+
+        "student(43-7148,nada,cs,5)."+
         "student(46-5295,mostafa,cs,3)."+
 
-        "passed_course(123,csen102)."+
-        "passed_course(123,math103)."+
-        "passed_course(123,chemp102)."+
-        "passed_course(123,chemt102)."+
-        "passed_course(123,phys101)."+
-        "passed_course(123,engd301)."+
+        "passed_course(43-1293,csen102)."+
+        "passed_course(43-1293,math103)."+
+        "passed_course(43-1293,chemp102)."+
+        "passed_course(43-1293,chemt102)."+
+        "passed_course(43-1293,phys101)."+
+        "passed_course(43-1293,engd301)."+
 
-        "passed_course(123,phys202)."+
-        "passed_course(123,csen202)."+
-        "passed_course(123,edpt201)."+
+        "passed_course(43-1293,phys202)."+
+        "passed_course(43-1293,csen202)."+
+        "passed_course(43-1293,edpt201)."+
         
-        "passed_course(123,physp301)."+
-        "passed_course(123,physt301)."+
-        "passed_course(123,elct301)."+
-        "passed_course(123,csen301)."+
+        "passed_course(43-1293,physp301)."+
+        "passed_course(43-1293,physt301)."+
+        "passed_course(43-1293,elct301)."+
+        "passed_course(43-1293,csen301)."+
 
-        "passed_course(123,math401)."+
-        "passed_course(123,csen401)."+
-        "passed_course(123,comm401)."+
-        "passed_course(123,csen403)."+
+        "passed_course(43-1293,math401)."+
+        "passed_course(43-1293,csen401)."+
+        "passed_course(43-1293,comm401)."+
+        "passed_course(43-1293,csen403)."+
         
-        "passed_course(123,math501)."+
-        "passed_course(123,dmet501)."+
-        "passed_course(123,csen501)."+
-        "passed_course(123,csen503)."+
-        "passed_course(123,csen605)."+
-        "passed_course(123,csen502)."+
+        "passed_course(43-1293,math501)."+
+        "passed_course(43-1293,dmet501)."+
+        "passed_course(43-1293,csen501)."+
+        "passed_course(43-1293,csen503)."+
+        "passed_course(43-1293,csen605)."+
+        "passed_course(43-1293,csen502)."+
 
-        "passed_course(456,csen102)."+
-        "passed_course(456,math103)."+
-        "passed_course(456,chemp102)."+
-        "passed_course(456,chemt102)."+
-        "passed_course(456,phys101)."+
-        "passed_course(456,engd301)."+
+        "passed_course(43-4861,csen102)."+
+        "passed_course(43-4861,math103)."+
+        "passed_course(43-4861,chemp102)."+
+        "passed_course(43-4861,chemt102)."+
+        "passed_course(43-4861,phys101)."+
+        "passed_course(43-4861,engd301)."+
 
-        "passed_course(456,phys202)."+
-        "passed_course(456,math203)."+
-        "passed_course(456,csen202)."+
-        "passed_course(456,elct201)."+
-        "passed_course(456,edpt201)."+
+        "passed_course(43-4861,phys202)."+
+        "passed_course(43-4861,math203)."+
+        "passed_course(43-4861,csen202)."+
+        "passed_course(43-4861,elct201)."+
+        "passed_course(43-4861,edpt201)."+
 
-        "passed_course(456,math301)."+
-        "passed_course(456,physp301)."+
-        "passed_course(456,physt301)."+
-        "passed_course(456,elct301)."+
-        "passed_course(456,csen301)."+
+        "passed_course(43-4861,math301)."+
+        "passed_course(43-4861,physp301)."+
+        "passed_course(43-4861,physt301)."+
+        "passed_course(43-4861,elct301)."+
+        "passed_course(43-4861,csen301)."+
         
-        "passed_course(456,csis402)."+
-        "passed_course(456,csen401)."+
-        "passed_course(456,csen403)."+
+        "passed_course(43-4861,csis402)."+
+        "passed_course(43-4861,csen401)."+
+        "passed_course(43-4861,csen403)."+
 
-        "passed_course(456,math501)."+
-        "passed_course(456,dmet501)."+
-        "passed_course(456,csen501)."+
-        "passed_course(456,csen503)."+
-        "passed_course(456,csen605)."+
-        "passed_course(456,csen502)."+
+        "passed_course(43-4861,math501)."+
+        "passed_course(43-4861,dmet501)."+
+        "passed_course(43-4861,csen501)."+
+        "passed_course(43-4861,csen503)."+
+        "passed_course(43-4861,csen605)."+
+        "passed_course(43-4861,csen502)."+
 
-        "passed_course(789,cps402)."+
-        "passed_course(789,as102)."+
-        "passed_course(789,ae101)."+
-        "passed_course(789,sm101)."+
+        "passed_course(43-7148,cps402)."+
+        "passed_course(43-7148,as102)."+
+        "passed_course(43-7148,ae101)."+
+        "passed_course(43-7148,sm101)."+
 
-        "passed_course(789,csen102)."+
-        "passed_course(789,math103)."+
-        "passed_course(789,chemp102)."+
-        "passed_course(789,chemt102)."+
-        "passed_course(789,phys101)."+
-        "passed_course(789,engd301)."+
+        "passed_course(43-7148,csen102)."+
+        "passed_course(43-7148,math103)."+
+        "passed_course(43-7148,chemp102)."+
+        "passed_course(43-7148,chemt102)."+
+        "passed_course(43-7148,phys101)."+
+        "passed_course(43-7148,engd301)."+
 
-        "passed_course(789,math203)."+
-        "passed_course(789,phys202)."+
-        "passed_course(789,csen202)."+
-        "passed_course(789,edpt201)."+
+        "passed_course(43-7148,math203)."+
+        "passed_course(43-7148,phys202)."+
+        "passed_course(43-7148,csen202)."+
+        "passed_course(43-7148,edpt201)."+
 
-        "passed_course(789,math301)."+
-        "passed_course(789,physp301)."+
-        "passed_course(789,physt301)."+
-        "passed_course(789,elct301)."+
-        "passed_course(789,csen301)."+
+        "passed_course(43-7148,math301)."+
+        "passed_course(43-7148,physp301)."+
+        "passed_course(43-7148,physt301)."+
+        "passed_course(43-7148,elct301)."+
+        "passed_course(43-7148,csen301)."+
 
-        "passed_course(789,csen403)."+
-        "passed_course(789,csis402)."+
-        "passed_course(789,csen401)."+
+        "passed_course(43-7148,csen403)."+
+        "passed_course(43-7148,csis402)."+
+        "passed_course(43-7148,csen401)."+
 
         "passed_course(46-5295,de303)."+
         "passed_course(46-5295,cps402)."+
@@ -256,27 +256,27 @@ function executeQuery(thisQuery) {
 
 
         /*a=attendance,o=other */
-        "failed_course(123,elct201,o)."+
-        "failed_course(123,math203,o)."+
-        "failed_course(123,math301,o)."+
-        "failed_course(123,elct401,o)."+
-        "failed_course(123,csis402,o)."+
-        "failed_course(123,csen403,o)."+
-        "failed_course(123,dmet501,o). "+
-        "failed_course(123,de202,o). "+
+        "failed_course(43-1293,elct201,o)."+
+        "failed_course(43-1293,math203,o)."+
+        "failed_course(43-1293,math301,o)."+
+        "failed_course(43-1293,elct401,o)."+
+        "failed_course(43-1293,csis402,o)."+
+        "failed_course(43-1293,csen403,o)."+
+        "failed_course(43-1293,dmet501,o). "+
+        "failed_course(43-1293,de202,o). "+
 
-        "failed_course(789,elct201,o). "+
-        "failed_course(789,elct401,o). "+
-        "failed_course(789,comm401,o). "+
-        "failed_course(789,math401,o). "+
-        "failed_course(789,math501,a). "+
-        "failed_course(789,dmet501,a). "+
-        "failed_course(789,csen501,o). "+
-        "failed_course(789,csen503,a). "+
-        "failed_course(789,csen605,a). "+
-        "failed_course(789,csen502,o). "+
-        "failed_course(789,rpw401,a). "+
-        "failed_course(789,de202,a). "+
+        "failed_course(43-7148,elct201,o). "+
+        "failed_course(43-7148,elct401,o). "+
+        "failed_course(43-7148,comm401,o). "+
+        "failed_course(43-7148,math401,o). "+
+        "failed_course(43-7148,math501,a). "+
+        "failed_course(43-7148,dmet501,a). "+
+        "failed_course(43-7148,csen501,o). "+
+        "failed_course(43-7148,csen503,a). "+
+        "failed_course(43-7148,csen605,a). "+
+        "failed_course(43-7148,csen502,o). "+
+        "failed_course(43-7148,rpw401,a). "+
+        "failed_course(43-7148,de202,a). "+
 
         "failed_course(46-5295,math203,a). "+
         "failed_course(46-5295,csen202,o). "+
@@ -410,7 +410,6 @@ function executeQuery(thisQuery) {
 } 
 
 module.exports = {
-
   getStudentNextSchedule: function(callback, studentID) {
     var scheduleQuery = "getSchedule("+studentID+",X).";
     var outputSchedule = executeQuery(scheduleQuery);
