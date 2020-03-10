@@ -196,7 +196,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "getSchedule":
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
-				console.log("PARAMETERS ARE -----> "+parameters);
+				console.log("PARAMETERS ARE -----> "+parameters['studentID']);
 				console.log("just entered HANDLEAPIAIACTION");
 				prolog.getStudentNextSchedule(function(allCourses){
 					console.log("PROLOG ANSWER IN APP.JS"+allCourses);
