@@ -194,7 +194,7 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
-		case "getSchedule":
+		case "getSchedule": //tested-=10/Mar/20
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
 				console.log("PARAMETERS ARE -----> "+contexts[0].parameters['studentID']);
 				prolog.getStudentNextSchedule(function(allCourses){
