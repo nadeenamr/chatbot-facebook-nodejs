@@ -1,5 +1,3 @@
-'use strict';
-const request = require('request');
 
 var pl = require( "tau-prolog" ); // Import Tau Prolog core
 require( "tau-prolog/modules/lists" )( pl ); // Import and apply the lists module
