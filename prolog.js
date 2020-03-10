@@ -405,6 +405,8 @@ function executeQuery(thisQuery) {
 
   session.answers(x => { // Show answers
     var str = pl.format_answer(x);
+    console.log("QUERY ENTERED: "+thisQuery);
+    console.log("UNFORMATED PROLOG ANSWER--->"+str);
     var res = str.split("=");
     if(str!="false."){
       str = res[1].split("[");
