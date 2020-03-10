@@ -412,7 +412,7 @@ function executeQuery(thisQuery) {
 module.exports = {
 
   getStudentNextSchedule: function(callback, studentID) {
-    var scheduleQuery = "getSchedule("+123+",X).";
+    var scheduleQuery = "getSchedule("+studentID+",X).";
     var outputSchedule = executeQuery(scheduleQuery);
     callback(outputSchedule);                         
   }
