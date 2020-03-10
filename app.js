@@ -202,7 +202,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let reply = `These are your courses for the next semester: ${allCourses}.`;
 				console.log("OUT OF PROLOG FILE WITH ANSWER WOHOOOOOOO");
 				sendTextMessage(sender, reply);
-				}, parameters['universityIDs']
+				//}, parameters['universityIDs']
+				}, parameters['object']
 			);
 			break;
 		case "course_prereq": 
