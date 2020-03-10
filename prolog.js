@@ -1,6 +1,5 @@
 
-var pl = require( "tau-prolog" ); // Import Tau Prolog core
-require( "tau-prolog/modules/lists" )( pl ); // Import and apply the lists module
+
 
 module.exports = {
 
@@ -12,6 +11,10 @@ module.exports = {
 }
 
 function executeQuery(thisQuery) {
+
+  var pl = require( "tau-prolog" ); // Import Tau Prolog core
+  
+  require( "tau-prolog/modules/lists" )( pl ); // Import and apply the lists module
 
   var session = pl.create( 1000 ); // Create a session
 
