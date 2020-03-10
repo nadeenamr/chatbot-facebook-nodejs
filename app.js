@@ -195,9 +195,12 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "schedule":
+			console.log("just entered HANDLEAPIAIACTION")
 			prolog.getStudentNextSchedule(function(allCourses){
+				console.log("PROLOG ANSWER IN APP.JS"+allCourses);
 				let reply = `These are your courses for the next semester: ${allCourses}.`;
-				sendTextMessage(sender, reply)
+				console.log("OUT OF PROLOG FILE WITH ANSWER WOHOOOOOOO");
+				sendTextMessage(sender, reply);
 				}, parameters['studentID']
 			);
 			break;
