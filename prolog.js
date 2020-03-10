@@ -1,8 +1,5 @@
-//'use strict';
-//const request = require('request');
-//const config = require('./config');
-//const pg = require('pg');
-//pg.defaults.ssl = true;
+'use strict';
+const request = require('request');
 
 var pl = require( "tau-prolog" ); // Import Tau Prolog core
 require( "tau-prolog/modules/lists" )( pl ); // Import and apply the lists module
@@ -10,7 +7,7 @@ require( "tau-prolog/modules/lists" )( pl ); // Import and apply the lists modul
 module.exports = {
 
   getStudentNextSchedule: function(callback, studentID) {
-    var scheduleQuery = "getSchedule($1,X).";
+    var scheduleQuery = "getSchedule("+studentID+",X).";
     var outputSchedule = executeQuery(scheduleQuery);
     callback(outputSchedule);                         
   }
