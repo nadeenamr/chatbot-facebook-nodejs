@@ -196,13 +196,16 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "getSchedule": //tested-=10/Mar/20
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
-				console.log("PARAMETERS ARE -----> "+contexts[0].parameters['studentID']);
-				prolog.getStudentNextSchedule(function(allCourses){
-					let reply = `These are your courses for the next semester: ${allCourses}.`;
-					console.log("OUT OF PROLOG FILE WITH ANSWER WOHOOOOOOO");
-					sendTextMessage(sender, reply);
-					}, contexts[0].parameters['studentID']
-				);
+				if(contexts[0].parameters['studentID']=="43-1293" || contexts[0].parameters['studentID']=="43-4861" || contexts[0].parameters['studentID']=="43-7148" || contexts[0].parameters['studentID']=="43-5295"){
+					prolog.getStudentNextSchedule(function(allCourses){
+						let reply = `These are your courses for the next semester: ${allCourses}.`;
+						console.log("OUT OF PROLOG FILE WITH ANSWER WOHOOOOOOO");
+						sendTextMessage(sender, reply);
+						}, contexts[0].parameters['studentID']
+					);
+				}else{
+					sendTextMessage(sender, "Sorry, you are not an advising student. This service is only available to advising and probation students.");
+				}
 			}
 			break;
 		case "course_prereq": 
