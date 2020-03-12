@@ -37,7 +37,6 @@ if(!config.PG_CONFIG){ //postgresql config object
 	throw new Error('missing PG_CONFIG');
 }
 
-
 app.set('port', (process.env.PORT || 5000))
 
 //verify request came from facebook
@@ -56,11 +55,7 @@ app.use(bodyParser.urlencoded({
 // Process application/json
 app.use(bodyParser.json())
 
-
-const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
-	language: "en",
-	requestSource: "fb"
-});
+const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {language: "en", requestSource: "fb"});
 const sessionIds = new Map();
 const usersMap = new Map();
 
@@ -194,12 +189,14 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "user_welcome":
+
+			break;
 		case "getSchedule": //tested-=10/Mar/20
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
 				if(contexts[0].parameters['studentID']=="43-1293" || contexts[0].parameters['studentID']=="43-4861" || contexts[0].parameters['studentID']=="43-7148" || contexts[0].parameters['studentID']=="43-5295"){
 					prolog.getStudentNextSchedule(function(allCourses){
 						let reply = `These are your courses for the next semester: ${allCourses}.`;
-						console.log("OUT OF PROLOG FILE WITH ANSWER WOHOOOOOOO");
 						sendTextMessage(sender, reply);
 						}, contexts[0].parameters['studentID']
 					);
@@ -210,19 +207,21 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "course_prereq": 
 			courses.readCoursePrereqs(function(codes){
-				let allCoursesString = codes.join(", ");
-				let reply = `Prerequisite courses' codes are: ${allCoursesString}.`;
-				sendTextMessage(sender, reply)
-				}, parameters['courses']
-			);
+				if(codes==""){
+					sendTextMessage(sender, "This course has no prerequisites.");
+				}else{
+					let allCoursesString = codes.join(", ");
+					let reply = `Prerequisite courses' code(s) are: ${allCoursesString}.`;
+					sendTextMessage(sender, reply);
+				}
+			}, parameters['courses']);
 			break;
 		case "cs_sem_courses":
 			courses.readAllCSSemesterCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
 				let reply = `Course codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply)
-				}, parameters['semesters']
-			);
+				}, parameters['semesters']);
 			break;
 		case "dmet_sem_courses":
 			courses.readAllDMETSemesterCourses(function(allCourses){
@@ -230,8 +229,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let reply = `Course codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply)
 				console.log(parameters);
-				}, parameters['semesters']
-			);
+				}, parameters['semesters']);
 			break;
 		case "buy-iphone8":
 			colors.readUserColor(function(color){
@@ -695,8 +693,7 @@ function greetUserText(userId) {
 	let user = usersMap.get(userId);
 
 	sendTextMessage(userId, "Welcome " + user.first_name + '!' + 
-	'I can answer any of your questions concerning the advising system' + 
-	'and I can help you create a graducation plan. What can I help you with?');
+	'I can answer any questions you might have and offer support/advice for MET students. What can I help you with?');
 
 }
 
