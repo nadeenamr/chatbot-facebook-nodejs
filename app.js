@@ -189,13 +189,11 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
-		/*
 		case "welcomeUser":
 				console.log(sender+ " BEFORE GREETUSERTEXT METHODDD");
 				greetUserText(sender);
 				console.log(sender+ " SHOULD BE IN THE DATABASE!!!!");
 			break;
-		*/
 		case "getSchedule": //tested-=10/Mar/20
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
 				if(contexts[0].parameters['studentID']=="43-1293" || contexts[0].parameters['studentID']=="43-4861" || contexts[0].parameters['studentID']=="43-7148" || contexts[0].parameters['studentID']=="43-5295"){
