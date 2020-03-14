@@ -190,6 +190,7 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "user_welcome":
+				console.log(sender+ " BEFORE GREETUSERTEXT METHODDD");
 				greetUserText(sender);
 				console.log(sender+ " SHOULD BE IN THE DATABASE!!!!");
 			break;
