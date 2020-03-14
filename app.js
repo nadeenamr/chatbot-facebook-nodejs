@@ -212,6 +212,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				}else{
 					let allCoursesString = codes.join(", ");
 					let reply = `Prerequisite courses' code(s) are: ${allCoursesString}.`;
+					console.log("THIS IS THE SENDER ---> "+sender);
 					sendTextMessage(sender, reply);
 				}
 			}, parameters['courses']);
