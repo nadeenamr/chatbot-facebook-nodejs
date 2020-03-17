@@ -40,9 +40,9 @@ module.exports = {
                                         let sql = 'INSERT INTO users (facebook_id, first_name, last_name) VALUES ($1, $2, $3)';
                                         console.log('sql: ' + sql);
                                         client.query(sql, [userId, user.first_name, user.last_name ]);
-                                        callback([1,user.first_name]);
+                                        callback(["new",user.first_name]);
                                     }else{ //regular user
-                                        callback([0,user.first_name]);
+                                        callback(["old",user.first_name]);
                                     }
                                 }
                             });
