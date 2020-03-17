@@ -5,9 +5,7 @@ const pg = require('pg');
 pg.defaults.ssl = true;
 
 
-module.exports = {
-
-    newOrRegularUser: function(callback, userId){
+module.exports = function(callback, userId){
     
         //first read user firstname
         request({
@@ -62,6 +60,4 @@ module.exports = {
         });
     }
 
-
-}
 

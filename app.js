@@ -121,8 +121,6 @@ app.post('/webhook/', function (req, res) {
 	}
 });
 
-
-
 function setSessionAndUser(senderID){
 	if (!sessionIds.has(senderID)) {
 		sessionIds.set(senderID, uuid.v1());
@@ -134,8 +132,6 @@ function setSessionAndUser(senderID){
 		}, senderID);
 	}
 }
-
-
 
 function receivedMessage(event) {
 
