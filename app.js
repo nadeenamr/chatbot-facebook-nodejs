@@ -198,6 +198,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					}else{
 						reply = "Welcome back" + isRegular[1] + "! How can I help you today?"; 
 					}
+					console.log("REPLY ---> "+reply);
 					sendTextMessage(sender, reply);
 				}, sender);
 			break;
