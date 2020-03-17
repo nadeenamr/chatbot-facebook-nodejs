@@ -29,7 +29,7 @@ module.exports = {
                         }
                         var rows = [];
                         console.log('fetching user');
-                        client.query(`SELECT id FROM users WHERE facebook_id='${userId}' LIMIT 1`,
+                        client.query(`SELECT facebook_id FROM users WHERE facebook_id='${userId}' LIMIT 1`,
                             function(err, result) {
                                 console.log('query result ' + result);
                                 if (err) {
