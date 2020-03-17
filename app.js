@@ -11,6 +11,7 @@ const app = express();
 const uuid = require('uuid');
 const userData = require('./user');
 const colors = require('./colors');
+const users = require('./users');
 const courses = require('./courses');
 const prolog = require('./prolog');
 
@@ -190,9 +191,15 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "welcomeUser":
-				console.log(sender+ " BEFORE GREETUSERTEXT METHODDD");
-				greetUserText(sender);
-				console.log(sender+ " SHOULD BE IN THE DATABASE!!!!");
+				users.newOrRegularUser(function(isRegular){
+					let reply;
+					if(isRegular[0]==1){
+						reply = "Welcome " + isRegular[1].first_name + "! I can answer any questions you might have and offer support/advice for MET students. What can I help you with?"; 
+					}else{
+						reply = "Welcome back" + isRegular[1].first_name + "! How can I help you today?"; 
+					}
+					sendTextMessage(sender, reply);
+				}, sender);
 			break;
 		case "getSchedule": //tested-=10/Mar/20
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
