@@ -197,7 +197,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						reply = "Welcome " + isRegular[1] + "! I can answer any questions you might have and offer support/advice for MET students. What can I help you with?"; 
 					}else{
 						if(isRegular[0]=="old"){
-							reply = "Welcome back" + isRegular[1] + "! How can I help you today?"; 
+							reply = "Welcome back " + isRegular[1] + "! How can I help you today?"; 
 						}else{
 							reply = "OTHER!";
 						}
