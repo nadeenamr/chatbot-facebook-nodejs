@@ -190,6 +190,9 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "testing": 
+				sendGifMessage(sender);
+			break;
 		case "welcomeUser":
 				users.newOrRegularUser(function(isRegular){
 					let reply;
@@ -201,9 +204,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						}else{
 							reply = "OTHER!";
 						}
-						
 					}
-					console.log("REPLY ---> "+reply);
 					sendTextMessage(sender, reply);
 				}, sender);
 			break;
