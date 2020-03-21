@@ -28,12 +28,14 @@ module.exports = {
                             return console.error('Error acquiring client', err.stack);
                         }
                         var rows = [];
-                        client.query(`SELECT facebook_id FROM users WHERE facebook_id='${userId}' LIMIT 1`,
+                        client.query(`SELECT first_name FROM users WHERE facebook_id='${userId}' LIMIT 1`,
                             function(err, result) {
                                 if (err) {
                                     console.log('Query error: ' + err);
                                 } else {
                                     console.log("FIRST RESULT = "+result);
+                                    console.log(result.rows.length);
+                                    console.log(result.rows[0].first_name)
                                     if (result.rows.length === 0) { //first time user
                                         callback("new");
                                     }else{ //regular user
