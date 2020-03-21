@@ -35,15 +35,9 @@ module.exports = {
                                 } else {
                                     console.log("FIRST RESULT = "+result);
                                     if (result.rows.length === 0) { //first time user
-                                        let sql = 'INSERT INTO users (facebook_id, first_name, last_name) VALUES ($1, $2, $3)';
-                                        client.query(sql, [userId, user.first_name, user.last_name ]);
-                                        console.log(result.rows.length);
-                                        console.log("SECOND RESULT = "+result+" AND PRINT NEW");
-                                        callback(["new",user.first_name]);
+                                        callback("new");
                                     }else{ //regular user
-                                        console.log(result.rows.length);
-                                        console.log("SECOND RESULT = "+result+" AND PRINT OLD");
-                                        callback(["old",user.first_name]);
+                                        callback("old");
                                     }
                                 }
                             });
