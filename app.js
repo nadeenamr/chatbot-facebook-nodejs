@@ -9,9 +9,9 @@ const request = require('request');
 const pg = require('pg');
 const app = express();
 const uuid = require('uuid');
-//const userData = require('./user');
+const userData = require('./user');
 const colors = require('./colors');
-const users = require('./users');
+const students = require('./students');
 const courses = require('./courses');
 const prolog = require('./prolog');
 
@@ -58,7 +58,7 @@ app.use(bodyParser.json())
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {language: "en", requestSource: "fb"});
 const sessionIds = new Map();
-//const usersMap = new Map();
+const usersMap = new Map();
 
 // Index route
 app.get('/', function (req, res) {
@@ -121,7 +121,6 @@ app.post('/webhook/', function (req, res) {
 	}
 });
 
-/*
 function setSessionAndUser(senderID){
 	if (!sessionIds.has(senderID)) {
 		sessionIds.set(senderID, uuid.v1());
@@ -133,7 +132,6 @@ function setSessionAndUser(senderID){
 		}, senderID);
 	}
 }
-*/
 
 function receivedMessage(event) {
 
@@ -142,7 +140,7 @@ function receivedMessage(event) {
 	var timeOfMessage = event.timestamp;
 	var message = event.message;
 
-	//setSessionAndUser(senderID);
+	setSessionAndUser(senderID);
 	//console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
 	//console.log(JSON.stringify(message));
 
@@ -196,7 +194,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				sendGifMessage(sender);
 			break;
 		case "welcomeUser":
-				users.newOrRegularUser(function(isRegular){
+				students.newOrRegularUser(function(isRegular){
 					let reply;
 					if(isRegular=="new"){
 						reply = "Welcome! I can answer any questions you might have and offer support/advice for MET students. What can I help you with?"; 
@@ -707,7 +705,6 @@ function sendAccountLinking(recipientId) { // Send a message with the account li
 	callSendAPI(messageData);
 }
 
-/*
 function greetUserText(userId) {
 	
 	let user = usersMap.get(userId);
@@ -716,7 +713,6 @@ function greetUserText(userId) {
 	'I can answer any questions you might have and offer support/advice for MET students. What can I help you with?');
 
 }
-*/
 
 function callSendAPI(messageData) { // Call the Send API. The message data goes in the body. If successful, we'll get the message id in a response 
 	request({
@@ -757,7 +753,7 @@ function receivedPostback(event) {
 	var recipientID = event.recipient.id;
 	var timeOfPostback = event.timestamp;
 
-	//setSessionAndUser(senderID);
+	setSessionAndUser(senderID);
 	// The 'payload' param is a developer-defined field which is set in a postback 
 	// button for Structured Messages. 
 	var payload = event.postback.payload;

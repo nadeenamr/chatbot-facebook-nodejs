@@ -5,9 +5,7 @@ const pg = require('pg');
 pg.defaults.ssl = true;
 
 
-module.exports = {
-
-    newOrRegularUser: function(callback, userId){
+module.exports = function(callback, userId){
     
         //first read user firstname
         request({
@@ -28,22 +26,23 @@ module.exports = {
                             return console.error('Error acquiring client', err.stack);
                         }
                         var rows = [];
-                        client.query(`SELECT first_name FROM users WHERE facebook_id='${userId}' LIMIT 1`,
+                        client.query(`SELECT facebook_id FROM users WHERE facebook_id='${userId}' LIMIT 1`,
                             function(err, result) {
                                 if (err) {
                                     console.log('Query error: ' + err);
                                 } else {
-                                    console.log("FIRST RESULT = "+result);
-                                    console.log(result.rows.length);
-                                    console.log(result.rows[0].first_name)
-                                    if (result.rows.length === 0) { //first time user
-                                        callback("new");
-                                    }else{ //regular user
-                                        callback("old");
+                                    if (result.rows.length === 0) {
+                                        let sql = 'INSERT INTO users (facebook_id, first_name, last_name) VALUES ($1, $2, $3)';
+                                        client.query(sql,
+                                            [
+                                                userId,
+                                                user.first_name,
+                                                user.last_name
+                                            ]);
                                     }
                                 }
                             });
-    
+
                     });
                     pool.end();
     
@@ -57,6 +56,4 @@ module.exports = {
         });
     }
 
-
-}
 
