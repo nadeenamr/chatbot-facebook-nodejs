@@ -9,7 +9,7 @@ const request = require('request');
 const pg = require('pg');
 const app = express();
 const uuid = require('uuid');
-const userData = require('./user');
+//const userData = require('./user');
 const colors = require('./colors');
 const users = require('./users');
 const courses = require('./courses');
@@ -58,7 +58,7 @@ app.use(bodyParser.json())
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {language: "en", requestSource: "fb"});
 const sessionIds = new Map();
-const usersMap = new Map();
+//const usersMap = new Map();
 
 // Index route
 app.get('/', function (req, res) {
@@ -121,6 +121,7 @@ app.post('/webhook/', function (req, res) {
 	}
 });
 
+/*
 function setSessionAndUser(senderID){
 	if (!sessionIds.has(senderID)) {
 		sessionIds.set(senderID, uuid.v1());
@@ -132,6 +133,7 @@ function setSessionAndUser(senderID){
 		}, senderID);
 	}
 }
+*/
 
 function receivedMessage(event) {
 
@@ -705,6 +707,7 @@ function sendAccountLinking(recipientId) { // Send a message with the account li
 	callSendAPI(messageData);
 }
 
+/*
 function greetUserText(userId) {
 	
 	let user = usersMap.get(userId);
@@ -713,6 +716,7 @@ function greetUserText(userId) {
 	'I can answer any questions you might have and offer support/advice for MET students. What can I help you with?');
 
 }
+*/
 
 function callSendAPI(messageData) { // Call the Send API. The message data goes in the body. If successful, we'll get the message id in a response 
 	request({
