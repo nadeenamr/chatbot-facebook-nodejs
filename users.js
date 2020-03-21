@@ -33,14 +33,16 @@ module.exports = {
                                 if (err) {
                                     console.log('Query error: ' + err);
                                 } else {
-                                    console.log("FIRST RESULT = "+result.facebook_id);
+                                    console.log("FIRST RESULT = "+result);
                                     if (result.rows.length === 0) { //first time user
                                         let sql = 'INSERT INTO users (facebook_id, first_name, last_name) VALUES ($1, $2, $3)';
                                         client.query(sql, [userId, user.first_name, user.last_name ]);
-                                        console.log("SECOND RESULT = "+result.facebook_id+" AND PRINT NEW");
+                                        console.log(result.rows.length);
+                                        console.log("SECOND RESULT = "+result+" AND PRINT NEW");
                                         callback(["new",user.first_name]);
                                     }else{ //regular user
-                                        console.log("SECOND RESULT = "+result.facebook_id+" AND PRINT OLD");
+                                        console.log(result.rows.length);
+                                        console.log("SECOND RESULT = "+result+" AND PRINT OLD");
                                         callback(["old",user.first_name]);
                                     }
                                 }
