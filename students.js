@@ -58,7 +58,7 @@ module.exports = {
         });
     },
 
-    takingStudentID: function(studentID, userId) {
+    saveStudentID: function(studentID, userId) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
@@ -85,7 +85,7 @@ module.exports = {
         pool.end();
     },
 
-    takingStudentUsername: function(studentUsername, userId) {
+    saveStudentUsername: function(studentUsername, userId) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
