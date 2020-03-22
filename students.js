@@ -35,7 +35,6 @@ module.exports = {
                                 } else {
                                     console.log("FIRST RESULT = "+result);
                                     console.log(result.rows.length);
-                                    console.log(result.rows[0].first_name)
                                     if (result.rows.length === 0) { //first time user
                                         callback("new");
                                     }else{ //regular user
