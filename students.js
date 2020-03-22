@@ -56,6 +56,60 @@ module.exports = {
             }
     
         });
+    },
+
+    takingStudentID: function(studentID, userId) {
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }
+
+            let sql1 = `SELECT student_id FROM public.students WHERE facebook_id='${userId}' LIMIT 1`;
+            client.query(sql1,
+                    function(err, result) {
+                        if (err) {
+                            console.log('Query error: ' + err);
+                        } else {
+                            let sql;
+                            if (result.rows.length === 0) {
+                                sql = 'INSERT INTO public.students (student_id) VALUES ($1) WHERE facebook_id=$2';
+                            } else {
+                                sql = 'UPDATE public.students SET student_id=$1 WHERE facebook_id=$2';
+                            }
+                            client.query(sql, [studentID,userId]);
+                        }
+                    }
+                    );
+        });
+        pool.end();
+    },
+
+    takingStudentUsername: function(studentUsername, userId) {
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }
+
+            let sql1 = `SELECT student_id FROM public.students WHERE facebook_id='${userId}' LIMIT 1`;
+            client.query(sql1,
+                    function(err, result) {
+                        if (err) {
+                            console.log('Query error: ' + err);
+                        } else {
+                            let sql;
+                            if (result.rows.length === 0) {
+                                sql = 'INSERT INTO public.students (student_username) VALUES ($1) WHERE facebook_id=$2';
+                            } else {
+                                sql = 'UPDATE public.students SET student_username=$1 WHERE facebook_id=$2';
+                            }
+                            client.query(sql, [studentUsername,userId]);
+                        }
+                    }
+                    );
+        });
+        pool.end();
     }
 
 

@@ -197,7 +197,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				students.newOrRegularUser(function(isRegular){
 					let reply;
 					if(isRegular[0]=="new"){
-						reply = "Welcome "+ isRegular[1] +"! I can answer any questions you might have and offer support/advice for MET students. What can I help you with?"; 
+						reply = "Welcome "+ isRegular[1] +"! I can answer any questions you might have and offer support/advice for MET students. Please enter your GUC ID so I am able to access your records."; 
 					}else{
 						if(isRegular[0]=="old"){
 							reply = "Welcome back "+ isRegular[1] +"! How can I help you today?"; 
@@ -207,6 +207,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					}
 					sendTextMessage(sender, reply);
 				}, sender);
+			break;
+		case "takingStudentID":
+			students.saveStudentID(contexts[0].parameters['studentID'], sender);
+			sendTextMessage(sender, "Amazing! Last thing I need is your GUC username.");
+			break;
+		case "takingStudentUsername":
+			students.saveStudentUsername(contexts[0].parameters['studentUsername'], sender);
+			sendTextMessage(sender, "Perfect! I have everything I need. Tell me, how can I be of service to you?");
 			break;
 		case "getSchedule": //tested-=10/Mar/20
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
