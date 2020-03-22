@@ -194,7 +194,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				sendGifMessage(sender);
 			break;
 		case "welcomeUser":
-				students.newOrRegularUser(function(isRegular){
+				students.newOrRegularStudent(function(isRegular){
 					let reply;
 					if(isRegular[0]=="new"){
 						reply = "Welcome "+ isRegular[1] +"! I can answer any questions you might have and offer support/advice for MET students. Please enter your GUC ID so I am able to access your records."; 

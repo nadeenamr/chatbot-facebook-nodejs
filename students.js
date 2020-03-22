@@ -7,7 +7,7 @@ pg.defaults.ssl = true;
 
 module.exports = {
 
-    newOrRegularUser: function(callback, userId){
+    newOrRegularStudent: function(callback, userId){
     
         //first read user firstname
         request({
