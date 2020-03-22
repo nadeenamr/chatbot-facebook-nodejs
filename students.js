@@ -33,12 +33,14 @@ module.exports = {
                                 if (err) {
                                     console.log('Query error: ' + err);
                                 } else {
-                                    console.log("FIRST RESULT = "+result);
+                                    console.log("FIRST RESULT = "+user.first_name);
                                     console.log(result.rows.length);
                                     if (result.rows.length === 0) { //first time user
-                                        callback("new");
+                                        let sql = 'INSERT INTO students (facebook_id, first_name, last_name) VALUES ($1, $2, $3)';
+                                        client.query(sql, [ userId, user.first_name, user.last_name ]);
+                                        callback(["new",result.rows[0].first_name]);    
                                     }else{ //regular user
-                                        callback("old");
+                                        callback(["old",result.rows[0].first_name]);
                                     }
                                 }
                             });
