@@ -196,11 +196,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "welcomeUser":
 				students.newOrRegularUser(function(isRegular){
 					let reply;
-					if(isRegular=="new"){
-						reply = "Welcome! I can answer any questions you might have and offer support/advice for MET students. What can I help you with?"; 
+					if(isRegular[0]=="new"){
+						reply = "Welcome "+ isRegular[1] +"! I can answer any questions you might have and offer support/advice for MET students. What can I help you with?"; 
 					}else{
-						if(isRegular=="old"){
-							reply = "Welcome back! How can I help you today?"; 
+						if(isRegular[0]=="old"){
+							reply = "Welcome back "+ isRegular[1] +"! How can I help you today?"; 
 						}else{
 							reply = "OTHER!";
 						}
