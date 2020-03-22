@@ -100,9 +100,9 @@ module.exports = {
                         } else {
                             let sql;
                             if (result.rows.length === 0) {
-                                sql = `INSERT INTO students (student_username) VALUES '${studentUsername}' WHERE facebook_id='${userId}'`;
+                                sql = `INSERT INTO students (student_username) VALUES ($1) WHERE facebook_id=$2`;
                             } else {
-                                sql = `UPDATE students SET student_username='${studentUsername}' WHERE facebook_id='${userId}'`;
+                                sql = `UPDATE students SET student_username=$1 WHERE facebook_id=$2`;
                             }
                             client.query(sql, [studentUsername,userId]);
                         }
