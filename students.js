@@ -92,7 +92,7 @@ module.exports = {
                 return console.error('Error acquiring client', err.stack);
             }
 
-            let sql1 = `SELECT student_id FROM public.students WHERE facebook_id='${userId}' LIMIT 1`;
+            let sql1 = `SELECT student_id FROM students WHERE facebook_id='${userId}' LIMIT 1`;
             client.query(sql1,
                     function(err, result) {
                         if (err) {
@@ -100,9 +100,9 @@ module.exports = {
                         } else {
                             let sql;
                             if (result.rows.length === 0) {
-                                sql = 'INSERT INTO public.students (student_username) VALUES ($1) WHERE facebook_id=$2';
+                                sql = `INSERT INTO students (student_username) VALUES '${studentUsername}' WHERE facebook_id='${userId}'`;
                             } else {
-                                sql = 'UPDATE public.students SET student_username=$1 WHERE facebook_id=$2';
+                                sql = `UPDATE students SET student_username='${studentUsername}' WHERE facebook_id='${userId}'`;
                             }
                             client.query(sql, [studentUsername,userId]);
                         }

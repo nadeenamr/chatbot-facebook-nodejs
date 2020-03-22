@@ -210,7 +210,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "takingStudentID":
 			students.saveStudentID(contexts[0].parameters['studentID'], sender);
-			sendTextMessage(sender, "Amazing! Last thing I need is your GUC username.");
+			sendTextMessage(sender, "Amazing! I also need is your GUC username");
 			break;
 		case "takingStudentUsername":
 			students.saveStudentUsername(contexts[0].parameters['studentUsername'], sender);
