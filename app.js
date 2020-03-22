@@ -209,12 +209,16 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				}, sender);
 			break;
 		case "takingStudentID":
-			students.saveStudentID(contexts[0].parameters['studentID'], sender);
-			sendTextMessage(sender, "Amazing! I also need is your GUC username");
+			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
+				students.saveStudentID(contexts[0].parameters['studentID'], sender);
+				sendTextMessage(sender, "Amazing! I also need is your GUC username");
+			}
 			break;
 		case "takingStudentUsername":
-			students.saveStudentUsername(contexts[0].parameters['studentUsername'], sender);
-			sendTextMessage(sender, "Perfect! I have everything I need. Tell me, how can I be of service to you?");
+			if(isDefined(contexts[0])&&contexts[0].parameters['studentUsername']){
+				students.saveStudentUsername(contexts[0].parameters['studentUsername'], sender);
+				sendTextMessage(sender, "Perfect! I have everything I need. Tell me, how can I be of service to you?");
+			}
 			break;
 		case "getSchedule": //tested-=10/Mar/20
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
