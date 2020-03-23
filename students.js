@@ -129,6 +129,7 @@ module.exports = {
                             let history = [];
                             for (let i = 0; i < result.rows.length; i++) {
                                 codes.push(result.rows[i].studentHistory);
+                                console.log(result.rows[i].studentHistory);
                             }
                             callback(history);
                         };
