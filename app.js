@@ -197,15 +197,19 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "testing": 
 				//sendGifMessage(sender);
 				students.getStudentHistory(function(allHistory){
-					let reply = `Here is the output from 43-7148 courses taken: ${allHistory}.`;
-					sendTextMessage(sender, reply);
+					
+					
 
-					prolog.getStudentNextSchedule(function(allCourses){
+					let studentHistory = allHistory.join("\n\n");
+					let reply = `${studentHistory}`;
+					sendTextMessage(sender, reply);
+					/*
+					prolog.getStudentNextScheduleWithID(function(allCourses){
 						reply = `These are your courses for the next semester: ${allCourses}.`;
 						sendTextMessage(sender, reply);
-						}, "43-1293"
+						}, "43-1293", allHistory
 					);
-
+					*/
 					}, "43-7148"
 				);
 				//sendTextMessage(sender, getHistory(sender));

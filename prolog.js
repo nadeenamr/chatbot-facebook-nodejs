@@ -502,6 +502,12 @@ module.exports = {
     var scheduleQuery = "getSchedule("+studentID+",X).";
     var outputSchedule = executeQuery(program, scheduleQuery);
     callback(outputSchedule);                         
+  },
+
+  getStudentNextScheduleWithID: function(callback, studentID, studentHistory) {
+    var scheduleQuery = "getSchedule("+studentID+",X).";
+    var outputSchedule = executeQuery(program+"\n\n"+studentHistory, scheduleQuery);
+    callback(outputSchedule);                         
   }
   
 }
