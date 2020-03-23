@@ -191,7 +191,12 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "testing": 
-				sendGifMessage(sender);
+				//sendGifMessage(sender);
+				students.getStudentHistory(function(allHistory){
+					let reply = `Here is the output from 43-7148 courses taken: ${allHistory}.`;
+					sendTextMessage(sender, reply);
+					}, "43-7148"
+				);
 			break;
 		case "welcomeUser":
 				students.newOrRegularStudent(function(isRegular){

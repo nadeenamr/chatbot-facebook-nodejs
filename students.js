@@ -110,6 +110,31 @@ module.exports = {
                     );
         });
         pool.end();
+    },
+
+    getStudentHistory: function(callback, studentID) {
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }
+            client .query(
+                    `select concat(student_id,',',course_id,',',grade) as "StudentHistory" from taken_courses where student_id='$1'`,
+                    [studentID],
+                    function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            callback('ERROR ERROR');
+                        } else {
+                            let history = [];
+                            for (let i = 0; i < result.rows.length; i++) {
+                                codes.push(result.rows[i].studentHistory);
+                            }
+                            callback(history);
+                        };
+                    });
+        });
+        pool.end();
     }
 
 
