@@ -128,7 +128,7 @@ module.exports = {
                         } else {
                             let history = [];
                             for (let i = 0; i < result.rows.length; i++) {
-                                codes.push(result.rows[i]);
+                                history.push(result.rows[i]);
                                 console.log(result.rows[i]);
                             }
                             callback(history);
