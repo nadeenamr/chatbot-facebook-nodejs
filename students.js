@@ -123,7 +123,7 @@ module.exports = {
                     function(err, result) {
                         if (err) {
                             console.log(err);
-                            console.log(result.rows[0].studentHistory);
+                            console.log(result);
                             callback('ERROR ERROR');
                         } else {
                             let history = [];
