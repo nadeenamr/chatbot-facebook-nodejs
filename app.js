@@ -272,14 +272,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "buy-iphone8":
 			colors.readUserColor(function(color){
-				let reply;
 				if(color==''){
-					reply = `In what color would you like to have it?`;
+					sendTextMessage(sender, `In what color would you like to have it?`);
 				}else{
-					reply = `Would you like to order it in your favourite color ${color}?`;
-				}
-				sendTextMessage(sender, reply);
-				}, sender
+					sendTextMessage(sender, `Would you like to order it in your favourite color ${color}?`);
+				}}, sender
 			)
 			break;
 		case "iphone8_colors.favourite":
