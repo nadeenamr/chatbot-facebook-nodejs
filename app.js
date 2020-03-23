@@ -188,17 +188,20 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 	console.log("Received echo for message %s and app %d with metadata %s", messageId, appId, metadata);
 }
 
+function getHistory(sender){
+	return "FUNCTION WORKS and this is sender : "+sender;
+}
+
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "testing": 
 				//sendGifMessage(sender);
-				let reply;
 				students.getStudentHistory(function(allHistory){
-					reply = `Here is the output from 43-7148 courses taken: ${allHistory}.`;
+					let reply = `Here is the output from 43-7148 courses taken: ${allHistory}.`;
 					sendTextMessage(sender, reply);
 					}, "43-7148"
 				);
-				sendTextMessage(sender, "OUTSIDE MESSAGE "+reply);
+				sendTextMessage(sender, getHistory(sender));
 			break;
 		case "welcomeUser":
 				students.newOrRegularStudent(function(isRegular){
