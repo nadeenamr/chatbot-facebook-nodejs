@@ -112,8 +112,7 @@ module.exports = {
         pool.end();
     },
 
-    getStudentHistory: function(studentID) {
-    //getStudentHistory: function(callback, studentID) {
+    getStudentHistory: function(callback, studentID) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
@@ -124,12 +123,10 @@ module.exports = {
                     function(err, result) {
                         if (err) {
                             console.log(err);
-                            console.log(result);
-                            //callback('ERROR ERROR');
+                            callback('ERROR ERROR');
                         } else {
                             let history = [];
                             for (let i = 0; i < result.rows.length; i++) {
-                                //passed courses
                                 if(result.rows[i].grade=="Abs"){
                                     history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",a).");
                                 }else{
@@ -140,8 +137,7 @@ module.exports = {
                                     }
                                 }
                             }
-                            //callback(history);
-                            return history;
+                            callback(history);
                         };
                     });
         });
