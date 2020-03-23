@@ -199,9 +199,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					}, "43-7148"
 				);
 				*/
-				students.getStudentHistory(allHistory,"43-7148")
-				let reply = `Here is the output from 43-7148 courses taken: ${allHistory}.`;
-				sendTextMessage(sender, reply);
+				students.getStudentHistory(allHistory,"43-7148");
+				sendTextMessage(sender, `Here is the output from 43-7148 courses taken: ${allHistory}.`);
 			break;
 		case "welcomeUser":
 				students.newOrRegularStudent(function(isRegular){
@@ -281,8 +280,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "iphone8_colors.favourite":
 			colors.updateUserColor(parameters['color'], sender);
-			let reply = `Oh, I like it too! I'll remember that.`;
-			sendTextMessage(sender, reply);
+			sendTextMessage(sender, `Oh, I like it too! I'll remember that.`);
 			break;
 		case "iphone-colors":
 			colors.readAllColors(function(allColors){
