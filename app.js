@@ -197,6 +197,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					sendTextMessage(sender, reply);
 					}, "43-7148"
 				);
+				sendTextMessage(sender, "OUTSIDE MESSAGE");
 			break;
 		case "welcomeUser":
 				students.newOrRegularStudent(function(isRegular){
