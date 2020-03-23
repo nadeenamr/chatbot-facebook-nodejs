@@ -118,8 +118,8 @@ module.exports = {
             if (err) {
                 return console.error('Error acquiring client', err.stack);
             }
-            let sql = `SELECT student_id,course_id,grade FROM taken_courses WHERE student_id='$1'`;
-            client.query(sql,[studentID],
+            let sql = `SELECT student_id,course_id,grade FROM taken_courses WHERE student_id='${studentID}'`;
+            client.query(sql,
                     function(err, result) {
                         if (err) {
                             console.log(err);
