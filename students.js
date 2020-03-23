@@ -119,7 +119,7 @@ module.exports = {
                 return console.error('Error acquiring client', err.stack);
             }
             client .query(
-                    `select concat(student_id,',',course_id,',',grade) as "StudentHistory" from taken_courses where student_id='$1'`,
+                    `select concat(student_id,',',course_id,',',grade) as "studentHistory" from taken_courses where student_id='$1'`,
                     [studentID],
                     function(err, result) {
                         if (err) {
