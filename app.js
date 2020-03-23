@@ -203,6 +203,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					}, "43-7148"
 				);
 				*/
+				console.log("RETURNEDDD "+students.getStudentHistory())
 				sendTextMessage(sender, students.getStudentHistory());
 			break;
 		case "welcomeUser":
