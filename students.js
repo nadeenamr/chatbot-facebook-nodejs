@@ -128,7 +128,18 @@ module.exports = {
                         } else {
                             let history = [];
                             for (let i = 0; i < result.rows.length; i++) {
-                                history.push(result.rows[i]);
+                                //passed courses
+                                if(result.rows[i].grade=="Abs"){
+                                    history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",a).");
+                                }else{
+                                    if(result.rows[i].grade=="FA" || result.rows[i].grade=="Ff"){
+                                        history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",o).");
+                                    }else{
+                                        history.push("passed_course("+result.rows[i].student_id+","+result.rows[i].course_id+").");
+                                    }
+                                }
+                                //failed courses
+                                history.push(result.rows[i].student_id+","+result.rows[i].course_id);
                                 console.log(result.rows[i]);
                             }
                             callback(history);
