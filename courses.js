@@ -67,9 +67,8 @@ module.exports = {
             }
             client
                 .query(
-                    `SELECT CONCAT(student_id,',',course_id,',',grade) AS "studentHistory" FROM taken_courses WHERE student_id='$1'`,
-                    //'SELECT prereq_code FROM public.prerequisites WHERE course_code=$1',
-                    [40-2138],
+                    'SELECT prereq_code FROM public.prerequisites WHERE course_code=$1',
+                    [course_code],
                     function(err, result) {
                         if (err) {
                             console.log(err);
@@ -77,7 +76,7 @@ module.exports = {
                         } else {
                             let codes = [];
                             for (let i = 0; i < result.rows.length; i++) {
-                                codes.push(result.rows[i].studentHistory);
+                                codes.push(result.rows[i].prereq_code);
                             }
                             callback(codes);
                         };

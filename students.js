@@ -118,7 +118,7 @@ module.exports = {
             if (err) {
                 return console.error('Error acquiring client', err.stack);
             }
-            let sql = `SELECT CONCAT(student_id,',',course_id,',',grade) AS "studentHistory" FROM taken_courses WHERE student_id='${studentID}'`;
+            let sql = `SELECT student_id,course_id,grade FROM taken_courses WHERE student_id='$1'`;
             client.query(sql,[studentID],
                     function(err, result) {
                         if (err) {
@@ -128,8 +128,8 @@ module.exports = {
                         } else {
                             let history = [];
                             for (let i = 0; i < result.rows.length; i++) {
-                                codes.push(result.rows[i].studentHistory);
-                                console.log(result.rows[i].studentHistory);
+                                codes.push(result.rows[i]);
+                                console.log(result.rows[i]);
                             }
                             callback(history);
                         };
