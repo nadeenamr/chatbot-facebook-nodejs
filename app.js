@@ -199,9 +199,16 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				students.getStudentHistory(function(allHistory){
 					let reply = `Here is the output from 43-7148 courses taken: ${allHistory}.`;
 					sendTextMessage(sender, reply);
+
+					prolog.getStudentNextSchedule(function(allCourses){
+						reply = `These are your courses for the next semester: ${allCourses}.`;
+						sendTextMessage(sender, reply);
+						}, "43-1293"
+					);
+
 					}, "43-7148"
 				);
-				sendTextMessage(sender, getHistory(sender));
+				//sendTextMessage(sender, getHistory(sender));
 			break;
 		case "welcomeUser":
 				students.newOrRegularStudent(function(isRegular){
