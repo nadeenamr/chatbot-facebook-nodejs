@@ -112,7 +112,8 @@ module.exports = {
         pool.end();
     },
 
-    getStudentHistory: function(callback, studentID) {
+    getStudentHistory: function(studentID) {
+    //getStudentHistory: function(callback, studentID) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
@@ -124,7 +125,7 @@ module.exports = {
                         if (err) {
                             console.log(err);
                             console.log(result);
-                            callback('ERROR ERROR');
+                            //callback('ERROR ERROR');
                         } else {
                             let history = [];
                             for (let i = 0; i < result.rows.length; i++) {
@@ -139,7 +140,8 @@ module.exports = {
                                     }
                                 }
                             }
-                            callback(history);
+                            //callback(history);
+                            return history;
                         };
                     });
         });

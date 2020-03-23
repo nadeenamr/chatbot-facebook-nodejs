@@ -196,12 +196,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "testing": 
 				//sendGifMessage(sender);
+				/*
 				students.getStudentHistory(function(allHistory){
 					let reply = `Here is the output from 43-7148 courses taken: ${allHistory}.`;
 					sendTextMessage(sender, reply);
 					}, "43-7148"
 				);
-				sendTextMessage(sender, getHistory(sender));
+				*/
+				sendTextMessage(sender, students.getStudentHistory());
 			break;
 		case "welcomeUser":
 				students.newOrRegularStudent(function(isRegular){
