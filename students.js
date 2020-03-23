@@ -118,7 +118,7 @@ module.exports = {
             if (err) {
                 return console.error('Error acquiring client', err.stack);
             }
-            let sql = `select concat(student_id,',',course_id,',',grade) as "studentHistory" from taken_courses where student_id='$1'`;
+            let sql = `SELECT CONCAT(student_id,',',course_id,',',grade) AS "studentHistory" FROM taken_courses WHERE student_id='$1'`;
             client.query(sql,[studentID],
                     function(err, result) {
                         if (err) {
