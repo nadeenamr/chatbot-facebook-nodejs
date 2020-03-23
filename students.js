@@ -138,9 +138,6 @@ module.exports = {
                                         history.push("passed_course("+result.rows[i].student_id+","+result.rows[i].course_id+").");
                                     }
                                 }
-                                //failed courses
-                                history.push(result.rows[i].student_id+","+result.rows[i].course_id);
-                                console.log(result.rows[i]);
                             }
                             callback(history);
                         };
