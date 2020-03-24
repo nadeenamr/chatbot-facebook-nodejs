@@ -161,7 +161,8 @@ module.exports = {
                                                                     }
                                                                 }
                                                                 let studentHistory = history.join("\n");
-                                                                callback([studentID,studentInfo+"\n"+studentHistory]);
+                                                                let transcript = studentInfo+"\n"+studentHistory;
+                                                                callback([studentID,transcript.toLowerCase()]);
                                                             }
                                                             
                                                         };
