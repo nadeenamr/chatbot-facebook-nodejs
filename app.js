@@ -232,19 +232,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				sendTextMessage(sender, "Perfect! I have everything I need. Tell me, how can I be of service to you?");
 			}
 			break;
-		case "getSchedule": //tested-=10/Mar/20
-			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
-				if(contexts[0].parameters['studentID']=="43-1293" || contexts[0].parameters['studentID']=="43-4861" || contexts[0].parameters['studentID']=="43-7148" || contexts[0].parameters['studentID']=="43-5295"){
-					prolog.getStudentNextSchedule(function(allCourses){
-						let reply = `These are your courses for the next semester: ${allCourses}.`;
-						sendTextMessage(sender, reply);
-						}, contexts[0].parameters['studentID']
-					);
-				}else{
-					sendTextMessage(sender, "Sorry, you are not an advising student. This service is only available to advising and probation students.");
-				}
-			}
-			break;
 		case "course_prereq": 
 			courses.readCoursePrereqs(function(codes){
 				if(codes==""){
