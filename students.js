@@ -2,6 +2,7 @@
 const request = require('request');
 const config = require('./config');
 const pg = require('pg');
+const prolog = require('./prolog');
 pg.defaults.ssl = true;
 
 
@@ -144,7 +145,7 @@ module.exports = {
         pool.end();
     },
 
-    getStudentInfo: function(callback, userId) {
+    getStudentTranscript: function(callback, userId) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
@@ -163,22 +164,46 @@ module.exports = {
                                 function(err, result) {
                                     if (err) {
                                         console.log(err);
-                                        callback('ERROR ERROR');
+                                        callback('ERROR WITH STUDENT INFO');
                                     } else {
                                         if(""+result=="undefined"){
                                             callback("Answer is undefined.");
                                         }else{
-                                            let info = "student("+studentID+","+result.rows[0].student_username+","+result.rows[0].student_major+","+result.rows[0].student_semester+","+result.rows[0].student_gpa+").";
-                                            callback(info);
+                                            let studentInfo = "student("+studentID+","+result.rows[0].student_username+","+result.rows[0].student_major+","+result.rows[0].student_semester+","+result.rows[0].student_gpa+").";
+                                            //callback(info);
+
+                                            let sql2 = `SELECT student_id,course_id,grade FROM taken_courses WHERE student_id='${studentID}'`;
+                                            client.query(sql2,
+                                                    function(err, result) {
+                                                        if (err) {
+                                                            console.log(err);
+                                                            callback('ERROR WITH STUDENT HISTORY');
+                                                        } else {
+                                                            let history = [];
+                                                            for (let i = 0; i < result.rows.length; i++) {
+                                                                if(result.rows[i].grade=="Abs"){
+                                                                    history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",a).");
+                                                                }else{
+                                                                    if(result.rows[i].grade=="FA" || result.rows[i].grade=="Ff"){
+                                                                        history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",o).");
+                                                                    }else{
+                                                                        history.push("passed_course("+result.rows[i].student_id+","+result.rows[i].course_id+").");
+                                                                    }
+                                                                }
+                                                            }
+                                                            let studentHistory = history.join("\n");
+                                                            callback(studentInfo+"\n"+studentHistory);
+                                                        };
+                                                    });
+
                                         }
                                         
                                     };
                                 }
                         );
 
-                            //callback(history);
-                        };
-                    }
+                    };
+                }
             );
         });
         pool.end();
