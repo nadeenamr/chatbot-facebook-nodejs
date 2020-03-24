@@ -165,8 +165,13 @@ module.exports = {
                                         console.log(err);
                                         callback('ERROR ERROR');
                                     } else {
-                                        let info = "student("+studentID+","+result.rows[0].student_username+","+result.rows[0].student_major+","+result.rows[0].student_semester+","+result.rows[0].student_gpa+").";
-                                        callback(info);
+                                        if(""+result=="undefined"){
+                                            callback("Answer is undefined.");
+                                        }else{
+                                            let info = "student("+studentID+","+result.rows[0].student_username+","+result.rows[0].student_major+","+result.rows[0].student_semester+","+result.rows[0].student_gpa+").";
+                                            callback(info);
+                                        }
+                                        
                                     };
                                 }
                         );
