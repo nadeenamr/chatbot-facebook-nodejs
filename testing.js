@@ -414,8 +414,27 @@ var program = // Load the program
 
         "filterTill(Lang,HighestTakenCourse,[H|T],TT):- lang_course(Lang,ThisLevel,H,_), lang_course(Lang,Level,HighestTakenCourse,_), ThisLevel=<Level, filterTill(Lang,HighestTakenCourse,T,TT). ";
 
-
-session.consult(program);
+let myString = "student(46-5295,ahmed.mohamed,CS,3,2).\n"+
+"passed_course(46-5295,DE303).\n"+
+"passed_course(46-5295,CPS402).\n"+
+"passed_course(46-5295,AS102).\n"+
+"passed_course(46-5295,SM101).\n"+
+"passed_course(46-5295,CHEMp102).\n"+
+"passed_course(46-5295,CHEMt102).\n"+
+"passed_course(46-5295,ENGD301).\n"+
+"passed_course(46-5295,CSEN102).\n"+
+"passed_course(46-5295,MATH103).\n"+
+"passed_course(46-5295,PHYS101).\n"+
+"failed_course(46-5295,CSEN202,o).\n"+
+"failed_course(46-5295,MATH203,a).\n"+
+"passed_course(46-5295,PHYS202).\n"+
+"passed_course(46-5295,EDPT201).\n"+
+"passed_course(46-5295,CSEN301).\n"+
+"passed_course(46-5295,ELCT201).\n"+
+"passed_course(46-5295,ELCT301).\n"+
+"passed_course(46-5295,PHYSp301).\n"+
+"passed_course(46-5295,PHYSt301).\n";
+session.consult(myString+"\n\n"+program);
 
 // Query the goal
 session.query("getSchedule(43-7148,X).");
