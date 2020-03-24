@@ -202,24 +202,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			);
 			break;
 		case "testing": 
-				//sendGifMessage(sender);
-				students.getStudentHistory(function(allHistory){
-					
-					
-
-					let studentHistory = allHistory.join("\n");
-					let reply = `${studentHistory}`;
-					sendTextMessage(sender, reply);
-					/*
-					prolog.getStudentNextScheduleWithID(function(allCourses){
-						reply = `These are your courses for the next semester: ${allCourses}.`;
-						sendTextMessage(sender, reply);
-						}, "43-1293", allHistory
-					);
-					*/
-					}, "43-7148"
-				);
-				//sendTextMessage(sender, getHistory(sender));
+				sendGifMessage(sender);
 			break;
 		case "welcomeUser":
 				students.newOrRegularStudent(function(isRegular){

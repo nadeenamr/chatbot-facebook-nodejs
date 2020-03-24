@@ -113,38 +113,6 @@ module.exports = {
         pool.end();
     },
 
-    getStudentHistory: function(callback, studentID) {
-        var pool = new pg.Pool(config.PG_CONFIG);
-        pool.connect(function(err, client, done) {
-            if (err) {
-                return console.error('Error acquiring client', err.stack);
-            }
-            let sql = `SELECT student_id,course_id,grade FROM taken_courses WHERE student_id='${studentID}'`;
-            client.query(sql,
-                    function(err, result) {
-                        if (err) {
-                            console.log(err);
-                            callback('ERROR ERROR');
-                        } else {
-                            let history = [];
-                            for (let i = 0; i < result.rows.length; i++) {
-                                if(result.rows[i].grade=="Abs"){
-                                    history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",a).");
-                                }else{
-                                    if(result.rows[i].grade=="FA" || result.rows[i].grade=="Ff"){
-                                        history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",o).");
-                                    }else{
-                                        history.push("passed_course("+result.rows[i].student_id+","+result.rows[i].course_id+").");
-                                    }
-                                }
-                            }
-                            callback(history);
-                        };
-                    });
-        });
-        pool.end();
-    },
-
     getStudentTranscript: function(callback, userId) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
@@ -156,7 +124,7 @@ module.exports = {
                     function(err, result) {
                         if (err) {
                             console.log(err);
-                            callback('ERROR ERROR');
+                            callback('ERROR FINDING STUDENT ID IN STUDENT INFO TABLE');
                         } else {
                             let studentID = result.rows[0].student_id;
                             let sql1 = `SELECT student_username,student_major,student_semester,student_gpa FROM student_info WHERE student_id='${studentID}'`;
@@ -167,11 +135,9 @@ module.exports = {
                                         callback('ERROR WITH STUDENT INFO');
                                     } else {
                                         if(""+result=="undefined"){
-                                            callback("Answer is undefined.");
+                                            callback("Student Info is undefined.");
                                         }else{
-                                            let studentInfo = "student("+studentID+","+result.rows[0].student_username+","+result.rows[0].student_major+","+result.rows[0].student_semester+","+result.rows[0].student_gpa+").";
-                                            //callback(info);
-
+                                            let studentInfo = "student("+studentID+","+result.rows[0].student_username+","+result.rows[0].student_major+","+result.rows[0].student_semester+","+result.rows[0].student_gpa+").";                                     
                                             let sql2 = `SELECT student_id,course_id,grade FROM taken_courses WHERE student_id='${studentID}'`;
                                             client.query(sql2,
                                                     function(err, result) {
@@ -179,22 +145,27 @@ module.exports = {
                                                             console.log(err);
                                                             callback('ERROR WITH STUDENT HISTORY');
                                                         } else {
-                                                            let history = [];
-                                                            for (let i = 0; i < result.rows.length; i++) {
-                                                                if(result.rows[i].grade=="Abs"){
-                                                                    history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",a).");
-                                                                }else{
-                                                                    if(result.rows[i].grade=="FA" || result.rows[i].grade=="Ff"){
-                                                                        history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",o).");
+                                                            if(""+result=="undefined"){
+                                                                callback("Student Info is undefined.");
+                                                            }else{
+                                                                let history = [];
+                                                                for (let i = 0; i < result.rows.length; i++) {
+                                                                    if(result.rows[i].grade=="Abs"){
+                                                                        history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",a).");
                                                                     }else{
-                                                                        history.push("passed_course("+result.rows[i].student_id+","+result.rows[i].course_id+").");
+                                                                        if(result.rows[i].grade=="FA" || result.rows[i].grade=="Ff"){
+                                                                            history.push("failed_course("+result.rows[i].student_id+","+result.rows[i].course_id+",o).");
+                                                                        }else{
+                                                                            history.push("passed_course("+result.rows[i].student_id+","+result.rows[i].course_id+").");
+                                                                        }
                                                                     }
                                                                 }
+                                                                let studentHistory = history.join("\n");
+                                                                callback(studentInfo+"\n"+studentHistory);
                                                             }
-                                                            let studentHistory = history.join("\n");
-                                                            callback(studentInfo+"\n"+studentHistory);
+                                                            
                                                         };
-                                                    });
+                                                });
 
                                         }
                                         
