@@ -143,140 +143,7 @@ var program = // Load the program
         "prereq(dmet1003,dmet603)."+
         "prereq(dmet1003,comm401)."+
 
-        "student(43-1293,ahmed,cs,5,1.2)."+
-        "student(43-4861,marwan,cs,5,2.4)."+
-        "student(43-7148,nada,cs,5,3.8)."+
-        "student(46-5295,mostafa,cs,3,3.2)."+
-
-        "passed_course(43-1293,csen102)."+
-        "passed_course(43-1293,math103)."+
-        "passed_course(43-1293,chemp102)."+
-        "passed_course(43-1293,chemt102)."+
-        "passed_course(43-1293,phys101)."+
-        "passed_course(43-1293,engd301)."+
-
-        "passed_course(43-1293,phys202)."+
-        "passed_course(43-1293,csen202)."+
-        "passed_course(43-1293,edpt201)."+
         
-        "passed_course(43-1293,physp301)."+
-        "passed_course(43-1293,physt301)."+
-        "passed_course(43-1293,elct301)."+
-        "passed_course(43-1293,csen301)."+
-
-        "passed_course(43-1293,math401)."+
-        "passed_course(43-1293,csen401)."+
-        "passed_course(43-1293,comm401)."+
-        "passed_course(43-1293,csen403)."+
-        
-        "passed_course(43-1293,math501)."+
-        "passed_course(43-1293,dmet501)."+
-        "passed_course(43-1293,csen501)."+
-        "passed_course(43-1293,csen503)."+
-        "passed_course(43-1293,csen605)."+
-        "passed_course(43-1293,csen502)."+
-
-        "passed_course(43-4861,csen102)."+
-        "passed_course(43-4861,math103)."+
-        "passed_course(43-4861,chemp102)."+
-        "passed_course(43-4861,chemt102)."+
-        "passed_course(43-4861,phys101)."+
-        "passed_course(43-4861,engd301)."+
-
-        "passed_course(43-4861,phys202)."+
-        "passed_course(43-4861,math203)."+
-        "passed_course(43-4861,csen202)."+
-        "passed_course(43-4861,elct201)."+
-        "passed_course(43-4861,edpt201)."+
-
-        "passed_course(43-4861,math301)."+
-        "passed_course(43-4861,physp301)."+
-        "passed_course(43-4861,physt301)."+
-        "passed_course(43-4861,elct301)."+
-        "passed_course(43-4861,csen301)."+
-        
-        "passed_course(43-4861,csis402)."+
-        "passed_course(43-4861,csen401)."+
-        "passed_course(43-4861,csen403)."+
-
-        "passed_course(43-4861,math501)."+
-        "passed_course(43-4861,dmet501)."+
-        "passed_course(43-4861,csen501)."+
-        "passed_course(43-4861,csen503)."+
-        "passed_course(43-4861,csen605)."+
-        "passed_course(43-4861,csen502)."+
-
-        "passed_course(43-7148,cps402)."+
-        "passed_course(43-7148,as102)."+
-        "passed_course(43-7148,ae101)."+
-        "passed_course(43-7148,sm101)."+
-
-        "passed_course(43-7148,csen102)."+
-        "passed_course(43-7148,math103)."+
-        "passed_course(43-7148,chemp102)."+
-        "passed_course(43-7148,chemt102)."+
-        "passed_course(43-7148,phys101)."+
-        "passed_course(43-7148,engd301)."+
-
-        "passed_course(43-7148,math203)."+
-        "passed_course(43-7148,phys202)."+
-        "passed_course(43-7148,csen202)."+
-        "passed_course(43-7148,edpt201)."+
-
-        "passed_course(43-7148,math301)."+
-        "passed_course(43-7148,physp301)."+
-        "passed_course(43-7148,physt301)."+
-        "passed_course(43-7148,elct301)."+
-        "passed_course(43-7148,csen301)."+
-
-        "passed_course(43-7148,csen403)."+
-        "passed_course(43-7148,csis402)."+
-        "passed_course(43-7148,csen401)."+
-
-        "passed_course(46-5295,de303)."+
-        "passed_course(46-5295,cps402)."+
-        "passed_course(46-5295,as102)."+
-        "passed_course(46-5295,sm101)."+
-        "passed_course(46-5295,chemp102)."+
-        "passed_course(46-5295,chemt102)."+
-        "passed_course(46-5295,engd301)."+
-        "passed_course(46-5295,csen102)."+
-        "passed_course(46-5295,math103)."+
-        "passed_course(46-5295,phys101)."+
-        "passed_course(46-5295,phys202)."+
-        "passed_course(46-5295,edpt201)."+
-        "passed_course(46-5295,csen301)."+
-        "passed_course(46-5295,elct201)."+
-        "passed_course(46-5295,elct301)."+
-        "passed_course(46-5295,physp301)."+
-        "passed_course(46-5295,physt301)."+
-
-
-        /*a=attendance,o=other */
-        "failed_course(43-1293,elct201,o)."+
-        "failed_course(43-1293,math203,o)."+
-        "failed_course(43-1293,math301,o)."+
-        "failed_course(43-1293,elct401,o)."+
-        "failed_course(43-1293,csis402,o)."+
-        "failed_course(43-1293,csen403,o)."+
-        "failed_course(43-1293,dmet501,o). "+
-        "failed_course(43-1293,de202,o). "+
-
-        "failed_course(43-7148,elct201,o). "+
-        "failed_course(43-7148,elct401,o). "+
-        "failed_course(43-7148,comm401,o). "+
-        "failed_course(43-7148,math401,o). "+
-        "failed_course(43-7148,math501,a). "+
-        "failed_course(43-7148,dmet501,a). "+
-        "failed_course(43-7148,csen501,o). "+
-        "failed_course(43-7148,csen503,a). "+
-        "failed_course(43-7148,csen605,a). "+
-        "failed_course(43-7148,csen502,o). "+
-        "failed_course(43-7148,rpw401,a). "+
-        "failed_course(43-7148,de202,a). "+
-
-        "failed_course(46-5295,math203,a). "+
-        "failed_course(46-5295,csen202,o). "+
 
         /*--- cannotTake ---*/
 
@@ -414,7 +281,7 @@ var program = // Load the program
 
         "filterTill(Lang,HighestTakenCourse,[H|T],TT):- lang_course(Lang,ThisLevel,H,_), lang_course(Lang,Level,HighestTakenCourse,_), ThisLevel=<Level, filterTill(Lang,HighestTakenCourse,T,TT). ";
 
-let myString = "student(46-5295,ahmed.mohamed,CS,3,2).\n"+
+let myString = "student(46-5295,ahmed,CS,3,2).\n"+
 "passed_course(46-5295,DE303).\n"+
 "passed_course(46-5295,CPS402).\n"+
 "passed_course(46-5295,AS102).\n"+
@@ -434,10 +301,10 @@ let myString = "student(46-5295,ahmed.mohamed,CS,3,2).\n"+
 "passed_course(46-5295,ELCT301).\n"+
 "passed_course(46-5295,PHYSp301).\n"+
 "passed_course(46-5295,PHYSt301).\n";
-session.consult(myString+"\n\n"+program);
+session.consult(program+"\n\n"+myString);
 
 // Query the goal
-session.query("getSchedule(43-7148,X).");
+session.query("getSchedule(46-5295,X).");
 
 // Show answers
 session.answers(x => console.log(pl.format_answer(x)));
