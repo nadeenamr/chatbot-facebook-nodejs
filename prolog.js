@@ -407,7 +407,8 @@ module.exports = {
 
   getStudentNextSchedule: function(callback, studentIDAndTranscript) {
     var scheduleQuery = "getSchedule("+studentIDAndTranscript[0]+",X).";
-    var outputSchedule = executeQuery(program+"\n\n"+studentIDAndTranscript[1].toLowerCase(), scheduleQuery);
+    var transcript = studentIDAndTranscript[1].toLowerCase();
+    var outputSchedule = executeQuery(program+"\n\n"+transcript,scheduleQuery);
     callback(outputSchedule);                         
   }
   

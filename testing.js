@@ -281,7 +281,7 @@ var program = // Load the program
 
         "filterTill(Lang,HighestTakenCourse,[H|T],TT):- lang_course(Lang,ThisLevel,H,_), lang_course(Lang,Level,HighestTakenCourse,_), ThisLevel=<Level, filterTill(Lang,HighestTakenCourse,T,TT). ";
 
-let myString = "student(46-5295,ahmed,CS,3,2).\n"+
+let myString = "student(46-5295,ahmed,cs,3,2).\n"+
 "passed_course(46-5295,DE303).\n"+
 "passed_course(46-5295,CPS402).\n"+
 "passed_course(46-5295,AS102).\n"+
@@ -301,12 +301,14 @@ let myString = "student(46-5295,ahmed,CS,3,2).\n"+
 "passed_course(46-5295,ELCT301).\n"+
 "passed_course(46-5295,PHYSp301).\n"+
 "passed_course(46-5295,PHYSt301).\n";
-session.consult(program+"\n\n"+myString);
+session.consult(program+"\n\n"+myString.toLowerCase());
 
 // Query the goal
 session.query("getSchedule(46-5295,X).");
 
 // Show answers
 session.answers(x => console.log(pl.format_answer(x)));
+
+//console.log(myString.toLowerCase())
 
 
