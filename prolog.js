@@ -475,15 +475,9 @@ function executeQuery(program, thisQuery) {
 
 module.exports = {
 
-  getStudentNextSchedule: function(callback, studentID) {
-    var scheduleQuery = "getSchedule("+studentID+",X).";
-    var outputSchedule = executeQuery(program, scheduleQuery);
-    callback(outputSchedule);                         
-  },
-
-  getStudentNextScheduleWithID: function(callback, studentID, studentHistory) {
-    var scheduleQuery = "getSchedule("+studentID+",X).";
-    var outputSchedule = executeQuery(program+"\n\n"+studentHistory, scheduleQuery);
+  getStudentNextSchedule: function(callback, studentIDAndTranscript) {
+    var scheduleQuery = "getSchedule("+studentIDAndTranscript[0]+",X).";
+    var outputSchedule = executeQuery(studentIDAndTranscript[0]+"\n\n"+program, scheduleQuery);
     callback(outputSchedule);                         
   }
   

@@ -161,7 +161,7 @@ module.exports = {
                                                                     }
                                                                 }
                                                                 let studentHistory = history.join("\n");
-                                                                callback(studentInfo+"\n"+studentHistory);
+                                                                callback([studentID,studentInfo+"\n"+studentHistory]);
                                                             }
                                                             
                                                         };

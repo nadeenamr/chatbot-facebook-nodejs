@@ -195,9 +195,12 @@ function getHistory(sender){
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "mySchedule":
-			students.getStudentTranscript(function(studentTranscript){
-				let reply = `${studentTranscript}`;
-				sendTextMessage(sender, reply);
+			students.getStudentTranscript(function(studentIDAndTranscript){
+				prolog.getStudentNextSchedule(function(allCourses){
+					let reply = `These are your courses for the next semester: ${allCourses}.`;
+					sendTextMessage(sender, reply);
+					}, studentIDAndTranscript
+				);
 				}, sender
 			);
 			break;
