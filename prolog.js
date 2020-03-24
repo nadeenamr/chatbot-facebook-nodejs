@@ -151,7 +151,6 @@ var program =
 
       "student(43-1293,ahmed,cs,5,1.2)."+
       "student(43-4861,marwan,cs,5,2.4)."+
-      "student(46-5295,mostafa,cs,3,3.2)."+
 
       "passed_course(43-1293,csen102)."+
       "passed_course(43-1293,math103)."+
@@ -211,25 +210,6 @@ var program =
       "passed_course(43-4861,csen605)."+
       "passed_course(43-4861,csen502)."+
 
-      "passed_course(46-5295,de303)."+
-      "passed_course(46-5295,cps402)."+
-      "passed_course(46-5295,as102)."+
-      "passed_course(46-5295,sm101)."+
-      "passed_course(46-5295,chemp102)."+
-      "passed_course(46-5295,chemt102)."+
-      "passed_course(46-5295,engd301)."+
-      "passed_course(46-5295,csen102)."+
-      "passed_course(46-5295,math103)."+
-      "passed_course(46-5295,phys101)."+
-      "passed_course(46-5295,phys202)."+
-      "passed_course(46-5295,edpt201)."+
-      "passed_course(46-5295,csen301)."+
-      "passed_course(46-5295,elct201)."+
-      "passed_course(46-5295,elct301)."+
-      "passed_course(46-5295,physp301)."+
-      "passed_course(46-5295,physt301)."+
-
-
       /*a=attendance,o=other */
       "failed_course(43-1293,elct201,o)."+
       "failed_course(43-1293,math203,o)."+
@@ -239,9 +219,6 @@ var program =
       "failed_course(43-1293,csen403,o)."+
       "failed_course(43-1293,dmet501,o). "+
       "failed_course(43-1293,de202,o). "+
-
-      "failed_course(46-5295,math203,a). "+
-      "failed_course(46-5295,csen202,o). "+
 
       /*--- cannotTake ---*/
 

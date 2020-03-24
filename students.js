@@ -142,6 +142,41 @@ module.exports = {
                     });
         });
         pool.end();
+    },
+
+    getStudentInfo: function(callback, userId) {
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }
+            let sql = `SELECT student_id FROM students WHERE facebook_id='${userId}'`;
+            client.query(sql,
+                    function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            callback('ERROR ERROR');
+                        } else {
+                            let studentID = result.rows[0].student_id;
+                            let sql1 = `SELECT student_username,student_major,student_semester,student_gpa FROM student_info WHERE student_id='${studentID}'`;
+                            client.query(sql1,
+                                function(err, result) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback('ERROR ERROR');
+                                    } else {
+                                        let info = "student("+studentID+","+result.rows[0].student_username+","+student_major+","+student_semester+","+student_gpa+").";
+                                        callback(info);
+                                    };
+                                }
+                        );
+
+                            //callback(history);
+                        };
+                    }
+            );
+        });
+        pool.end();
     }
 
 

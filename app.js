@@ -194,13 +194,28 @@ function getHistory(sender){
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "mySchedule":
+			students.getStudentInfo(function(studentInfo){
+				let reply = `${studentInfo}`;
+				sendTextMessage(sender, reply);
+				}, sender
+			);
+			/*
+			students.getStudentHistory(function(allHistory){
+				let studentHistory = allHistory.join("\n");
+				let reply = `${studentHistory}`;
+				sendTextMessage(sender, reply);
+				}, "43-7148"
+			);
+			*/
+			break;
 		case "testing": 
 				//sendGifMessage(sender);
 				students.getStudentHistory(function(allHistory){
 					
 					
 
-					let studentHistory = allHistory.join("\n\n");
+					let studentHistory = allHistory.join("\n");
 					let reply = `${studentHistory}`;
 					sendTextMessage(sender, reply);
 					/*
