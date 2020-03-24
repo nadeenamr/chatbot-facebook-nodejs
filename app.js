@@ -199,10 +199,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				prolog.getStudentNextSchedule(function(allCourses){
 					let reply = `These are your courses for the next semester: ${allCourses}.`;
 					sendTextMessage(sender, reply);
-					}, studentIDAndTranscript
-				);
-				}, sender
-			);
+				}, studentIDAndTranscript);
+			}, sender);
 			break;
 		case "testing": 
 				sendGifMessage(sender);
