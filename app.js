@@ -78,27 +78,22 @@ app.get('/webhook/', function (req, res) {
 
 function menuButton() {
 	var messageData = {
-	  setting_type : "call_to_actions",
-	  composerinputdisabled :"TRUE",
-	  thread_state : "existing_thread",
-	  call_to_actions: [
+		setting_type : "call_to_actions",
+		composerinputdisabled :"TRUE",
+		thread_state : "existing_thread",
+		call_to_actions:[
 		{
-			type: "postback",
-			title: "Difference between CS and DMET",
-			payload: "GET_DMET_SEM_COURSES"
+		  type:"postback",
+		  title:"MENU ITEM 1",
+		  payload:"ACTUALIZAR"
 		},
 		{
-			type: "postback",
-			title: "View courses for specific CS semesters",
-			payload: "GET_CS_SEM_COURSES"
-		},
-		{
-			type: "postback",
-			title: "View courses for specific DMET semesters",
-			payload: "GET_DMET_SEM_COURSES"
+		  type:"postback",
+		  title:"MENU ITEM 2",
+		  payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_START_ORDER"
 		}
-  	  ]     
-	}
+		]    
+	  }
 	request({
 	  uri: 'https://graph.facebook.com/v2.6/me/thread_settings',
 	  qs: { 
