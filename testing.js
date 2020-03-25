@@ -399,10 +399,36 @@ passed_course(43-9317,dmet501).
 passed_course(43-9317,math501).
 passed_course(43-9317,csen502).`;
 
-session.consult(program+"\n\n"+notWorking4.toLowerCase());
+let notWorking5ID = "43-4877";
+let notWorking5 = `student(43-4877,youssef,cs,5,3.8).
+passed_course(43-4877,de101).
+passed_course(43-4877,as102).
+passed_course(43-4877,ae101).
+passed_course(43-4877,sm101).
+passed_course(43-4877,chemp102).
+passed_course(43-4877,chemt102).
+passed_course(43-4877,engd301).
+passed_course(43-4877,csen102).
+failed_course(43-4877,math103,o).
+passed_course(43-4877,phys101).
+passed_course(43-4877,csen202).
+passed_course(43-4877,math203).
+passed_course(43-4877,phys202).
+passed_course(43-4877,edpt201).
+failed_course(43-4877,csen301,o).
+failed_course(43-4877,elct301,o).
+failed_course(43-4877,math301,o).
+passed_course(43-4877,physp301).
+passed_course(43-4877,physt301).
+passed_course(43-4877,csen401).
+failed_course(43-4877,csen403,o).
+failed_course(43-4877,elct401,o).
+failed_course(43-4877,comm401,o).`;
+
+session.consult(program+"\n\n"+notWorking5.toLowerCase());
 
 // Query the goal
-session.query("getSchedule("+notWorking4ID+",X).");
+session.query("getSchedule("+notWorking5ID+",X).");
 
 // Show answers
 session.answers(x => console.log(pl.format_answer(x)));
