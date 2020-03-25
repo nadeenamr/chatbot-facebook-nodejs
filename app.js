@@ -977,7 +977,7 @@ app.listen(app.get('port'), function () {
 
 
 
-
+/*
 
 
 fb-persistent-menu --token <EAACkvzAhabEBAHPfEKFcGaqfWQfaKDZAceGo8oP6jkuRkAJLSQNzt4GDbyXkYEQOwd5EZAkFpBJDosf2qjcPOpsq5iMRwBl6yhL6LZAcpnB1SUuWo9OxZAdJpKqOptJtij9QnBjA46yaZAFr3f1wVZBYaZA3xEFZCLMQxJDbDJjPcy5KPmmZB0amp> --settings '{
@@ -1027,3 +1027,5 @@ fb-persistent-menu --token <EAACkvzAhabEBAHPfEKFcGaqfWQfaKDZAceGo8oP6jkuRkAJLSQN
 		}
 	]
   }'
+
+  */
