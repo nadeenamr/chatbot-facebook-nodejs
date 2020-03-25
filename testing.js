@@ -281,30 +281,36 @@ var program = // Load the program
 
         "filterTill(Lang,HighestTakenCourse,[H|T],TT):- lang_course(Lang,ThisLevel,H,_), lang_course(Lang,Level,HighestTakenCourse,_), ThisLevel=<Level, filterTill(Lang,HighestTakenCourse,T,TT). ";
 
-let myString = "student(46-5295,ahmed,cs,3,2).\n"+
-"passed_course(46-5295,DE303).\n"+
-"passed_course(46-5295,CPS402).\n"+
-"passed_course(46-5295,AS102).\n"+
-"passed_course(46-5295,SM101).\n"+
-"passed_course(46-5295,CHEMp102).\n"+
-"passed_course(46-5295,CHEMt102).\n"+
-"passed_course(46-5295,ENGD301).\n"+
-"passed_course(46-5295,CSEN102).\n"+
-"passed_course(46-5295,MATH103).\n"+
-"passed_course(46-5295,PHYS101).\n"+
-"failed_course(46-5295,CSEN202,o).\n"+
-"failed_course(46-5295,MATH203,a).\n"+
-"passed_course(46-5295,PHYS202).\n"+
-"passed_course(46-5295,EDPT201).\n"+
-"passed_course(46-5295,CSEN301).\n"+
-"passed_course(46-5295,ELCT201).\n"+
-"passed_course(46-5295,ELCT301).\n"+
-"passed_course(46-5295,PHYSp301).\n"+
-"passed_course(46-5295,PHYSt301).\n";
+let myString = `student(43-4861,marwan,cs,5,2.4).
+passed_course(43-4861,chemp102).
+passed_course(43-4861,chemt102).
+ passed_course(43-4861,csen102).
+ passed_course(43-4861,csen202).
+ passed_course(43-4861,csen301).
+  passed_course(43-4861,csen401).
+  passed_course(43-4861,csen403).
+  passed_course(43-4861,csen501).
+  passed_course(43-4861,csen502).
+  passed_course(43-4861,csen503).
+ passed_course(43-4861,csen605).
+ passed_course(43-4861,csis402).
+ passed_course(43-4861,dmet501).
+ passed_course(43-4861,edpt201).
+ passed_course(43-4861,elct201).
+ passed_course(43-4861,elct301).
+ passed_course(43-4861,engd301).
+ passed_course(43-4861,math103).
+ passed_course(43-4861,math203).
+ passed_course(43-4861,math301).
+ passed_course(43-4861,math501).
+ passed_course(43-4861,phys101).
+ passed_course(43-4861,phys202).
+ passed_course(43-4861,physp301).
+passed_course(43-4861,physt301).`;
 session.consult(program+"\n\n"+myString.toLowerCase());
 
 // Query the goal
-session.query("getSchedule(46-5295,X).");
+session.query("getSchedule(43-4861,X).");
 
 // Show answers
 session.answers(x => console.log(pl.format_answer(x)));
