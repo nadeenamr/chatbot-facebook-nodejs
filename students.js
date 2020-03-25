@@ -138,7 +138,6 @@ module.exports = {
                                         if(result==undefined){
                                             callback("Student Info is undefined.");
                                         }else{
-                                            console.log("RESUUULLLTTTTT ---> "+result.rows[0]);
                                             let studentInfo = "student("+studentID+","+result.rows[0].student_firstname+","+result.rows[0].student_major+","+result.rows[0].student_semester+","+result.rows[0].student_gpa+").";                                     
                                             let sql2 = `SELECT student_id,course_id,grade FROM taken_courses WHERE student_id='${studentID}'`;
                                             client.query(sql2,
