@@ -15,7 +15,8 @@ module.exports = {
             }
             client
                 .query(
-                    'SELECT course_code FROM public.cs_semester_courses WHERE semester=$1',
+                    `SELECT course_code FROM public.courses WHERE (course_semester_cs=$1 AND course_major='CS') OR (course_semester_cs=$1 AND course_major='both')`,
+                    //'SELECT course_code FROM public.cs_semester_courses WHERE semester=$1',
                     [semester],
                     function(err, result) {
                         if (err) {
@@ -41,7 +42,8 @@ module.exports = {
             }
             client
                 .query(
-                    'SELECT course_code FROM public.dmet_semester_courses WHERE semester=$1',
+                    `SELECT course_code FROM public.courses WHERE (course_semester_dmet=$1 AND course_major='DMET') OR (course_semester_dmet=$1 AND course_major='both')`,
+                    //'SELECT course_code FROM public.dmet_semester_courses WHERE semester=$1',
                     [semester],
                     function(err, result) {
                         if (err) {
