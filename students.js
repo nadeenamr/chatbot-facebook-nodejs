@@ -181,6 +181,5 @@ module.exports = {
         pool.end();
     }
 
-
 }
 

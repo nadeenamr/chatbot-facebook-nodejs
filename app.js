@@ -76,6 +76,44 @@ app.get('/webhook/', function (req, res) {
 	}
 })
 
+function menuButton() {
+	var messageData = {
+	  setting_type : "call_to_actions",
+	  composerinputdisabled :"TRUE",
+	  thread_state : "existing_thread",
+	  call_to_actions:[
+			{
+				type:"postback",
+				title:"¿Tiempo de espera?",
+				payload:"ACTUALIZAR"
+			},
+			{
+				type:"postback",
+				title:"Ver Promociones",
+				payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_START_ORDER"
+			}
+	  ]    
+	}
+	request({
+	  uri: 'https://graph.facebook.com/v2.6/me/thread_settings',
+	  qs: { access_token: PAGE_ACCESS_TOKEN },
+	  method: 'POST',
+	  json: messageData
+	}, function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+		var recipientId = body.recipient_id;
+		var messageId = body.message_id;
+  
+		console.log("Successfully sent generic message with id %s to recipient %s", 
+		  messageId, recipientId);
+	  } else {
+		console.error("Unable to send message.");
+		console.error(response);
+		console.error(error);
+	  }
+	  });
+	  }
+
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
  * webhook. Be sure to subscribe your app to your page to receive callbacks
@@ -89,6 +127,7 @@ app.post('/webhook/', function (req, res) {
 
 	// Make sure this is a page subscription
 	if (data.object == 'page') {
+		menuButton();
 		// Iterate over each entry
 		// There may be multiple if batched
 		data.entry.forEach(function (pageEntry) {
@@ -239,7 +278,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				}else{
 					let allCoursesString = codes.join(", ");
 					let reply = `Prerequisite courses' code(s) are: ${allCoursesString}.`;
-					console.log("THIS IS THE SENDER ---> "+sender);
 					sendTextMessage(sender, reply);
 				}
 			}, parameters['courses']);
@@ -248,15 +286,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			courses.readAllCSSemesterCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
 				let reply = `Course codes are: ${allCoursesString}.`;
-				sendTextMessage(sender, reply)
+				sendTextMessage(sender, reply);
 				}, parameters['semesters']);
 			break;
 		case "dmet_sem_courses":
 			courses.readAllDMETSemesterCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
 				let reply = `Course codes are: ${allCoursesString}.`;
-				sendTextMessage(sender, reply)
-				console.log(parameters);
+				sendTextMessage(sender, reply);
 				}, parameters['semesters']);
 			break;
 		case "buy-iphone8":

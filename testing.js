@@ -310,5 +310,3 @@ session.query("getSchedule(46-5295,X).");
 session.answers(x => console.log(pl.format_answer(x)));
 
 //console.log(myString.toLowerCase())
-
-
