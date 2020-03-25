@@ -136,7 +136,7 @@ module.exports = {
                                         callback('ERROR WITH STUDENT INFO');
                                     } else {
                                         if(result==undefined){
-                                            callback("Student Info is undefined.");
+                                            callback("Sorry, can't find your info in our database :(");
                                         }else{
                                             let studentInfo = "student("+studentID+","+result.rows[0].student_firstname+","+result.rows[0].student_major+","+result.rows[0].student_semester+","+result.rows[0].student_gpa+").";                                     
                                             let sql2 = `SELECT student_id,course_id,grade FROM taken_courses WHERE student_id='${studentID}'`;
