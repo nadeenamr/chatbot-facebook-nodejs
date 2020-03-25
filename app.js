@@ -74,59 +74,7 @@ app.get('/webhook/', function (req, res) {
 		console.error("Failed validation. Make sure the validation tokens match.");
 		res.sendStatus(403);
 	}
-})
-
-
-function menuButton() {
-	var messageData = {
-		setting_type : "call_to_actions",
-		composerinputdisabled :"TRUE",
-		thread_state : "existing_thread",
-		call_to_actions:[
-		{
-		  type:"postback",
-		  title:"MENU ITEM 1",
-		  call_to_actions: [
-			{
-				"type": "nested",
-				"title": "MET",
-				"call_to_actions": [
-					  { type: "postback", title: "Difference between CS and DMET", payload: "GET_DMET_SEM_COURSES" },
-					  { type: "postback", title: "View courses for specific CS semesters", payload: "GET_CS_SEM_COURSES" },
-					  { type: "postback", title: "View courses for specific DMET semesters", payload: "GET_DMET_SEM_COURSES" },
-					  { type: "postback", title: "Get the prerequisites of a specific course", payload: "GET_PREREQ" }
-				]
-
-			}
-		  ]
-		},
-		{
-		  type:"postback",
-		  title:"MENU ITEM 2",
-		  payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_START_ORDER"
-		}
-		]    
-	  }
-	request({
-	  uri: 'https://graph.facebook.com/v2.6/me/thread_settings',
-	  qs: { 
-		  access_token: 'EAACkvzAhabEBAHPfEKFcGaqfWQfaKDZAceGo8oP6jkuRkAJLSQNzt4GDbyXkYEQOwd5EZAkFpBJDosf2qjcPOpsq5iMRwBl6yhL6LZAcpnB1SUuWo9OxZAdJpKqOptJtij9QnBjA46yaZAFr3f1wVZBYaZA3xEFZCLMQxJDbDJjPcy5KPmmZB0amp' },
-	  	  method: 'POST',
-	  	  json: messageData
-	  }, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var recipientId = body.recipient_id;
-			var messageId = body.message_id;
-			console.log("Successfully sent generic message with id %s to recipient %s", messageId, recipientId);
-		} else {
-			console.error("Unable to send message.");
-			console.error(response);
-			console.error(error);
-		}
-	  });
-	  }
-
-	  
+})	  
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
@@ -141,7 +89,6 @@ app.post('/webhook/', function (req, res) {
 
 	// Make sure this is a page subscription
 	if (data.object == 'page') {
-		menuButton();
 		// Iterate over each entry
 		// There may be multiple if batched
 		data.entry.forEach(function (pageEntry) {

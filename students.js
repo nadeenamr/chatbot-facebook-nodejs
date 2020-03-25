@@ -127,7 +127,7 @@ module.exports = {
                             callback('ERROR FINDING STUDENT ID IN STUDENT INFO TABLE');
                         } else {
                             let studentID = result.rows[0].student_id;
-                            let sql1 = `SELECT student_username,student_major,student_semester,student_gpa FROM student_info WHERE student_id='${studentID}'`;
+                            let sql1 = `SELECT student_firstname,student_major,student_semester,student_gpa FROM student_info WHERE student_id='${studentID}'`;
                             client.query(sql1,
                                 function(err, result) {
                                     if (err) {
@@ -137,7 +137,7 @@ module.exports = {
                                         if(""+result=="undefined"){
                                             callback("Student Info is undefined.");
                                         }else{
-                                            let studentInfo = "student("+studentID+","+result.rows[0].student_username+","+result.rows[0].student_major+","+result.rows[0].student_semester+","+result.rows[0].student_gpa+").";                                     
+                                            let studentInfo = "student("+studentID+","+result.rows[0].student_firstname+","+result.rows[0].student_major+","+result.rows[0].student_semester+","+result.rows[0].student_gpa+").";                                     
                                             let sql2 = `SELECT student_id,course_id,grade FROM taken_courses WHERE student_id='${studentID}'`;
                                             client.query(sql2,
                                                     function(err, result) {
