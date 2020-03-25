@@ -768,14 +768,14 @@ function receivedPostback(event) {
 				sendToApiAi(senderID, "dmet semester courses");
 			break;
 		case "GET_CS_SEM_COURSES": 
-			
+				sendToApiAi(senderID, "cs semester courses");
 			break;
 		case "GET_CS_DMET_DIFF":
-
+				sendToApiAi(senderID, "What is the difference between CS and DMET?");
 			break;
 		case "GET_PREREQ": 
-			
-		break;
+				sendToApiAi(senderID, "prerequisite");
+			break;
 		default:
 			//unindentified payload
 			sendTextMessage(senderID, "I'm not sure what you want. Can you be more specific?");
