@@ -447,10 +447,40 @@ failed_course(43-9156,math301,o).
 passed_course(43-9156,physp301).
 failed_course(43-9156,csis402,a).`;
 
-session.consult(program+"\n\n"+notWorking6.toLowerCase());
+let notWorking7ID = "43-12132";
+let notWorking7 = `student(43-12132,mina,cs,5,3.76).
+failed_course(43-12132,de303,a).
+passed_course(43-12132,cps402).
+passed_course(43-12132,as102).
+failed_course(43-12132,rpw401,o).
+passed_course(43-12132,sm101).
+passed_course(43-12132,chemp102).
+passed_course(43-12132,chemt102).
+passed_course(43-12132,engd301).
+passed_course(43-12132,csen102).
+failed_course(43-12132,math103,o).
+failed_course(43-12132,phys101,o).
+passed_course(43-12132,csen202).
+failed_course(43-12132,math203,o).
+passed_course(43-12132,phys202).
+passed_course(43-12132,edpt201).
+failed_course(43-12132,csen301,a).
+failed_course(43-12132,elct201,o).
+failed_course(43-12132,elct301,o).
+failed_course(43-12132,math301,o).
+passed_course(43-12132,physp301).
+passed_course(43-12132,physt301).
+failed_course(43-12132,csis402,a).
+passed_course(43-12132,csen401).
+failed_course(43-12132,csen403,a).
+failed_course(43-12132,elct401,a).
+failed_course(43-12132,math401,a).
+failed_course(43-12132,comm401,a).`;
+
+session.consult(program+"\n\n"+notWorking7.toLowerCase());
 
 // Query the goal
-session.query("getSchedule("+notWorking6ID+",X).");
+session.query("getSchedule("+notWorking7ID+",X).");
 
 // Show answers
 session.answers(x => console.log(pl.format_answer(x)));
