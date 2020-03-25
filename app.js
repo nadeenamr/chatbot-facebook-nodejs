@@ -764,13 +764,18 @@ function receivedPostback(event) {
 	var payload = event.postback.payload;
 
 	switch (payload) {
-		case "GET_STARTED": 
-			greetUserText(senderID);
+		case "GET_DMET_SEM_COURSES": 
+				sendToApiAi(senderID, "dmet semester courses");
 			break;
-		case "CHAT": 
-			//user wants to chat
-			sendTextMessage(senderID, "I love chatting too. Do you have any other questions for me?");
+		case "GET_CS_SEM_COURSES": 
+			
 			break;
+		case "GET_CS_DMET_DIFF":
+
+			break;
+		case "GET_PREREQ": 
+			
+		break;
 		default:
 			//unindentified payload
 			sendTextMessage(senderID, "I'm not sure what you want. Can you be more specific?");
