@@ -134,7 +134,7 @@ module.exports = {
                                         console.log(err);
                                         callback('ERROR WITH STUDENT INFO');
                                     } else {
-                                        if(""+result=="undefined"){
+                                        if(result==undefined){
                                             callback("Student Info is undefined.");
                                         }else{
                                             console.log("RESUUULLLTTTTT ---> "+result.rows[0]);
