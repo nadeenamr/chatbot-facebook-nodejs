@@ -141,9 +141,7 @@ let program = // Load the program
         "prereq(dmet902,dmet703)."+
         "prereq(dmet1001,dmet603)."+
         "prereq(dmet1003,dmet603)."+
-        "prereq(dmet1003,comm401)."+
-
-        
+        "prereq(dmet1003,comm401)."+     
 
         /*--- cannotTake ---*/
 
@@ -163,9 +161,9 @@ let program = // Load the program
 
         "getSchedule(StudentID,Courses):- getScheduleHelper(StudentID,Courses). "+
 
-        "getScheduleHelper(StudentID,Courses):- student(StudentID,_,cs,CurrentSemester,_), WantedSemester is CurrentSemester+1, getNextDECourse(StudentID,DECourse), getNextENGCourse(StudentID,ENGCourse), append(DECourse,ENGCourse,LangCourses), soFarCourses(CurrentSemester,AllPastCourses), studentPassedCourses(StudentID,PassedCourses), subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses), cs_semester_courses(WantedSemester,SemCourses), append(NotTakenOrFailedCourses,SemCourses,PossibleCourses), cannotTake(StudentID,CantTakeCourses), subtract(PossibleCourses,CantTakeCourses,AllowedCourses), filterSameSemesterCategory(AllowedCourses,WantedSemester,AllowedFilteredCourses), addCSCourses(StudentID,LangCourses,AllowedFilteredCourses,WantedSemester,Courses). "+
-
         "getScheduleHelper(StudentID,Courses):- student(StudentID,_,cs,CurrentSemester,_), WantedSemester is CurrentSemester+1, getNextDECourse(StudentID,DECourse), getNextENGCourse(StudentID,ENGCourse), append(DECourse,ENGCourse,LangCourses), soFarCourses(CurrentSemester,AllPastCourses), studentPassedCourses(StudentID,PassedCourses), subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses), cs_semester_courses(WantedSemester,SemCourses), append(NotTakenOrFailedCourses,SemCourses,PossibleCourses), \\+cannotTake(StudentID,_), filterSameSemesterCategory(PossibleCourses,WantedSemester,PossibleFilteredCourses), addCSCourses(StudentID,LangCourses,PossibleFilteredCourses,WantedSemester,Courses). "+
+
+        "getScheduleHelper(StudentID,Courses):- student(StudentID,_,cs,CurrentSemester,_), WantedSemester is CurrentSemester+1, getNextDECourse(StudentID,DECourse), getNextENGCourse(StudentID,ENGCourse), append(DECourse,ENGCourse,LangCourses), soFarCourses(CurrentSemester,AllPastCourses), studentPassedCourses(StudentID,PassedCourses), subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses), cs_semester_courses(WantedSemester,SemCourses), append(NotTakenOrFailedCourses,SemCourses,PossibleCourses), cannotTake(StudentID,CantTakeCourses), subtract(PossibleCourses,CantTakeCourses,AllowedCourses), filterSameSemesterCategory(AllowedCourses,WantedSemester,AllowedFilteredCourses), addCSCourses(StudentID,LangCourses,AllowedFilteredCourses,WantedSemester,Courses). "+
 
         /*--- addCSCourses ---*/
 
@@ -197,10 +195,10 @@ let program = // Load the program
 
         "filterSameSemesterCategory([],_,[]). "+
 
-        "filterSameSemesterCategory([H|T],SemesterNumber,[H|O]):- cs_course(H,CourseSemesterNumber,_), isSameSemesterCategory(SemesterNumber,CourseSemesterNumber,1), filterSameSemesterCategory(T,SemesterNumber,O). "+
-
         "filterSameSemesterCategory([H|T],SemesterNumber,O):- cs_course(H,CourseSemesterNumber,_), \\+isSameSemesterCategory(SemesterNumber,CourseSemesterNumber,1), filterSameSemesterCategory(T,SemesterNumber,O). "+
 
+        "filterSameSemesterCategory([H|T],SemesterNumber,[H|O]):- cs_course(H,CourseSemesterNumber,_), isSameSemesterCategory(SemesterNumber,CourseSemesterNumber,1), filterSameSemesterCategory(T,SemesterNumber,O). "+
+        
         /*--- getMaxHours ---*/
         
         "getMaxHours(StudentID,Semester,SemesterHours):- "+ // probation students get no extra credit hours
@@ -345,12 +343,34 @@ passed_course(43-7148,csen401).
 passed_course(43-7148,csen403).
 failed_course(43-7148,elct401,o).
 failed_course(43-7148,math401,o).
-failed_course(43-7148,comm401,o).`.
+failed_course(43-7148,comm401,o).`;
 
-session.consult(program+"\n\n"+notWorking2.toLowerCase());
+let notWorking3ID = "43-18800";
+let notWorking3 = `student(43-18800,farah,cs,5,1.6).
+passed_course(43-18800,de202).
+passed_course(43-18800,as102).
+passed_course(43-18800,sm101).
+passed_course(43-18800,chemp102).
+passed_course(43-18800,chemt102).
+passed_course(43-18800,csen102).
+failed_course(43-18800,math103,o).
+passed_course(43-18800,phys101).
+failed_course(43-18800,edpt201,a).
+passed_course(43-18800,engd301).
+passed_course(43-18800,csen202).
+failed_course(43-18800,math203,o).
+passed_course(43-18800,phys202).
+failed_course(43-18800,csen301,o).
+failed_course(43-18800,elct201,o).
+failed_course(43-18800,elct301,o).
+failed_course(43-18800,physp301,a).
+failed_course(43-18800,physt301,o).
+failed_course(43-18800,comm401,a).`;
+
+session.consult(program+"\n\n"+notWorking3.toLowerCase());
 
 // Query the goal
-session.query("getSchedule("+notWorking2ID+",X).");
+session.query("getSchedule("+notWorking3ID+",X).");
 
 // Show answers
 session.answers(x => console.log(pl.format_answer(x)));
