@@ -209,7 +209,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				students.newOrRegularStudent(function(isRegular){
 					let reply;
 					if(isRegular[0]=="new"){
-						reply = "Welcome "+ isRegular[1] +"! I can answer any questions you might have and offer support/advice for MET students. Please enter your GUC ID so I am able to access your records."; 
+						reply = "Welcome "+ isRegular[1] +"! I'm your MET Mentor! I can answer any questions you might have and offer support/advice for MET students. Please enter your GUC ID so I am able to access your records."; 
 					}else{
 						if(isRegular[0]=="old"){
 							reply = "Welcome back "+ isRegular[1] +"! How can I help you today?"; 
