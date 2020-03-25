@@ -96,7 +96,7 @@ function menuButton() {
 	}
 	request({
 	  uri: 'https://graph.facebook.com/v2.6/me/thread_settings',
-	  qs: { access_token: PAGE_ACCESS_TOKEN },
+	  qs: { access_token: 'EAACkvzAhabEBAHPfEKFcGaqfWQfaKDZAceGo8oP6jkuRkAJLSQNzt4GDbyXkYEQOwd5EZAkFpBJDosf2qjcPOpsq5iMRwBl6yhL6LZAcpnB1SUuWo9OxZAdJpKqOptJtij9QnBjA46yaZAFr3f1wVZBYaZA3xEFZCLMQxJDbDJjPcy5KPmmZB0amp' },
 	  method: 'POST',
 	  json: messageData
 	}, function (error, response, body) {
