@@ -96,31 +96,25 @@ function menuButton() {
 			type: "postback",
 			title: "View courses for specific DMET semesters",
 			payload: "GET_DMET_SEM_COURSES"
-		},
-		{
-			type: "postback",
-			title: "Get the prerequisites of a specific course",
-			payload: "GET_PREREQ"
 		}
   	  ]     
 	}
 	request({
 	  uri: 'https://graph.facebook.com/v2.6/me/thread_settings',
-	  qs: { access_token: EAACkvzAhabEBAHPfEKFcGaqfWQfaKDZAceGo8oP6jkuRkAJLSQNzt4GDbyXkYEQOwd5EZAkFpBJDosf2qjcPOpsq5iMRwBl6yhL6LZAcpnB1SUuWo9OxZAdJpKqOptJtij9QnBjA46yaZAFr3f1wVZBYaZA3xEFZCLMQxJDbDJjPcy5KPmmZB0amp },
-	  method: 'POST',
-	  json: messageData
-	}, function (error, response, body) {
-	  if (!error && response.statusCode == 200) {
-		var recipientId = body.recipient_id;
-		var messageId = body.message_id;
-  
-		console.log("Successfully sent generic message with id %s to recipient %s", 
-		  messageId, recipientId);
-	  } else {
-		console.error("Unable to send message.");
-		console.error(response);
-		console.error(error);
-	  }
+	  qs: { 
+		  access_token: 'EAACkvzAhabEBAHPfEKFcGaqfWQfaKDZAceGo8oP6jkuRkAJLSQNzt4GDbyXkYEQOwd5EZAkFpBJDosf2qjcPOpsq5iMRwBl6yhL6LZAcpnB1SUuWo9OxZAdJpKqOptJtij9QnBjA46yaZAFr3f1wVZBYaZA3xEFZCLMQxJDbDJjPcy5KPmmZB0amp' },
+	  	  method: 'POST',
+	  	  json: messageData
+	  }, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var recipientId = body.recipient_id;
+			var messageId = body.message_id;
+			console.log("Successfully sent generic message with id %s to recipient %s", messageId, recipientId);
+		} else {
+			console.error("Unable to send message.");
+			console.error(response);
+			console.error(error);
+		}
 	  });
 	  }
 
