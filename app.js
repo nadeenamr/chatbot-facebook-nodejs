@@ -76,6 +76,7 @@ app.get('/webhook/', function (req, res) {
 	}
 })
 
+
 function menuButton() {
 	var messageData = {
 		setting_type : "call_to_actions",
@@ -85,7 +86,19 @@ function menuButton() {
 		{
 		  type:"postback",
 		  title:"MENU ITEM 1",
-		  payload:"ACTUALIZAR"
+		  call_to_actions: [
+			{
+				"type": "nested",
+				"title": "MET",
+				"call_to_actions": [
+					  { type: "postback", title: "Difference between CS and DMET", payload: "GET_DMET_SEM_COURSES" },
+					  { type: "postback", title: "View courses for specific CS semesters", payload: "GET_CS_SEM_COURSES" },
+					  { type: "postback", title: "View courses for specific DMET semesters", payload: "GET_DMET_SEM_COURSES" },
+					  { type: "postback", title: "Get the prerequisites of a specific course", payload: "GET_PREREQ" }
+				]
+
+			}
+		  ]
 		},
 		{
 		  type:"postback",
@@ -112,6 +125,8 @@ function menuButton() {
 		}
 	  });
 	  }
+
+	  
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
