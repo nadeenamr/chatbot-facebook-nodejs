@@ -127,7 +127,7 @@ module.exports = {
                             callback('ERROR FINDING STUDENT ID IN STUDENT INFO TABLE');
                         } else {
                             let studentID = result.rows[0].student_id;
-                            console.log(studentID);
+                            console.log("CURRENT STUDENT ID: "+studentID);
                             let sql1 = `SELECT student_firstname,student_major,student_semester,student_gpa FROM student_info WHERE student_id='${studentID}'`;
                             client.query(sql1,
                                 function(err, result) {
