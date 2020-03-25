@@ -5,7 +5,7 @@ require( "tau-prolog/modules/lists" )( pl );
 var session = pl.create( 1000 );
 
 // Load the program
-var program = // Load the program
+let program = // Load the program
     
         ":- use_module(library(lists))." + // Load the lists module
 
@@ -281,7 +281,9 @@ var program = // Load the program
 
         "filterTill(Lang,HighestTakenCourse,[H|T],TT):- lang_course(Lang,ThisLevel,H,_), lang_course(Lang,Level,HighestTakenCourse,_), ThisLevel=<Level, filterTill(Lang,HighestTakenCourse,T,TT). ";
 
-let myString = `student(43-4861,marwan,cs,5,2.4).
+
+let notWorking1ID = "43-4861";
+let notWorking1 = `student(43-4861,marwan,cs,5,2.4).
 passed_course(43-4861,chemp102).
 passed_course(43-4861,chemt102).
  passed_course(43-4861,csen102).
@@ -307,10 +309,48 @@ passed_course(43-4861,chemt102).
  passed_course(43-4861,phys202).
  passed_course(43-4861,physp301).
 passed_course(43-4861,physt301).`;
-session.consult(program+"\n\n"+myString.toLowerCase());
+
+let notWorking2ID = "43-7148";
+let notWorking2 = `student(43-7148,nada,cs,5,3).
+failed_course(43-7148,rpw401,a).
+failed_course(43-7148,de202,a).
+passed_course(43-7148,cps402).
+passed_course(43-7148,as102).
+passed_course(43-7148,ae101).
+passed_course(43-7148,sm101).
+failed_course(43-7148,csen501,o).
+failed_course(43-7148,csen605,a).
+failed_course(43-7148,csen503,a).
+failed_course(43-7148,dmet501,a).
+failed_course(43-7148,math501,a).
+failed_course(43-7148,csen502,o).
+passed_course(43-7148,chemp102).
+passed_course(43-7148,chemt102).
+passed_course(43-7148,engd301).
+passed_course(43-7148,csen102).
+passed_course(43-7148,math103).
+passed_course(43-7148,phys101).
+passed_course(43-7148,csen202).
+passed_course(43-7148,math203).
+passed_course(43-7148,phys202).
+passed_course(43-7148,edpt201).
+passed_course(43-7148,csen301).
+failed_course(43-7148,elct201,o).
+passed_course(43-7148,elct301).
+passed_course(43-7148,math301).
+passed_course(43-7148,physp301).
+passed_course(43-7148,physt301).
+passed_course(43-7148,csis402).
+passed_course(43-7148,csen401).
+passed_course(43-7148,csen403).
+failed_course(43-7148,elct401,o).
+failed_course(43-7148,math401,o).
+failed_course(43-7148,comm401,o).`.
+
+session.consult(program+"\n\n"+notWorking2.toLowerCase());
 
 // Query the goal
-session.query("getSchedule(43-4861,X).");
+session.query("getSchedule("+notWorking2ID+",X).");
 
 // Show answers
 session.answers(x => console.log(pl.format_answer(x)));
