@@ -81,18 +81,28 @@ function menuButton() {
 	  setting_type : "call_to_actions",
 	  composerinputdisabled :"TRUE",
 	  thread_state : "existing_thread",
-	  call_to_actions:[
-			{
-				type:"postback",
-				title:"¿Tiempo de espera?",
-				payload:"ACTUALIZAR"
-			},
-			{
-				type:"postback",
-				title:"Ver Promociones",
-				payload:"DEVELOPER_DEFINED_PAYLOAD_FOR_START_ORDER"
-			}
-	  ]    
+	  call_to_actions: [
+		{
+			type: "postback",
+			title: "Difference between CS and DMET",
+			payload: "GET_DMET_SEM_COURSES"
+		},
+		{
+			type: "postback",
+			title: "View courses for specific CS semesters",
+			payload: "GET_CS_SEM_COURSES"
+		},
+		{
+			type: "postback",
+			title: "View courses for specific DMET semesters",
+			payload: "GET_DMET_SEM_COURSES"
+		},
+		{
+			type: "postback",
+			title: "Get the prerequisites of a specific course",
+			payload: "GET_PREREQ"
+		}
+  	  ]     
 	}
 	request({
 	  uri: 'https://graph.facebook.com/v2.6/me/thread_settings',
@@ -958,3 +968,62 @@ function isDefined(obj) {
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
 })
+
+
+
+
+
+
+
+
+
+
+
+
+fb-persistent-menu --token <EAACkvzAhabEBAHPfEKFcGaqfWQfaKDZAceGo8oP6jkuRkAJLSQNzt4GDbyXkYEQOwd5EZAkFpBJDosf2qjcPOpsq5iMRwBl6yhL6LZAcpnB1SUuWo9OxZAdJpKqOptJtij9QnBjA46yaZAFr3f1wVZBYaZA3xEFZCLMQxJDbDJjPcy5KPmmZB0amp> --settings '{
+	"persistent_menu": [
+		{
+			"locale": "default",
+			"composer_input_disabled": false,
+			"call_to_actions": [
+				{
+					"type": "nested",
+					"title": "MET",
+					"call_to_actions": [
+						  {
+								"type": "postback",
+								"title": "Difference between CS and DMET",
+								"payload": "GET_DMET_SEM_COURSES"
+						  },
+						  {
+								"type": "postback",
+								"title": "View courses for specific CS semesters",
+								"payload": "GET_CS_SEM_COURSES"
+						  },
+						  {
+								"type": "postback",
+								"title": "View courses for specific DMET semesters",
+								"payload": "GET_DMET_SEM_COURSES"
+						  },
+						  {
+								"type": "postback",
+								"title": "Get the prerequisites of a specific course",
+								"payload": "GET_PREREQ"
+						  }
+					]
+				},
+				{
+					"type": "postback",
+					"title": "Get Started",
+					"payload": "GET_STARTED"
+				},
+				{
+					"type": "web_url",
+					"title": "Search now",
+					"url": "https://www.google.com/",
+					"webview_height_ratio": "full"
+				}
+			]
+		}
+	]
+  }'
