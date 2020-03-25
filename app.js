@@ -776,6 +776,10 @@ function receivedPostback(event) {
 		case "GET_PREREQ": 
 				sendToApiAi(senderID, "prerequisite");
 			break;
+
+		case "GET_INFO": 
+			//sendToApiAi(senderID, "prerequisite");
+		break;
 		default:
 			//unindentified payload
 			sendTextMessage(senderID, "I'm not sure what you want. Can you be more specific?");
