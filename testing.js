@@ -378,33 +378,6 @@ var program =
       "filterTill(Lang,HighestTakenCourse,T,TT). "+
       "\n\n failed_course(123,csen102,o)."; 
 
-let notWorking1ID = "43-4861";
-let notWorking1 = `student(43-4861,marwan,cs,5,2.4).
-      passed_course(43-4861,chemp102).
-      passed_course(43-4861,chemt102).
-      passed_course(43-4861,csen102).
-      passed_course(43-4861,csen202).
-      passed_course(43-4861,csen301).
-      passed_course(43-4861,csen401).
-      passed_course(43-4861,csen403).
-      passed_course(43-4861,csen501).
-      passed_course(43-4861,csen502).
-      passed_course(43-4861,csen503).
-      passed_course(43-4861,csen605).
-      passed_course(43-4861,csis402).
-      passed_course(43-4861,dmet501).
-      passed_course(43-4861,edpt201).
-      passed_course(43-4861,elct201).
-      passed_course(43-4861,elct301).
-      passed_course(43-4861,engd301).
-      passed_course(43-4861,math103).
-      passed_course(43-4861,math203).
-      passed_course(43-4861,math301).
-      passed_course(43-4861,math501).
-      passed_course(43-4861,phys101).
-      passed_course(43-4861,phys202).
-      passed_course(43-4861,physp301).
-      passed_course(43-4861,physt301).`;
 
 let notWorking2ID = "43-7148";
 let notWorking2 = `student(43-7148,nada,cs,5,3).
@@ -575,10 +548,10 @@ failed_course(43-12132,elct401,a).
 failed_course(43-12132,math401,a).
 failed_course(43-12132,comm401,a).`;
 
-session.consult(program+"\n\n"+notWorking2.toLowerCase());
+session.consult(program+"\n\n"+notWorking4.toLowerCase());
 
 // Query the goal
-session.query("getSchedule("+notWorking2ID+",X).");
+session.query("getSchedule("+notWorking4ID+",X).");
 
 // Show answers
 session.answers(x => console.log(pl.format_answer(x)));
