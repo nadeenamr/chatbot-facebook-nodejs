@@ -778,7 +778,7 @@ function receivedPostback(event) {
 			break;
 
 		case "GET_INFO": 
-			//hey
+			
 		break;
 		default:
 			//unindentified payload
