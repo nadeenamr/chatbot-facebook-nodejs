@@ -778,7 +778,7 @@ function receivedPostback(event) {
 			break;
 
 		case "GET_INFO": 
-			//sendToApiAi(senderID, "prerequisite");
+			
 		break;
 		default:
 			//unindentified payload
