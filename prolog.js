@@ -368,7 +368,8 @@ var program =
       "lang_course(Lang,ThisLevel,H,_), "+
       "lang_course(Lang,Level,HighestTakenCourse,_), "+
       "ThisLevel=<Level, "+
-      "filterTill(Lang,HighestTakenCourse,T,TT). ";
+      "filterTill(Lang,HighestTakenCourse,T,TT). "+
+      "\n\n failed_course(123,csen102,o).";
 
 function executeQuery(program, thisQuery) {
 
