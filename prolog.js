@@ -395,12 +395,11 @@ function executeQuery(program, thisQuery) {
       var length = str[1].length;
       var substring = str[1].substring(0,length-3);
       schedule = substring;
+      return schedule; 
     }
   });
 
   console.log( "----> PROLOG ANSWER: " +schedule);
-  
-  return schedule; 
 
 } 
 
