@@ -469,7 +469,7 @@ function sendImageMessage(recipientId, imageUrl) { // Send an image using the Se
 	callSendAPI(messageData);
 }
 
-function sendGifMessage(recipientId) { // Send a Gif using the Send API.
+function sendGifMessage(gifAddress, recipientId) { // Send a Gif using the Send API.
 	var messageData = {
 		recipient: {
 			id: recipientId
@@ -478,7 +478,7 @@ function sendGifMessage(recipientId) { // Send a Gif using the Send API.
 			attachment: {
 				type: "image",
 				payload: {
-					url: config.SERVER_URL + "/assets/instagram_logo.gif"
+					url: gifAddress
 				}
 			}
 		}
@@ -750,7 +750,7 @@ function receivedPostback(event) {
 				sendToApiAi(senderID, "What is the difference between CS and DMET?");
 			break;
 		case "GET_PREREQ": 
-				sendToApiAi(senderID, "prerequisite");
+				sendGifMessage("https://media.giphy.com/media/F6PFPjc3K0CPe/giphy.gif", senderID);
 			break;
 		case "GET_INFO": 
 			

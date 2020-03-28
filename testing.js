@@ -543,23 +543,24 @@ session.query("getNormalSchedule("+notWorking1ID+",X).");
 // Show answers
 //session.answers(x => console.log(pl.format_answer(x)));
 
-var schedule = [];
+var schedule;
+var list = [];
 
-  session.answers(x => { // Show answers
+session.answers(x => { // Show answers
     var str = pl.format_answer(x);
     console.log("UNFORMATED PROLOG ANSWER--->"+str);
     if(str!="limit exceeded ;"){
       var res = str.split("=");
       if(str!="false."){
-            str = res[1].split("[");
-            var length = str[1].length;
-            var substring = str[1].substring(0,length-3);
-            schedule.push(substring);
-            
+          str = res[1].split("[");
+          var length = str[1].length;
+          var substring = str[1].substring(0,length-3);
+          schedule = substring;        
       }
-    }
-     
-  });
+    }  
+    console.log( "----> PROLOG ANSWER: " +schedule); 
+    list.push(schedule); 
+});
 
-  console.log( "----> PROLOG ANSWER: " +schedule);
+console.log("FINAL LIST: " +list);
   
