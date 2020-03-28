@@ -10,7 +10,6 @@ const pg = require('pg');
 const app = express();
 const uuid = require('uuid');
 const userData = require('./user');
-const colors = require('./colors');
 const students = require('./students');
 const courses = require('./courses');
 const prolog = require('./prolog');
@@ -202,9 +201,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				}, studentIDAndTranscript);
 			}, sender);
 			break;
-		case "testing": 
-				sendGifMessage(sender);
-			break;
 		case "welcomeUser":
 				students.newOrRegularStudent(function(isRegular){
 					let reply;
@@ -256,26 +252,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let reply = `Course codes are: ${allCoursesString}.`;
 				sendTextMessage(sender, reply);
 				}, parameters['semesters']);
-			break;
-		case "buy-iphone8":
-			colors.readUserColor(function(color){
-				if(color==''){
-					sendTextMessage(sender, `In what color would you like to have it?`);
-				}else{
-					sendTextMessage(sender, `Would you like to order it in your favourite color ${color}?`);
-				}}, sender
-			)
-			break;
-		case "iphone8_colors.favourite":
-			colors.updateUserColor(parameters['color'], sender);
-			sendTextMessage(sender, `Oh, I like it too! I'll remember that.`);
-			break;
-		case "iphone-colors":
-			colors.readAllColors(function(allColors){
-				let allColorsString = allColors.join(", ");
-				let reply = `IPhone 8 is available in ${allColorsString}. What is your favorite color?`;
-				sendTextMessage(sender, reply);
-			});
 			break;
 		// video no.35
 		case "detailed_applications": 
@@ -776,7 +752,6 @@ function receivedPostback(event) {
 		case "GET_PREREQ": 
 				sendToApiAi(senderID, "prerequisite");
 			break;
-
 		case "GET_INFO": 
 			
 		break;

@@ -1,6 +1,6 @@
 
-var pl = require( "tau-prolog" );
-require( "tau-prolog/modules/lists" )( pl );
+var pl = require("tau-prolog");
+require("tau-prolog/modules/lists")( pl );
 
 var session = pl.create( 1000 );
 
@@ -9,6 +9,8 @@ var session = pl.create( 1000 );
 var program = 
     
       ":- use_module(library(lists))." + // Load the lists module
+      //":- set_prolog_stack(global, limit(100 000 000 000))."+
+      //"set_prolog_flag(stack_limit, 10 000 000 000)."+
 
       "subtract([], _, []). "+
       "subtract([Head|Tail], L2, L3) :- "+
@@ -192,10 +194,9 @@ var program =
       "subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses), "+
       "cs_semester_courses(WantedSemester,SemCourses), "+
       "append(NotTakenOrFailedCourses,SemCourses,PossibleCourses), "+
-      "cannotTake(StudentID,CantTakeCourses), "+
-      "subtract(PossibleCourses,CantTakeCourses,AllowedCourses), "+
-      "filterSameSemesterCategory(AllowedCourses,WantedSemester,AllowedFilteredCourses), "+
-      "addCSCourses(StudentID,LangCourses,AllowedFilteredCourses,WantedSemester,Courses). "+
+      "\\+cannotTake(StudentID,_), "+
+      "filterSameSemesterCategory(PossibleCourses,WantedSemester,PossibleFilteredCourses), "+
+      "addCSCourses(StudentID,LangCourses,PossibleFilteredCourses,WantedSemester,Courses). "+
 
       "getScheduleHelper(StudentID,Courses):- "+
       "student(StudentID,_,cs,CurrentSemester,_), "+
@@ -208,9 +209,11 @@ var program =
       "subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses), "+
       "cs_semester_courses(WantedSemester,SemCourses), "+
       "append(NotTakenOrFailedCourses,SemCourses,PossibleCourses), "+
-      "\\+cannotTake(StudentID,_), "+
-      "filterSameSemesterCategory(PossibleCourses,WantedSemester,PossibleFilteredCourses), "+
-      "addCSCourses(StudentID,LangCourses,PossibleFilteredCourses,WantedSemester,Courses). "+
+      "cannotTake(StudentID,CantTakeCourses), "+
+      "subtract(PossibleCourses,CantTakeCourses,AllowedCourses), "+
+      "filterSameSemesterCategory(AllowedCourses,WantedSemester,AllowedFilteredCourses), "+
+      "addCSCourses(StudentID,LangCourses,AllowedFilteredCourses,WantedSemester,Courses). "+
+
 
       /*--- addCSCourses ---*/
 
@@ -376,23 +379,29 @@ var program =
       "lang_course(Lang,Level,HighestTakenCourse,_), "+
       "ThisLevel=<Level, "+
       "filterTill(Lang,HighestTakenCourse,T,TT). "+
-      "\n\n failed_course(123,csen102,o)."; 
 
-
-let notWorking2ID = "43-7148";
-let notWorking2 = `student(43-7148,nada,cs,5,3).
-failed_course(43-7148,rpw401,a).
-failed_course(43-7148,de202,a).
+      "getNormalSchedule(StudentID,Courses):- "+
+            "student(StudentID,_,cs,CurrentSemester,_), "+
+            "WantedSemester is CurrentSemester+1, "+
+            "getNextDECourse(StudentID,DECourse), "+
+            "getNextENGCourse(StudentID,ENGCourse), "+
+            "append(DECourse,ENGCourse,LangCourses), "+
+            "soFarCourses(CurrentSemester,AllPastCourses), "+
+            "studentPassedCourses(StudentID,PassedCourses), "+
+            "subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses), "+
+            "cs_semester_courses(WantedSemester,SemCourses), "+
+            "append(NotTakenOrFailedCourses,SemCourses,PossibleCourses), "+
+            "cannotTake(StudentID,CantTakeCourses), "+
+            "subtract(PossibleCourses,CantTakeCourses,AllowedCourses), "+
+            "filterSameSemesterCategory(AllowedCourses,WantedSemester,AllowedFilteredCourses), "+
+            "addCSCourses(StudentID,LangCourses,AllowedFilteredCourses,WantedSemester,Courses). ";
+      
+let notWorking1ID = "43-7148";
+let notWorking1 = `student(43-7148,nada,cs,5,3).
 passed_course(43-7148,cps402).
 passed_course(43-7148,as102).
 passed_course(43-7148,ae101).
 passed_course(43-7148,sm101).
-failed_course(43-7148,csen501,o).
-failed_course(43-7148,csen605,a).
-failed_course(43-7148,csen503,a).
-failed_course(43-7148,dmet501,a).
-failed_course(43-7148,math501,a).
-failed_course(43-7148,csen502,o).
 passed_course(43-7148,chemp102).
 passed_course(43-7148,chemt102).
 passed_course(43-7148,engd301).
@@ -404,7 +413,6 @@ passed_course(43-7148,math203).
 passed_course(43-7148,phys202).
 passed_course(43-7148,edpt201).
 passed_course(43-7148,csen301).
-failed_course(43-7148,elct201,o).
 passed_course(43-7148,elct301).
 passed_course(43-7148,math301).
 passed_course(43-7148,physp301).
@@ -412,12 +420,22 @@ passed_course(43-7148,physt301).
 passed_course(43-7148,csis402).
 passed_course(43-7148,csen401).
 passed_course(43-7148,csen403).
+
+failed_course(43-7148,rpw401,a).
+failed_course(43-7148,de202,a).
+failed_course(43-7148,csen501,o).
+failed_course(43-7148,csen605,a).
+failed_course(43-7148,csen503,a).
+failed_course(43-7148,dmet501,a).
+failed_course(43-7148,math501,a).
+failed_course(43-7148,csen502,o).
+failed_course(43-7148,elct201,o).
 failed_course(43-7148,elct401,o).
 failed_course(43-7148,math401,o).
 failed_course(43-7148,comm401,o).`;
 
-let notWorking3ID = "43-18800";
-let notWorking3 = `student(43-18800,farah,cs,5,1.6).
+let notWorking2ID = "43-18800";
+let notWorking2 = `student(43-18800,farah,cs,5,1.6).
 passed_course(43-18800,de202).
 passed_course(43-18800,as102).
 passed_course(43-18800,sm101).
@@ -438,40 +456,8 @@ failed_course(43-18800,physp301,a).
 failed_course(43-18800,physt301,o).
 failed_course(43-18800,comm401,a).`;
 
-let notWorking4ID = "43-9317";
-let notWorking4 = `student(43-9317,nadia,cs,5,2.5).
-passed_course(43-9317,de202).
-passed_course(43-9317,cps402).
-passed_course(43-9317,as102).
-passed_course(43-9317,rpw401).
-passed_course(43-9317,sm101).
-passed_course(43-9317,chemp102).
-passed_course(43-9317,chemt102).
-passed_course(43-9317,engd301).
-passed_course(43-9317,csen102).
-passed_course(43-9317,math103).
-passed_course(43-9317,phys101).
-passed_course(43-9317,csen202).
-passed_course(43-9317,math203).
-passed_course(43-9317,phys202).
-passed_course(43-9317,edpt201).
-passed_course(43-9317,csen301).
-passed_course(43-9317,elct201).
-passed_course(43-9317,elct301).
-passed_course(43-9317,math301).
-passed_course(43-9317,physp301).
-passed_course(43-9317,physt301).
-passed_course(43-9317,csis402).
-passed_course(43-9317,csen401).
-passed_course(43-9317,csen501).
-passed_course(43-9317,csen605).
-passed_course(43-9317,csen503).
-passed_course(43-9317,dmet501).
-passed_course(43-9317,math501).
-passed_course(43-9317,csen502).`;
-
-let notWorking5ID = "43-4877";
-let notWorking5 = `student(43-4877,youssef,cs,5,3.8).
+let notWorking3ID = "43-4877";
+let notWorking3 = `student(43-4877,youssef,cs,5,3.8).
 passed_course(43-4877,de101).
 passed_course(43-4877,as102).
 passed_course(43-4877,ae101).
@@ -496,8 +482,8 @@ failed_course(43-4877,csen403,o).
 failed_course(43-4877,elct401,o).
 failed_course(43-4877,comm401,o).`;
 
-let notWorking6ID = "43-9156";
-let notWorking6 = `student(43-9156,omar,cs,5,3.9).
+let notWorking4ID = "43-9156";
+let notWorking4 = `student(43-9156,omar,cs,5,3.9).
 passed_course(43-9156,cps402).
 passed_course(43-9156,as102).
 passed_course(43-9156,sm101).
@@ -518,8 +504,8 @@ failed_course(43-9156,math301,o).
 passed_course(43-9156,physp301).
 failed_course(43-9156,csis402,a).`;
 
-let notWorking7ID = "43-12132";
-let notWorking7 = `student(43-12132,mina,cs,5,3.76).
+let notWorking5ID = "43-12132";
+let notWorking5 = `student(43-12132,mina,cs,5,3.76).
 failed_course(43-12132,de303,a).
 passed_course(43-12132,cps402).
 passed_course(43-12132,as102).
@@ -548,12 +534,32 @@ failed_course(43-12132,elct401,a).
 failed_course(43-12132,math401,a).
 failed_course(43-12132,comm401,a).`;
 
-session.consult(program+"\n\n"+notWorking4.toLowerCase());
+session.consult(program+"\n\n"+notWorking1.toLowerCase());
 
 // Query the goal
-session.query("getSchedule("+notWorking4ID+",X).");
+//session.query("getSchedule("+notWorking1ID+",X).");
+session.query("getNormalSchedule("+notWorking1ID+",X).");
 
 // Show answers
-session.answers(x => console.log(pl.format_answer(x)));
+//session.answers(x => console.log(pl.format_answer(x)));
 
-//console.log(myString.toLowerCase())
+var schedule = [];
+
+  session.answers(x => { // Show answers
+    var str = pl.format_answer(x);
+    console.log("UNFORMATED PROLOG ANSWER--->"+str);
+    if(str!="limit exceeded ;"){
+      var res = str.split("=");
+      if(str!="false."){
+            str = res[1].split("[");
+            var length = str[1].length;
+            var substring = str[1].substring(0,length-3);
+            schedule.push(substring);
+            
+      }
+    }
+     
+  });
+
+  console.log( "----> PROLOG ANSWER: " +schedule);
+  

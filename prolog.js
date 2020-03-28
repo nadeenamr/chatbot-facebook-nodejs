@@ -390,7 +390,7 @@ function executeQuery(program, thisQuery) {
     console.log("QUERY ENTERED: "+thisQuery);
     console.log("UNFORMATED PROLOG ANSWER--->"+str);
     var res = str.split("=");
-    if(str!="false."){
+    if(str!="false." && str!="limit exceeded ;"){
       str = res[1].split("[");
       var length = str[1].length;
       var substring = str[1].substring(0,length-3);
