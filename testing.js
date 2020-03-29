@@ -13,16 +13,20 @@ var program =
       //"set_prolog_flag(stack_limit, 10 000 000 000)."+
 
       "subtract([], _, []). "+
+
       "subtract([Head|Tail], L2, L3) :- "+
-      "memberchk(Head, L2), "+
-      "!, subtract(Tail, L2, L3). "+
+            "memberchk(Head, L2), "+
+            "!,"+
+            "subtract(Tail, L2, L3). "+
+
       "subtract([Head|Tail1], L2, [Head|Tail3]) :- "+
-      "subtract(Tail1, L2, Tail3). "+
+            "subtract(Tail1, L2, Tail3). "+
 
       "memberchk(X,[X|_]) :- "+
-      "!. "+ 
+            "!. "+ 
+
       "memberchk(X,[_|T]):- "+
-      "memberchk(X,T). "+
+            "memberchk(X,T). "+
 
       "cs_semester(1,36)."+ /* 38/36 */
       "cs_semester(2,28)."+ /* 30/28 */
@@ -31,7 +35,7 @@ var program =
       "cs_semester(5,28)."+ /* 28/30 */
       "cs_semester(6,24)."+
       "cs_semester(7,24)."+
-
+      "cs_semester(8,18)."+
       "cs_semester(9,20)."+
       "cs_semester(10,26)."+
 
@@ -102,18 +106,18 @@ var program =
       "cs_course(csen1003,10,4)."+
 
       "cs_semester_courses(SemesterNum,Courses):- "+
-      "setof(X,Y^cs_course(X,SemesterNum,Y),Courses)."+
+            "setof(X,Y^cs_course(X,SemesterNum,Y),Courses)."+
 
       "cs_collective_credithours([],0)."+
-      "cs_collective_credithours([H|T],CH):- "+
-      "cs_course(H,_,X), "+
-      "cs_collective_credithours(T,X1), "+
-      "CH is X+X1."+
+            "cs_collective_credithours([H|T],CH):- "+
+            "cs_course(H,_,X), "+
+            "cs_collective_credithours(T,X1), "+
+            "CH is X+X1."+
 
       "cs_collective_credithours([H|T],CH):- "+
-      "lang_course(_,_,H,X), "+
-      "cs_collective_credithours(T,X1), "+
-      "CH is X+X1."+
+            "lang_course(_,_,H,X), "+
+            "cs_collective_credithours(T,X1), "+
+            "CH is X+X1."+
 
       "prereq(math203,math103)."+
       "prereq(phys202,phys101)."+
@@ -158,229 +162,31 @@ var program =
       "prereq(dmet1003,dmet603)."+
       "prereq(dmet1003,comm401)."+
 
-
       /*--- cannotTake ---*/
 
       "cannotTake(StudentID, Courses):- "+
-      "setof(X,cannot_take_helper(StudentID,X),Courses). "+
+            "setof(X,cannot_take_helper(StudentID,X),Courses). "+
 
       "cannot_take_helper(StudentID, CourseCode):- "+
-      "failed_course(StudentID,OtherCourseCode,a), "+
-      "prereq(CourseCode,OtherCourseCode). "+
+            "failed_course(StudentID,OtherCourseCode,a), "+
+            "prereq(CourseCode,OtherCourseCode). "+
 
       /*--- studentPassedCourses ---*/
 
       "studentPassedCourses(StudentID,Courses):- "+
-      "setof(X,passed_course(StudentID,X),Courses). "+
+            "setof(X,passed_course(StudentID,X),Courses). "+
 
       /*--- studentFailedCourses ---*/
 
       "studentFailedCourses(StudentID,Courses):- "+
-      "setof(X,Y^failed_course(StudentID,X,Y),Courses). "+
+            "setof(X,Y^failed_course(StudentID,X,Y),Courses). "+
 
       /*--- getSchedule ---*/
 
       "getSchedule(StudentID,Courses):- "+
-      "getScheduleHelper(StudentID,Courses). "+
+            "ScheduleHelper(StudentID,Courses). "+
 
       "getScheduleHelper(StudentID,Courses):- "+
-      "student(StudentID,_,cs,CurrentSemester,_), "+
-      "WantedSemester is CurrentSemester+1, "+
-      "getNextDECourse(StudentID,DECourse), "+
-      "getNextENGCourse(StudentID,ENGCourse), "+
-      "append(DECourse,ENGCourse,LangCourses), "+
-      "soFarCourses(CurrentSemester,AllPastCourses), "+
-      "studentPassedCourses(StudentID,PassedCourses), "+
-      "subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses), "+
-      "cs_semester_courses(WantedSemester,SemCourses), "+
-      "append(NotTakenOrFailedCourses,SemCourses,PossibleCourses), "+
-      "\\+cannotTake(StudentID,_), "+
-      "filterSameSemesterCategory(PossibleCourses,WantedSemester,PossibleFilteredCourses), "+
-      "addCSCourses(StudentID,LangCourses,PossibleFilteredCourses,WantedSemester,Courses). "+
-
-      "getScheduleHelper(StudentID,Courses):- "+
-      "student(StudentID,_,cs,CurrentSemester,_), "+
-      "WantedSemester is CurrentSemester+1, "+
-      "getNextDECourse(StudentID,DECourse), "+
-      "getNextENGCourse(StudentID,ENGCourse), "+
-      "append(DECourse,ENGCourse,LangCourses), "+
-      "soFarCourses(CurrentSemester,AllPastCourses), "+
-      "studentPassedCourses(StudentID,PassedCourses), "+
-      "subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses), "+
-      "cs_semester_courses(WantedSemester,SemCourses), "+
-      "append(NotTakenOrFailedCourses,SemCourses,PossibleCourses), "+
-      "cannotTake(StudentID,CantTakeCourses), "+
-      "subtract(PossibleCourses,CantTakeCourses,AllowedCourses), "+
-      "filterSameSemesterCategory(AllowedCourses,WantedSemester,AllowedFilteredCourses), "+
-      "addCSCourses(StudentID,LangCourses,AllowedFilteredCourses,WantedSemester,Courses). "+
-
-
-      /*--- addCSCourses ---*/
-
-      "addCSCourses(_,List,[],_,List). "+
-
-      "addCSCourses(StudentID,List,[Course|T2],StudentSemester,Courses):- "+ 
-      "cs_collective_credithours(List,TotalCH), "+
-      "cs_course(Course,_,CH), "+
-      "Temp is TotalCH+CH, "+
-      "getMaxHours(StudentID,StudentSemester,MaxHours), "+ 
-      "Temp>MaxHours, "+
-      "addCSCourses(StudentID,List,T2,StudentSemester,Courses). "+
-
-      "addCSCourses(StudentID,List,[Course|T2],StudentSemester,Courses):- "+
-      "cs_course(Course,_,CH), "+
-      "cs_collective_credithours(List,TotalCH), "+
-      "Temp is TotalCH+CH, "+
-      "getMaxHours(StudentID,StudentSemester,MaxHours), "+
-      "Temp=<MaxHours, "+
-      "addCSCourses(StudentID,[Course|List],T2,StudentSemester,Courses). "+
-
-      /*--- isSameSemesterCategory ---*/
-
-      "isSameSemesterCategory(CourseSemesterNumber,CurrentSemesterNumber,1):- "+
-      "member(CourseSemesterNumber,[2,4,6,8,10]), "+
-      "member(CurrentSemesterNumber,[2,4,6,8,10]). "+
-
-      "isSameSemesterCategory(CourseSemesterNumber,CurrentSemesterNumber,1):- "+
-      "member(CourseSemesterNumber,[1,3,5,7,9]), "+
-      "member(CurrentSemesterNumber,[1,3,5,7,9]). "+
-
-      /*--- filterSameSemesterCategory ---*/
-
-      "filterSameSemesterCategory([],_,[]). "+
-
-      "filterSameSemesterCategory([H|T],SemesterNumber,[H|O]):- "+
-      "cs_course(H,CourseSemesterNumber,_), "+
-      "isSameSemesterCategory(SemesterNumber,CourseSemesterNumber,1), "+
-      "filterSameSemesterCategory(T,SemesterNumber,O). "+
-
-      "filterSameSemesterCategory([H|T],SemesterNumber,O):- "+
-      "cs_course(H,CourseSemesterNumber,_), "+
-      "\\+isSameSemesterCategory(SemesterNumber,CourseSemesterNumber,1), "+
-      "filterSameSemesterCategory(T,SemesterNumber,O). "+
-
-      /*--- getMaxHours ---*/
-
-      "getMaxHours(StudentID,Semester,SemesterHours):- "+ // probation students get no extra credit hours
-      "student(StudentID,_,cs,_,StudentGPA), "+
-      "StudentGPA>3.7, "+
-      "cs_semester(Semester,SemesterHours). "+
-            
-
-      "getMaxHours(StudentID,Semester,SemesterHours):- "+ 
-      "student(StudentID,_,cs,_,StudentGPA), "+
-      "StudentGPA=<3.7, "+
-      "cs_semester(Semester,SemesterHours), "+
-      "SemesterHours>=34. "+
-
-      "getMaxHours(StudentID,Semester,34):- "+
-      "student(StudentID,_,cs,_,StudentGPA), "+
-      "StudentGPA=<3.7, "+
-      "cs_semester(Semester,SemesterHours), "+
-      "Temp is SemesterHours+3, "+
-      "SemesterHours<34, Temp>34. "+
-
-      "getMaxHours(StudentID,Semester,TotalHours):- "+
-      "student(StudentID,_,cs,_,StudentGPA), "+
-      "StudentGPA=<3.7, "+
-      "cs_semester(Semester,SemesterHours), "+
-      "TotalHours is SemesterHours+3, "+
-      "TotalHours=<34. "+
-
-      /*--- soFarCourses ---*/
-
-      "soFarCourses(0,[]). "+
-
-      "soFarCourses(Semester,Courses):- "+
-      "cs_semester_courses(Semester,SemesterCourses), "+
-      "NextSemester is Semester-1, "+
-      "soFarCourses(NextSemester,OtherCourses), "+
-      "append(OtherCourses,SemesterCourses,Courses). "+
-
-      /*--- getNextDECourse ---*/
-
-      "getNextDECourse(StudentID,CourseCode):- "+
-      "studentPassedCourses(StudentID,Courses), "+
-      "filterLangCourses(de,Courses,DECoursesTaken), "+
-      "highestLangCourse(de,DECoursesTaken,HighestDETaken), "+
-      "filterTill(de,HighestDETaken,[de101,de202,de303,de404],LeftDECourses), "+
-      "getLangHead(LeftDECourses,CourseCode). "+
-
-      "getNextDECourse(StudentID,[de101]):- "+
-      "studentPassedCourses(StudentID,Courses), "+
-      "filterLangCourses(de,Courses,[]). "+
-
-      /*--- getNextENGCourse ---*/
-
-      "getNextENGCourse(StudentID,CourseCode):- "+
-      "studentPassedCourses(StudentID,Courses), "+
-      "filterLangCourses(eng,Courses,ENGCoursesTaken), "+
-      "highestLangCourse(eng,ENGCoursesTaken,HighestENGTaken), "+
-      "filterTill(eng,HighestENGTaken,[ae101,as102,sm101,cps402,rpw401],LeftENGCourses), "+
-      "getLangHead(LeftENGCourses,CourseCode). "+
-
-      "getNextENGCourse(StudentID,[ae101]):- "+
-      "studentPassedCourses(StudentID,Courses), "+
-      "filterLangCourses(eng,Courses,[]). "+
-
-      /*--- getLangHead ---*/
-
-      "getLangHead([],[]). "+
-
-      "getLangHead([H|_],[H]):- "+
-      "lang_course(_,_,H,_). "+
-
-      /*--- filterLangCourses ---*/
-
-      "filterLangCourses(_,[],[]). "+
-
-      "filterLangCourses(Lang,[H|T],[H|TT]):- "+
-      "lang_course(Lang,_,H,_), "+
-      "filterLangCourses(Lang,T,TT). "+
-
-      "filterLangCourses(Lang,[H|T],TT):- "+
-      "\\+lang_course(Lang,_,H,_), "+
-      "filterLangCourses(Lang,T,TT). "+
-
-      /*--- highestLangCourse ---*/
-
-      "highestLangCourse(Lang,[H|T],HighestLangCourse):- "+
-      "highestLangHelper(Lang,T,H,HighestLangCourse). "+
-
-      "highestLangHelper(_,[],X,X). "+
-
-      "highestLangHelper(Lang,[H|T],HighestSoFar,HighestLangCourse):- "+
-      "lang_course(Lang,ThisLevel,H,_), "+
-      "lang_course(Lang,Level,HighestSoFar,_), "+
-      "ThisLevel>Level, "+
-      "highestLangHelper(Lang,T,H,HighestLangCourse). "+
-
-      "highestLangHelper(Lang,[H|T],HighestSoFar,HighestLangCourse):- "+
-      "lang_course(Lang,ThisLevel,H,_), "+
-      "lang_course(Lang,ThisLevel,H,_), "+
-      "lang_course(Lang,Level,HighestSoFar,_), "+
-      "ThisLevel<Level, "+
-      "highestLangHelper(Lang,T,HighestSoFar,HighestLangCourse). "+
-
-      /*--- filterTill ---*/
-
-      "filterTill(_,_,[],[]). "+
-
-      "filterTill(_,[],_,[]). "+
-
-      "filterTill(Lang,HighestTakenCourse,[H|T],[H|TT]):- "+
-      "lang_course(Lang,ThisLevel,H,_), "+
-      "lang_course(Lang,Level,HighestTakenCourse,_), "+
-      "ThisLevel>Level, "+
-      "filterTill(Lang,HighestTakenCourse,T,TT). "+
-
-      "filterTill(Lang,HighestTakenCourse,[H|T],TT):- "+
-      "lang_course(Lang,ThisLevel,H,_), "+
-      "lang_course(Lang,Level,HighestTakenCourse,_), "+
-      "ThisLevel=<Level, "+
-      "filterTill(Lang,HighestTakenCourse,T,TT). "+
-
-      "getNormalSchedule(StudentID,Courses):- "+
             "student(StudentID,_,cs,CurrentSemester,_), "+
             "WantedSemester is CurrentSemester+1, "+
             "getNextDECourse(StudentID,DECourse), "+
@@ -394,7 +200,215 @@ var program =
             "cannotTake(StudentID,CantTakeCourses), "+
             "subtract(PossibleCourses,CantTakeCourses,AllowedCourses), "+
             "filterSameSemesterCategory(AllowedCourses,WantedSemester,AllowedFilteredCourses), "+
-            "addCSCourses(StudentID,LangCourses,AllowedFilteredCourses,WantedSemester,Courses). ";
+            "addCSCourses(StudentID,LangCourses,AllowedFilteredCourses,Courses). "+
+
+      "getScheduleHelper(StudentID,Courses):- "+
+            "student(StudentID,_,cs,CurrentSemester,_), "+
+            "WantedSemester is CurrentSemester+1, "+
+            "getNextDECourse(StudentID,DECourse), "+
+            "getNextENGCourse(StudentID,ENGCourse), "+
+            "append(DECourse,ENGCourse,LangCourses), "+
+            "soFarCourses(CurrentSemester,AllPastCourses), "+
+            "studentPassedCourses(StudentID,PassedCourses), "+
+            "subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses), "+
+            "cs_semester_courses(WantedSemester,SemCourses), "+
+            "append(NotTakenOrFailedCourses,SemCourses,PossibleCourses), "+
+            "\\+cannotTake(StudentID,_), "+
+            "filterSameSemesterCategory(PossibleCourses,WantedSemester,PossibleFilteredCourses), "+
+            "addCSCourses(StudentID,LangCourses,PossibleFilteredCourses,Courses). "+
+
+      /*--- addCSCourses ---*/
+
+      "addCSCourses(_,List,[],List). "+
+
+      "addCSCourses(StudentID,List,[Course|T2],Courses):- "+ 
+            "cs_collective_credithours(List,TotalCH), "+
+            "cs_course(Course,_,CH), "+
+            "Temp is TotalCH+CH, "+
+            "getMaxHours(StudentID,MaxHours), "+ 
+            "Temp>MaxHours, "+
+            "addCSCourses(StudentID,List,T2,Courses). "+
+
+      "addCSCourses(StudentID,List,[Course|T2],Courses):- "+
+            "cs_course(Course,_,CH), "+
+            "cs_collective_credithours(List,TotalCH), "+
+            "Temp is TotalCH+CH, "+
+            "getMaxHours(StudentID,MaxHours), "+
+            "Temp=<MaxHours, "+
+            "addCSCourses(StudentID,[Course|List],T2,Courses). "+
+
+      /*--- isSameSemesterCategory ---*/
+
+      "isSameSemesterCategory(CourseSemesterNumber,CurrentSemesterNumber,1):- "+
+            "member(CourseSemesterNumber,[2,4,6,8,10]), "+
+            "member(CurrentSemesterNumber,[2,4,6,8,10]). "+
+
+      "isSameSemesterCategory(CourseSemesterNumber,CurrentSemesterNumber,1):- "+
+            "member(CourseSemesterNumber,[1,3,5,7,9]), "+
+            "member(CurrentSemesterNumber,[1,3,5,7,9]). "+
+
+      /*--- filterSameSemesterCategory ---*/
+
+      "filterSameSemesterCategory([],_,[]). "+
+
+      "filterSameSemesterCategory([H|T],SemesterNumber,[H|O]):- "+
+            "cs_course(H,CourseSemesterNumber,_), "+
+            "isSameSemesterCategory(SemesterNumber,CourseSemesterNumber,1), "+
+            "filterSameSemesterCategory(T,SemesterNumber,O). "+
+
+      "filterSameSemesterCategory([H|T],SemesterNumber,O):- "+
+            "cs_course(H,CourseSemesterNumber,_), "+
+            "\\+isSameSemesterCategory(SemesterNumber,CourseSemesterNumber,1), "+
+            "filterSameSemesterCategory(T,SemesterNumber,O). "+
+
+      /*--- getMaxHours ---*/
+
+      "getMaxHours(StudentID,SemesterHours):-"+
+            "student(StudentID,_,cs,_,StudentGPA),"+
+            "StudentGPA>3.7,"+
+            "belongingCHSemester(StudentID,Semester),"+
+            "cs_semester(Semester,SemesterHours)."+
+
+
+      "getMaxHours(StudentID,SemesterHours):-"+
+            "student(StudentID,_,cs,_,StudentGPA),"+
+            "StudentGPA=<3.7,"+
+            "belongingCHSemester(StudentID,Semester),"+
+            "cs_semester(Semester,SemesterHours),"+
+            "SemesterHours>=34."+
+
+      "getMaxHours(StudentID,34):-"+
+            "student(StudentID,_,cs,_,StudentGPA),"+
+            "StudentGPA=<3.7,"+
+            "belongingCHSemester(StudentID,Semester),"+
+            "cs_semester(Semester,SemesterHours),"+
+            "Temp is SemesterHours+3,"+
+            "SemesterHours<34,"+
+            "Temp>34."+
+
+      "getMaxHours(StudentID,TotalHours):-"+
+            "student(StudentID,_,cs,_,StudentGPA),"+
+            "StudentGPA=<3.7,"+
+            "belongingCHSemester(StudentID,Semester),"+
+            "cs_semester(Semester,SemesterHours),"+
+            "TotalHours is SemesterHours+3,"+
+            "TotalHours=<34."+
+
+      /*--- belongingCHSemester ---*/
+
+      "belongingCHSemester(StudentID,Semester):-"+
+            "studentPassedCourses(StudentID,PassedCourses),"+
+            "cs_collective_credithours(PassedCourses,CH),"+
+            "getSemester(CH,1,36,[28,37,34,28,24,24,18,20,26],Semester)."+
+
+      /*--- getSemester ---*/
+
+      "getSemester(CH,AccumSem,AccumSemSum,_,AccumSem):-"+
+            "CH<AccumSemSum."+
+
+      "getSemester(CH,AccumSem,AccumSemSum,_,Semester):- "+ /* Normal Semester */
+            "CH=AccumSemSum,"+
+            "Semester is AccumSem+1."+
+
+      "getSemester(CH,AccumSem,AccumSemSum,[H|T],Semester):-"+
+            "CH>AccumSemSum,"+
+            "A is AccumSem+1,"+
+            "B is AccumSemSum+H,"+
+            "getSemester(CH,A,B,T,Semester)."+
+
+      /*--- soFarCourses ---*/
+
+      "soFarCourses(0,[]). "+
+
+      "soFarCourses(Semester,Courses):- "+
+            "cs_semester_courses(Semester,SemesterCourses), "+
+            "NextSemester is Semester-1, "+
+            "soFarCourses(NextSemester,OtherCourses), "+
+            "append(OtherCourses,SemesterCourses,Courses). "+
+
+      /*--- getNextDECourse ---*/
+
+      "getNextDECourse(StudentID,CourseCode):- "+
+            "studentPassedCourses(StudentID,Courses), "+
+            "filterLangCourses(de,Courses,DECoursesTaken), "+
+            "highestLangCourse(de,DECoursesTaken,HighestDETaken), "+
+            "filterTill(de,HighestDETaken,[de101,de202,de303,de404],LeftDECourses), "+
+            "getLangHead(LeftDECourses,CourseCode). "+
+
+      "getNextDECourse(StudentID,[de101]):- "+
+            "studentPassedCourses(StudentID,Courses), "+
+            "filterLangCourses(de,Courses,[]). "+
+
+      /*--- getNextENGCourse ---*/
+
+      "getNextENGCourse(StudentID,CourseCode):- "+
+            "studentPassedCourses(StudentID,Courses), "+
+            "filterLangCourses(eng,Courses,ENGCoursesTaken), "+
+            "highestLangCourse(eng,ENGCoursesTaken,HighestENGTaken), "+
+            "filterTill(eng,HighestENGTaken,[ae101,as102,sm101,cps402,rpw401],LeftENGCourses), "+
+            "getLangHead(LeftENGCourses,CourseCode). "+
+
+      "getNextENGCourse(StudentID,[ae101]):- "+
+            "studentPassedCourses(StudentID,Courses), "+
+            "filterLangCourses(eng,Courses,[]). "+
+
+      /*--- getLangHead ---*/
+
+      "getLangHead([],[]). "+
+
+      "getLangHead([H|_],[H]):- "+
+            "lang_course(_,_,H,_). "+
+
+      /*--- filterLangCourses ---*/
+
+      "filterLangCourses(_,[],[]). "+
+
+      "filterLangCourses(Lang,[H|T],[H|TT]):- "+
+            "lang_course(Lang,_,H,_), "+
+            "filterLangCourses(Lang,T,TT). "+
+
+      "filterLangCourses(Lang,[H|T],TT):- "+
+            "\\+lang_course(Lang,_,H,_), "+
+            "filterLangCourses(Lang,T,TT). "+
+
+      /*--- highestLangCourse ---*/
+
+      "highestLangCourse(Lang,[H|T],HighestLangCourse):- "+
+            "highestLangHelper(Lang,T,H,HighestLangCourse). "+
+
+      "highestLangHelper(_,[],X,X). "+
+
+      "highestLangHelper(Lang,[H|T],HighestSoFar,HighestLangCourse):- "+
+            "lang_course(Lang,ThisLevel,H,_), "+
+            "lang_course(Lang,Level,HighestSoFar,_), "+
+            "ThisLevel>Level, "+
+            "highestLangHelper(Lang,T,H,HighestLangCourse). "+
+
+      "highestLangHelper(Lang,[H|T],HighestSoFar,HighestLangCourse):- "+
+            "lang_course(Lang,ThisLevel,H,_), "+
+            "lang_course(Lang,ThisLevel,H,_), "+
+            "lang_course(Lang,Level,HighestSoFar,_), "+
+            "ThisLevel<Level, "+
+            "highestLangHelper(Lang,T,HighestSoFar,HighestLangCourse). "+
+
+      /*--- filterTill ---*/
+
+      "filterTill(_,_,[],[]). "+
+
+      "filterTill(_,[],_,[]). "+
+
+      "filterTill(Lang,HighestTakenCourse,[H|T],[H|TT]):- "+
+            "lang_course(Lang,ThisLevel,H,_), "+
+            "lang_course(Lang,Level,HighestTakenCourse,_), "+
+            "ThisLevel>Level, "+
+            "filterTill(Lang,HighestTakenCourse,T,TT). "+
+
+      "filterTill(Lang,HighestTakenCourse,[H|T],TT):- "+
+            "lang_course(Lang,ThisLevel,H,_), "+
+            "lang_course(Lang,Level,HighestTakenCourse,_), "+
+            "ThisLevel=<Level, "+
+            "filterTill(Lang,HighestTakenCourse,T,TT). "+
+            "\n\n failed_course(123,csen102,o).";
       
 let notWorking1ID = "43-7148";
 let notWorking1 = `student(43-7148,nada,cs,5,3).
@@ -534,33 +548,33 @@ failed_course(43-12132,elct401,a).
 failed_course(43-12132,math401,a).
 failed_course(43-12132,comm401,a).`;
 
-session.consult(program+"\n\n"+notWorking1.toLowerCase());
+session.consult(program+"\n\n"+notWorking2.toLowerCase());
 
 // Query the goal
-//session.query("getSchedule("+notWorking1ID+",X).");
-session.query("getNormalSchedule("+notWorking1ID+",X).");
+session.query("getSchedule("+notWorking2ID+",X).");
 
 // Show answers
 //session.answers(x => console.log(pl.format_answer(x)));
 
 var schedule;
-var list = [];
 
 session.answers(x => { // Show answers
     var str = pl.format_answer(x);
     console.log("UNFORMATED PROLOG ANSWER--->"+str);
-    if(str!="limit exceeded ;"){
-      var res = str.split("=");
-      if(str!="false."){
-          str = res[1].split("[");
-          var length = str[1].length;
-          var substring = str[1].substring(0,length-3);
-          schedule = substring;        
-      }
-    }  
-    console.log( "----> PROLOG ANSWER: " +schedule); 
-    list.push(schedule); 
+    if(str=='undefined'){
+      console.log("ANSWER IS UNDEFINED");
+    }else{
+      if(str!="limit exceeded ;"){
+        var res = str.split("=");
+        if(str!="false."){
+            str = res[1].split("[");
+            var length = str[1].length;
+            var substring = str[1].substring(0,length-3);
+            schedule = substring;        
+        }
+      } 
+    }
+    console.log( "----> PROLOG ANSWER: " +schedule);
 });
 
-console.log("FINAL LIST: " +list);
   
