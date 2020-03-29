@@ -16,7 +16,7 @@ var program =
 
       "subtract([Head|Tail], L2, L3) :- "+
             "memberchk(Head, L2), "+
-            "!,"+
+            "!, "+
             "subtract(Tail, L2, L3). "+
 
       "subtract([Head|Tail1], L2, [Head|Tail3]) :- "+
@@ -105,20 +105,6 @@ var program =
       "cs_course(csen1002,10,4)."+
       "cs_course(csen1003,10,4)."+
 
-      "cs_semester_courses(SemesterNum,Courses):- "+
-            "setof(X,Y^cs_course(X,SemesterNum,Y),Courses)."+
-
-      "cs_collective_credithours([],0)."+
-            "cs_collective_credithours([H|T],CH):- "+
-            "cs_course(H,_,X), "+
-            "cs_collective_credithours(T,X1), "+
-            "CH is X+X1."+
-
-      "cs_collective_credithours([H|T],CH):- "+
-            "lang_course(_,_,H,X), "+
-            "cs_collective_credithours(T,X1), "+
-            "CH is X+X1."+
-
       "prereq(math203,math103)."+
       "prereq(phys202,phys101)."+
       "prereq(csen202,csen102)."+
@@ -162,6 +148,25 @@ var program =
       "prereq(dmet1003,dmet603)."+
       "prereq(dmet1003,comm401)."+
 
+      /*--- cs_semester_courses ---*/
+
+      "cs_semester_courses(SemesterNum,Courses):- "+
+            "setof(X,Y^cs_course(X,SemesterNum,Y),Courses)."+
+
+      /*--- cs_collective_credithours ---*/      
+
+      "cs_collective_credithours([],0)."+
+
+      "cs_collective_credithours([H|T],CH):- "+
+            "cs_course(H,_,X), "+
+            "cs_collective_credithours(T,X1), "+
+            "CH is X+X1."+
+
+      "cs_collective_credithours([H|T],CH):- "+
+            "lang_course(_,_,H,X), "+
+            "cs_collective_credithours(T,X1), "+
+            "CH is X+X1."+
+
       /*--- cannotTake ---*/
 
       "cannotTake(StudentID, Courses):- "+
@@ -184,7 +189,7 @@ var program =
       /*--- getSchedule ---*/
 
       "getSchedule(StudentID,Courses):- "+
-            "ScheduleHelper(StudentID,Courses). "+
+            "getScheduleHelper(StudentID,Courses). "+
 
       "getScheduleHelper(StudentID,Courses):- "+
             "student(StudentID,_,cs,CurrentSemester,_), "+
@@ -263,36 +268,35 @@ var program =
 
       /*--- getMaxHours ---*/
 
-      "getMaxHours(StudentID,SemesterHours):-"+
-            "student(StudentID,_,cs,_,StudentGPA),"+
-            "StudentGPA>3.7,"+
+      "getMaxHours(StudentID,SemesterHours):- "+ // probation students get no extra credit hours
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA>3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
-            "cs_semester(Semester,SemesterHours)."+
-
-
-      "getMaxHours(StudentID,SemesterHours):-"+
-            "student(StudentID,_,cs,_,StudentGPA),"+
-            "StudentGPA=<3.7,"+
+            "cs_semester(Semester,SemesterHours). "+
+            
+      "getMaxHours(StudentID,SemesterHours):- "+ 
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA=<3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
-            "cs_semester(Semester,SemesterHours),"+
-            "SemesterHours>=34."+
+            "cs_semester(Semester,SemesterHours), "+
+            "SemesterHours>=34. "+
 
-      "getMaxHours(StudentID,34):-"+
-            "student(StudentID,_,cs,_,StudentGPA),"+
-            "StudentGPA=<3.7,"+
+      "getMaxHours(StudentID,34):- "+
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA=<3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
-            "cs_semester(Semester,SemesterHours),"+
-            "Temp is SemesterHours+3,"+
+            "cs_semester(Semester,SemesterHours), "+
+            "Temp is SemesterHours+3, "+
             "SemesterHours<34,"+
-            "Temp>34."+
+            "Temp>34. "+
 
-      "getMaxHours(StudentID,TotalHours):-"+
-            "student(StudentID,_,cs,_,StudentGPA),"+
-            "StudentGPA=<3.7,"+
+      "getMaxHours(StudentID,TotalHours):- "+
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA=<3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
-            "cs_semester(Semester,SemesterHours),"+
-            "TotalHours is SemesterHours+3,"+
-            "TotalHours=<34."+
+            "cs_semester(Semester,SemesterHours), "+
+            "TotalHours is SemesterHours+3, "+
+            "TotalHours=<34. "+
 
       /*--- belongingCHSemester ---*/
 
@@ -408,7 +412,8 @@ var program =
             "lang_course(Lang,Level,HighestTakenCourse,_), "+
             "ThisLevel=<Level, "+
             "filterTill(Lang,HighestTakenCourse,T,TT). "+
-            "\n\n failed_course(123,csen102,o).";
+
+      "\n\n failed_course(123,csen102,o).";      
       
 let notWorking1ID = "43-7148";
 let notWorking1 = `student(43-7148,nada,cs,5,3).
@@ -548,33 +553,36 @@ failed_course(43-12132,elct401,a).
 failed_course(43-12132,math401,a).
 failed_course(43-12132,comm401,a).`;
 
-session.consult(program+"\n\n"+notWorking2.toLowerCase());
+session.consult(program+"\n\n"+notWorking5.toLowerCase());
 
 // Query the goal
-session.query("getSchedule("+notWorking2ID+",X).");
+session.query("getSchedule("+notWorking5ID+",X).");
 
 // Show answers
-//session.answers(x => console.log(pl.format_answer(x)));
+session.answers(x => console.log(pl.format_answer(x)));
+
+/*
 
 var schedule;
+var list = [];
 
 session.answers(x => { // Show answers
     var str = pl.format_answer(x);
-    console.log("UNFORMATED PROLOG ANSWER--->"+str);
-    if(str=='undefined'){
-      console.log("ANSWER IS UNDEFINED");
-    }else{
-      if(str!="limit exceeded ;"){
-        var res = str.split("=");
-        if(str!="false."){
-            str = res[1].split("[");
-            var length = str[1].length;
-            var substring = str[1].substring(0,length-3);
-            schedule = substring;        
-        }
-      } 
-    }
-    console.log( "----> PROLOG ANSWER: " +schedule);
+    console.log("UNFORMATED PROLOG ANSWER---> "+str);
+    if(str!="limit exceeded ;"){
+      var res = str.split("=");
+      if(str!="false."){
+          str = res[1].split("[");
+          var length = str[1].length;
+          var substring = str[1].substring(0,length-3);
+          schedule = substring;        
+      }
+    }  
+    console.log("UNFORMATED PROLOG ANSWER--->" +schedule); 
+    list.push(schedule); 
 });
 
+console.log("FINAL LIST: " +list);
+
+*/
   

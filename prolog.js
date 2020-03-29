@@ -2,18 +2,24 @@
 var program = 
     
       ":- use_module(library(lists))." + // Load the lists module
+      //":- set_prolog_stack(global, limit(100 000 000 000))."+
+      //"set_prolog_flag(stack_limit, 10 000 000 000)."+
 
       "subtract([], _, []). "+
+
       "subtract([Head|Tail], L2, L3) :- "+
-      "memberchk(Head, L2), "+
-      "!, subtract(Tail, L2, L3). "+
+            "memberchk(Head, L2), "+
+            "!, "+
+            "subtract(Tail, L2, L3). "+
+
       "subtract([Head|Tail1], L2, [Head|Tail3]) :- "+
-      "subtract(Tail1, L2, Tail3). "+
+            "subtract(Tail1, L2, Tail3). "+
 
       "memberchk(X,[X|_]) :- "+
-      "!. "+ 
+            "!. "+ 
+
       "memberchk(X,[_|T]):- "+
-      "memberchk(X,T). "+
+            "memberchk(X,T). "+
 
       "cs_semester(1,36)."+ /* 38/36 */
       "cs_semester(2,28)."+ /* 30/28 */
@@ -22,7 +28,7 @@ var program =
       "cs_semester(5,28)."+ /* 28/30 */
       "cs_semester(6,24)."+
       "cs_semester(7,24)."+
-
+      "cs_semester(8,18)."+
       "cs_semester(9,20)."+
       "cs_semester(10,26)."+
 
@@ -92,20 +98,6 @@ var program =
       "cs_course(csen1002,10,4)."+
       "cs_course(csen1003,10,4)."+
 
-      "cs_semester_courses(SemesterNum,Courses):- "+
-      "setof(X,Y^cs_course(X,SemesterNum,Y),Courses)."+
-
-      "cs_collective_credithours([],0)."+
-      "cs_collective_credithours([H|T],CH):- "+
-      "cs_course(H,_,X), "+
-      "cs_collective_credithours(T,X1), "+
-      "CH is X+X1."+
-
-      "cs_collective_credithours([H|T],CH):- "+
-      "lang_course(_,_,H,X), "+
-      "cs_collective_credithours(T,X1), "+
-      "CH is X+X1."+
-
       "prereq(math203,math103)."+
       "prereq(phys202,phys101)."+
       "prereq(csen202,csen102)."+
@@ -149,30 +141,48 @@ var program =
       "prereq(dmet1003,dmet603)."+
       "prereq(dmet1003,comm401)."+
 
+      /*--- cs_semester_courses ---*/
+
+      "cs_semester_courses(SemesterNum,Courses):- "+
+            "setof(X,Y^cs_course(X,SemesterNum,Y),Courses)."+
+
+      /*--- cs_collective_credithours ---*/      
+
+      "cs_collective_credithours([],0)."+
+
+      "cs_collective_credithours([H|T],CH):- "+
+            "cs_course(H,_,X), "+
+            "cs_collective_credithours(T,X1), "+
+            "CH is X+X1."+
+
+      "cs_collective_credithours([H|T],CH):- "+
+            "lang_course(_,_,H,X), "+
+            "cs_collective_credithours(T,X1), "+
+            "CH is X+X1."+
 
       /*--- cannotTake ---*/
 
       "cannotTake(StudentID, Courses):- "+
-      "setof(X,cannot_take_helper(StudentID,X),Courses). "+
+            "setof(X,cannot_take_helper(StudentID,X),Courses). "+
 
       "cannot_take_helper(StudentID, CourseCode):- "+
-      "failed_course(StudentID,OtherCourseCode,a), "+
-      "prereq(CourseCode,OtherCourseCode). "+
+            "failed_course(StudentID,OtherCourseCode,a), "+
+            "prereq(CourseCode,OtherCourseCode). "+
 
       /*--- studentPassedCourses ---*/
 
       "studentPassedCourses(StudentID,Courses):- "+
-      "setof(X,passed_course(StudentID,X),Courses). "+
+            "setof(X,passed_course(StudentID,X),Courses). "+
 
       /*--- studentFailedCourses ---*/
 
       "studentFailedCourses(StudentID,Courses):- "+
-      "setof(X,Y^failed_course(StudentID,X,Y),Courses). "+
+            "setof(X,Y^failed_course(StudentID,X,Y),Courses). "+
 
       /*--- getSchedule ---*/
 
       "getSchedule(StudentID,Courses):- "+
-            "ScheduleHelper(StudentID,Courses). "+
+            "getScheduleHelper(StudentID,Courses). "+
 
       "getScheduleHelper(StudentID,Courses):- "+
             "student(StudentID,_,cs,CurrentSemester,_), "+
@@ -251,36 +261,35 @@ var program =
 
       /*--- getMaxHours ---*/
 
-      "getMaxHours(StudentID,SemesterHours):-"+
-            "student(StudentID,_,cs,_,StudentGPA),"+
-            "StudentGPA>3.7,"+
+      "getMaxHours(StudentID,SemesterHours):- "+ // probation students get no extra credit hours
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA>3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
-            "cs_semester(Semester,SemesterHours)."+
-
-
-      "getMaxHours(StudentID,SemesterHours):-"+
-            "student(StudentID,_,cs,_,StudentGPA),"+
-            "StudentGPA=<3.7,"+
+            "cs_semester(Semester,SemesterHours). "+
+            
+      "getMaxHours(StudentID,SemesterHours):- "+ 
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA=<3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
-            "cs_semester(Semester,SemesterHours),"+
-            "SemesterHours>=34."+
+            "cs_semester(Semester,SemesterHours), "+
+            "SemesterHours>=34. "+
 
-      "getMaxHours(StudentID,34):-"+
-            "student(StudentID,_,cs,_,StudentGPA),"+
-            "StudentGPA=<3.7,"+
+      "getMaxHours(StudentID,34):- "+
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA=<3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
-            "cs_semester(Semester,SemesterHours),"+
-            "Temp is SemesterHours+3,"+
+            "cs_semester(Semester,SemesterHours), "+
+            "Temp is SemesterHours+3, "+
             "SemesterHours<34,"+
-            "Temp>34."+
+            "Temp>34. "+
 
-      "getMaxHours(StudentID,TotalHours):-"+
-            "student(StudentID,_,cs,_,StudentGPA),"+
-            "StudentGPA=<3.7,"+
+      "getMaxHours(StudentID,TotalHours):- "+
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA=<3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
-            "cs_semester(Semester,SemesterHours),"+
-            "TotalHours is SemesterHours+3,"+
-            "TotalHours=<34."+
+            "cs_semester(Semester,SemesterHours), "+
+            "TotalHours is SemesterHours+3, "+
+            "TotalHours=<34. "+
 
       /*--- belongingCHSemester ---*/
 
@@ -303,7 +312,6 @@ var program =
             "A is AccumSem+1,"+
             "B is AccumSemSum+H,"+
             "getSemester(CH,A,B,T,Semester)."+
-
 
       /*--- soFarCourses ---*/
 
@@ -397,7 +405,8 @@ var program =
             "lang_course(Lang,Level,HighestTakenCourse,_), "+
             "ThisLevel=<Level, "+
             "filterTill(Lang,HighestTakenCourse,T,TT). "+
-            "\n\n failed_course(123,csen102,o).";
+
+      "\n\n failed_course(123,csen102,o).";  
 
 function executeQuery(program, thisQuery) {
 
