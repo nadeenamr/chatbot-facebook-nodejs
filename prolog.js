@@ -265,7 +265,8 @@ var program =
             "student(StudentID,_,cs,_,StudentGPA), "+
             "StudentGPA>3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
-            "cs_semester(Semester,SemesterHours). "+
+            "cs_semester(Semester,SH), "+
+            "SemesterHours is SH*0.75."+
             
       "getMaxHours(StudentID,SemesterHours):- "+ 
             "student(StudentID,_,cs,_,StudentGPA), "+
