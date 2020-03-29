@@ -425,7 +425,7 @@ function executeQuery(program, thisQuery) {
   session.answers(x => { // Show answers
     var str = pl.format_answer(x);
     console.log("QUERY ENTERED: "+thisQuery);
-    console.log("UNFORMATED PROLOG ANSWER--->"+str);
+    console.log("UNFORMATED PROLOG ANSWER---> "+str);
     var res = str.split("=");
     if(str!="false." && str!="limit exceeded ;"){
       str = res[1].split("[");
@@ -435,7 +435,7 @@ function executeQuery(program, thisQuery) {
     }
   });
 
-  console.log( "----> PROLOG ANSWER: " +schedule);
+  console.log( "FORMATED PROLOG ANSWER---> " +schedule);
   
   return schedule; 
 
