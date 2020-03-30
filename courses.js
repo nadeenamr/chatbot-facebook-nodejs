@@ -93,6 +93,7 @@ module.exports = {
             }else{
                 let dates = [];
                 console.log("COURSES ---> "+courses);
+                console.log("TYPE OF COURSES ---> "+ typeof courses);
                 for(let i=0; i<courses.length; i++){
                     let sql =`SELECT final_date FROM finals WHERE course_code='${courses[i]}'`;
                     client.query(sql,
