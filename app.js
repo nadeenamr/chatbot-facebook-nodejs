@@ -193,6 +193,18 @@ function getHistory(sender){
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "myLastFinal":
+			students.getStudentTranscript(function(studentIDAndTranscript){
+				prolog.getStudentNextSchedule(function(allCourses){
+					courses.getLastFinal(function(lastFinalDateAndCourseCode){
+						courses.getCourseName(function(courseName){
+							let reply = `If I'm not mistaken, I believe your last final is ${lastFinalDateAndCourseCode[1]}:${courseName} and it's on ${lastFinalDateAndCourseCode[0]}.`;
+							sendTextMessage(sender, reply);
+						}, lastFinalDateAndCourseCode[1]); // course code 
+					}, allCourses); // list of courses
+				}, studentIDAndTranscript); 
+			}, sender);
+			break;
 		case "mySchedule":
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){

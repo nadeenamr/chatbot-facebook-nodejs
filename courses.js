@@ -83,7 +83,63 @@ module.exports = {
                     });
         });
         pool.end();
+    },
+
+    getLastFinal: function(callback, courses){
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }else{
+                let dates = [];
+                for(i=0; i<courses.length; i++){
+                    let sql =`SELECT final_date FROM finals WHERE course_code='${courses[i]}'`;
+                    client.query(sql,
+                        function(err, result) {
+                            if (err) {
+                                console.log(err);
+                                callback('CANNOT FIND FINAL DATE FOR THIS COURSE '+courses[i]);
+                            } else {
+                                dates.push(result.rows[0].final_date);
+                            }
+                            
+                        }
+                    );
+                }
+                let currentMaxDateIndex = 0; // if have more than 1 final in 1 day
+                let currentMaxDate = dates[0];
+                for(i=1; i<dates.length; i++){
+                    if(currentMaxDate<dates[i]){
+                        currentMaxDate = dates[i];
+                        currentMaxDateIndex = i;
+                    }
+                }
+                callback([currentMaxDate,courses[currentMaxDateIndex]]);
+
+            }
+             
+        });
+        pool.end();
+    },
+
+    getCourseName: function(callback, course_code) {
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }
+            client.query(
+                    'SELECT course_name FROM public.courses WHERE course_code=$1', [course_code], // assuming the last final is never a language course
+                    function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            callback('CANNOT FIND COURSE WITH THIS CODE '+course_code);
+                        } else {
+                            callback(result.rows[0].course_name);
+                        };
+                    });
+        });
+        pool.end();
     }
 
 }
-
