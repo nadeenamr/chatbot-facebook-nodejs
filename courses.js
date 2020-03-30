@@ -156,20 +156,28 @@ module.exports = {
                 let index = allCourses.indexOf(courses[i]);
                 courseFinalDates.push(allDates[index]);
             }
-            var maxDate = new Date(courseFinalDates[0]);
+            let maxDate = courseFinalDates[0];
             let maxDateIndex = 0;
             for(let i=1; i<courseFinalDates.length; i++){
-                if(maxDate<new Date(courseFinalDates[i])){
-                    console.log(maxDate+" < "+new Date(courseFinalDates[i]));
+                let temp1 = maxDate.split("/");
+                let temp2 = courseFinalDates[i].split("/")
+                if(temp1[2]<temp2[2]){ // year is greater
+                    console.log(maxDate+" < "+courseFinalDates[i]);
+                    maxDate = courseFinalDates[i];
+                    maxDateIndex = i;
+                if(temp1[2]==temp2[2] && temp1[1]<temp2[1]){ // same year, month is greater
+                    console.log(maxDate+" < "+courseFinalDates[i]);
+                    maxDate = courseFinalDates[i];
+                    maxDateIndex = i;
+                }
+                if(temp1[2]==temp2[2] && temp1[1]==temp2[1] && temp1[0]<temp2[0]){ // same year, same month, day is greater
+                    console.log(maxDate+" < "+courseFinalDates[i]);
                     maxDate = courseFinalDates[i];
                     maxDateIndex = i;
                 }
             }
-            var day = maxDate.getDate();
-            var month = 1 + parseInt(maxDate.getMonth());
-            var year = maxDate.getFullYear();
             console.log("CODE == "+courses[maxDateIndex]+"  DATE == "+maxDate);
-            callback([courses[maxDateIndex],day+"/"+month+"/"+year]);
+            callback([courses[maxDateIndex],maxDate]);
             
         });
         
@@ -193,7 +201,7 @@ module.exports = {
                             let dates = [];
                             for (let i = 0; i < result.rows.length; i++) {
                                 courses.push(result.rows[i].course_code);
-                                dates.push(result.rows[i].final_date.getFullYear()+","+(1+parseInt(result.rows[i].final_date.getMonth()))+","+result.rows[i].final_date.getDate());
+                                dates.push(result.rows[i].final_date.getDate()+"/"+(1+parseInt(result.rows[i].final_date.getMonth()))+"/"+result.rows[i].final_date.getFullYear());
                             }
                             callback([courses,dates]);
                         };
