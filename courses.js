@@ -286,6 +286,7 @@ module.exports = {
             let coursesMinusDeutsch = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404'});
             let courseMidtermDates = [];
             let allCourses = coursesAndDates[0];
+            console.log(allCourses);
             console.log(coursesMinusDeutsch);
             let allDates = coursesAndDates[1];
             for(let i=0; i<coursesMinusDeutsch.length; i++){
