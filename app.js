@@ -201,7 +201,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						//let reply = `According to my calculations, your last final is ${finalCodeNameDate[0]}:${finalCodeNameDate[1]} and it's expected to be on ${finalCodeNameDate[2]}.`;
 						//sendTextMessage(sender,reply);
 						sendTextMessage(sender,""+finalCodeNameDate);
-					},courseList);
+					},courseList.toUpperCase());
 				}, studentIDAndTranscript); 
 			}, sender);
 			break;
