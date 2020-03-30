@@ -122,6 +122,7 @@ module.exports = {
                         currentMaxDateIndex = i;
                     }
                 }
+                console.log("MAX DATE IS --> "+currentMaxDate.format('D MMM, YYYY'));
                 callback([currentMaxDate,allCourses[currentMaxDateIndex]]);
 
             }
