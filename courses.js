@@ -161,7 +161,7 @@ module.exports = {
             for(let i=1; i<courses.length; i++){
                 //console.log(maxDate+" < "+courseFinalDates[i]);
                 let temp1 = maxDate.split("/");
-                let temp2 = courseFinalDates[i].split("/")
+                let temp2 = courseFinalDates[i].split("/");
                 if(temp1[2]<temp2[2]){ // year is greater
                     console.log(maxDate+" < "+courseFinalDates[i]);
                     maxDate = courseFinalDates[i];

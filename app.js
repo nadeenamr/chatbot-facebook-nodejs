@@ -201,6 +201,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						courses.getCourseName(function(courseName){
 							let reply = `According to my calculations, your last final is ${finalCodeDate[0]}: ${courseName} and it's expected to be on ${finalCodeDate[1]}.`;
 							sendTextMessage(sender,reply);
+							sendGifMessage("https://media.giphy.com/media/3o84UdRSymVQCrZT6E/giphy.gif",sender);
 						},finalCodeDate[0]);
 					},courseList);
 				}, studentIDAndTranscript); 
