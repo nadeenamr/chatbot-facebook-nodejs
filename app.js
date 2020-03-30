@@ -194,6 +194,20 @@ function getHistory(sender){
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "myFirstFinal":
+			students.getStudentTranscript(function(studentIDAndTranscript){
+				prolog.getStudentNextSchedule(function(allCourses){
+					let courseList = allCourses.toUpperCase().split(", ");
+					courses.getFirstFinalInfo(function(firstCodeDate){
+						courses.getCourseName(function(courseName){
+							let reply = `Lets see here... your first final is ${firstCodeDate[0]}: ${courseName} and so far it's expected to be on ${firstCodeDate[1]} (although keep an eye out for any adjustments given the current "situation") `;
+							sendTextMessage(sender,reply);
+							sendGifMessage("https://media.giphy.com/media/25EAreLnZIFWasblJe/giphy.gif",sender);
+						},firstCodeDate[0]);
+					},courseList);
+				}, studentIDAndTranscript); 
+			}, sender);
+			break;
 		case "myLastFinal":
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){
