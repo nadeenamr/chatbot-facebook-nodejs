@@ -146,6 +146,51 @@ module.exports = {
         pool.end();
     },
 
+    getFirstFinalInfo: function(callback, courses){
+        this.getAllFinals(function(coursesAndDates){
+            let courseFinalDates = [];
+            let allCourses = coursesAndDates[0];
+            console.log(courses);
+            let allDates = coursesAndDates[1];
+            for(let i=0; i<courses.length; i++){
+                let index = allCourses.indexOf(courses[i]);
+                courseFinalDates.push(allDates[index]);
+            }
+            let minDate = courseFinalDates[0];
+            let minDateIndex = 0;
+            for(let i=1; i<courses.length; i++){
+                //console.log(minDate+" < "+courseFinalDates[i]);
+                let temp1 = minDate.split("/");
+                let temp2 = courseFinalDates[i].split("/");
+                if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
+                    console.log(minDate+" > "+courseFinalDates[i] + " FIRST IF STAT");
+                    minDate = courseFinalDates[i];
+                    minDateIndex = i;
+                }else{
+                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
+                        console.log(minDate+" > "+courseFinalDates[i] + " SECOND IF STAT");
+                        minDate = courseFinalDates[i];
+                        minDateIndex = i;
+                    }else{
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
+                            console.log(minDate+" > "+courseFinalDates[i]  + " THIRD IF STAT");
+                            minDate = courseFinalDates[i];
+                            minDateIndex = i;
+                        }else{
+                            console.log(minDate+" < "+courseFinalDates[i]);
+                        }
+                    }
+                    
+                }
+                
+            }
+            console.log("CODE == "+courses[minDateIndex]+"  DATE == "+minDate);
+            callback([courses[minDateIndex],minDate]);
+            
+        });
+        
+    },
+
     getLastFinalInfo: function(callback, courses){
         this.getAllFinals(function(coursesAndDates){
             let courseFinalDates = [];
@@ -191,38 +236,38 @@ module.exports = {
         
     },
 
-    getFirstFinalInfo: function(callback, courses){
-        this.getAllFinals(function(coursesAndDates){
-            let courseFinalDates = [];
+    getFirstMidtermInfo: function(callback, courses){
+        this.getAllMidterms(function(coursesAndDates){
+            let courseMidtermDates = [];
             let allCourses = coursesAndDates[0];
             console.log(courses);
             let allDates = coursesAndDates[1];
             for(let i=0; i<courses.length; i++){
                 let index = allCourses.indexOf(courses[i]);
-                courseFinalDates.push(allDates[index]);
+                courseMidtermDates.push(allDates[index]);
             }
-            let minDate = courseFinalDates[0];
+            let minDate = courseMidtermDates[0];
             let minDateIndex = 0;
             for(let i=1; i<courses.length; i++){
-                //console.log(minDate+" < "+courseFinalDates[i]);
+                //console.log(minDate+" < "+courseMidtermDates[i]);
                 let temp1 = minDate.split("/");
-                let temp2 = courseFinalDates[i].split("/");
+                let temp2 = courseMidtermDates[i].split("/");
                 if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
-                    console.log(minDate+" > "+courseFinalDates[i] + " FIRST IF STAT");
-                    minDate = courseFinalDates[i];
+                    console.log(minDate+" > "+courseMidtermDates[i] + " FIRST IF STAT");
+                    minDate = courseMidtermDates[i];
                     minDateIndex = i;
                 }else{
                     if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
-                        console.log(minDate+" > "+courseFinalDates[i] + " SECOND IF STAT");
-                        minDate = courseFinalDates[i];
+                        console.log(minDate+" > "+courseMidtermDates[i] + " SECOND IF STAT");
+                        minDate = courseMidtermDates[i];
                         minDateIndex = i;
                     }else{
                         if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
-                            console.log(minDate+" > "+courseFinalDates[i]  + " THIRD IF STAT");
-                            minDate = courseFinalDates[i];
+                            console.log(minDate+" > "+courseMidtermDates[i]  + " THIRD IF STAT");
+                            minDate = courseMidtermDates[i];
                             minDateIndex = i;
                         }else{
-                            console.log(minDate+" < "+courseFinalDates[i]);
+                            console.log(minDate+" < "+courseMidtermDates[i]);
                         }
                     }
                     
@@ -234,6 +279,33 @@ module.exports = {
             
         });
         
+    },
+
+    getAllMidterms: function(callback) {
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }
+            client
+                .query(
+                    `SELECT course_code,midterm_date FROM public.midterms`,
+                    function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            callback('');
+                        } else {
+                            let courses = [];
+                            let dates = [];
+                            for (let i = 0; i < result.rows.length; i++) {
+                                courses.push(result.rows[i].course_code);
+                                dates.push(result.rows[i].midterm_date.getDate()+"/"+(1+parseInt(result.rows[i].midterm_date.getMonth()))+"/"+result.rows[i].midterm_date.getFullYear());
+                            }
+                            callback([courses,dates]);
+                        };
+                    });
+        });
+        pool.end();
     },
 
     getAllFinals: function(callback) {
