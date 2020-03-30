@@ -264,12 +264,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				students.newOrRegularStudent(function(isRegular){
 					let reply;
 					if(isRegular[0]=="new"){
-						reply = "Welcome "+ isRegular[1] +"! "+emoji.get('Waving Hand')+" I'm your MET Mentor! I can answer any questions you might have and offer support/advice for MET students. Please enter your GUC ID so I am able to access your records."; 
+						reply = "Welcome "+ isRegular[1] +"! "+emoji.get('waving hand')+" I'm your MET Mentor! I can answer any questions you might have and offer support/advice for MET students. Please enter your GUC ID so I am able to access your records."; 
 						sendTextMessage(sender, reply);
 						sendGifMessage("https://giphy.com/gifs/cbc-schittscreek-schitts-creek-88iGfhImcQ7mkbyuiS",sender);
 					}else{
 						if(isRegular[0]=="old"){
-							reply = "Welcome back "+ isRegular[1] +" "+emoji.get('Waving Hand')+" ! How can I help you today? "+emoji.get('Woman Office Worker');
+							reply = "Welcome back "+ isRegular[1] +" "+emoji.get('waving hand')+" ! How can I help you today? "+emoji.get('woman office worker');
 							//sendGifMessage("https://media.giphy.com/media/lTkG4o9F8TVLgDDdng/giphy.gif",sender); 
 							sendTextMessage(sender, reply);							
 						}else{
