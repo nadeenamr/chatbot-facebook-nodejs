@@ -197,30 +197,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){
 					let courseList = allCourses.split(", ");
-					let maxCourseCode = courseList[0];
-					let maxFinalDate = courses.getFinalDate(maxCourseCode);
-					console.log("RETURN --> "+maxFinalDate);
-					for(let i=1; i<courseList.length; i++){
-						let temp = courses.getFinalDate(courseList[i]);
-						if(maxFinalDate<temp){
-							maxCourseCode = courseList[i];
-							maxFinalDate = temp;
-						}
-					}	
-					let maxCourseName = courses.getCourseName(maxCourseCode);
-					let dateFormat = maxFinalDate.getDate() +"/"+ (1+ parseInt(maxFinalDate.getMonth())) +"/"+ maxFinalDate.getFullYear();
-					let reply = `If I'm not mistaken, I believe your last final is ${maxCourseCode}:${maxCourseName} and it's on ${dateFormat}.`;
-					sendTextMessage(sender, reply);
 					
-					/*
-					courses.getLastFinal(function(lastFinalDateAndCourseCode){
-						console.log("ALLCOURSES ---> "+allCourses);
-						courses.getCourseName(function(courseName){
-							let reply = `If I'm not mistaken, I believe your last final is ${lastFinalDateAndCourseCode[1]}:${courseName} and it's on ${lastFinalDateAndCourseCode[0]}.`;
-							sendTextMessage(sender, reply);
-						}, lastFinalDateAndCourseCode[1]); // course code 
-					}, allCourses); // list of courses
-					*/
+					sendTextMessage(sender,courses.getCourseName(courseList[0]));
 
 				}, studentIDAndTranscript); 
 			}, sender);
