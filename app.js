@@ -199,6 +199,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let courseList = allCourses.split(", ");
 					let maxCourseCode = courseList[0];
 					let maxFinalDate = courses.getFinalDate(maxCourseCode);
+					console.log("RETURN --> "+maxFinalDate);
 					for(let i=1; i<courseList.length; i++){
 						let temp = courses.getFinalDate(courseList[i]);
 						if(maxFinalDate<temp){
