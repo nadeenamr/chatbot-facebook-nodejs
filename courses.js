@@ -121,6 +121,18 @@ module.exports = {
                             console.log(err);
                             callback('CANNOT FIND COURSE WITH THIS CODE '+course_code);
                         } else {
+                            if(result.length==0){
+                                client.query(
+                                    'SELECT course_name FROM public.language_courses WHERE course_code=$1', [course_code], // assuming the last final is never a language course
+                                    function(err, result) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback('CANNOT FIND LANGUAGE COURSE WITH THIS CODE '+course_code);
+                                        } else {
+                                            callback(result.rows[0].course_name);
+                                        };
+                                    });
+                            }
                             callback(result.rows[0].course_name);
                         };
                     });
@@ -144,6 +156,7 @@ module.exports = {
             let maxDateIndex = 0;
             for(let i=1; i<courseFinalDates.length; i++){
                 if(maxDate<courseFinalDates[i]){
+                    console.log(maxDate+" < "+courseFinalDates[i]);
                     maxDate = courseFinalDates[i];
                     maxDateIndex = i;
                 }
