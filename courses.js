@@ -130,22 +130,27 @@ module.exports = {
 
     getLastFinalInfo: function(callback, courses){
         this.getAllFinals(function(coursesAndDates){
-            
-            //console.log(coursesAndDates);
             let courseFinalDates = [];
             let allCourses = coursesAndDates[0];
             console.log(courses);
-            console.log(allCourses);
             let allDates = coursesAndDates[1];
-            //console.log(allDates);
             for(let i=0; i<courses.length; i++){
-                //for
                 let index = allCourses.indexOf(courses[i]);
                 console.log(index);
                 console.log(allDates[index]);
                 courseFinalDates.push(allDates[index]);
             }
-            callback(courseFinalDates);
+            let maxDate = courseFinalDates[0];
+            let maxDateIndex = 0;
+            for(let i=1; i<courseFinalDates.length; i++){
+                if(maxDate<courseFinalDates[i]){
+                    maxDate = courseFinalDates[i];
+                    maxDateIndex = i;
+                }
+            }
+            this.getCourseName(function(courseName){
+                callback([courses[maxDateIndex],courseName,maxDate]);
+            },courses[maxDateIndex]);
         })
         
     },
