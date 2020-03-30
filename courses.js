@@ -107,6 +107,7 @@ module.exports = {
                                 console.log(err);
                                 callback('CANNOT FIND FINAL DATE FOR THIS COURSE '+allCourses[i]);
                             } else {
+                                /*
                                 if(i==0){
                                     currentMaxDate = result.rows[0].final_date;
                                 }else{
@@ -115,6 +116,7 @@ module.exports = {
                                         currentMaxDateCourseCode = allCourses[i];
                                     }
                                 }
+                                */
                                 let date = result.rows[0].final_date.getDate() +"/"+ (1+parseInt(result.rows[0].final_date.getMonth())) +"/"+ result.rows[0].final_date.getFullYear();
                                 console.log("FINAL DATE OF "+allCourses[i]+" is "+ date);
                             }
