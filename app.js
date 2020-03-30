@@ -227,9 +227,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						sendGifMessage("https://giphy.com/gifs/cbc-schittscreek-schitts-creek-88iGfhImcQ7mkbyuiS",sender);
 					}else{
 						if(isRegular[0]=="old"){
-							reply = "Welcome back "+ isRegular[1] +"! How can I help you today?"; 
-							sendTextMessage(sender, reply);
-							sendGifMessage("https://media.giphy.com/media/lTkG4o9F8TVLgDDdng/giphy.gif",sender);
+							reply = "Welcome back "+ isRegular[1] +"! How can I help you today?";
+							sendGifMessage("https://media.giphy.com/media/lTkG4o9F8TVLgDDdng/giphy.gif",sender); 
+							sendTextMessage(sender, reply);							
 						}else{
 							reply = "Hello There! How may I help you";
 							sendTextMessage(sender, reply);
