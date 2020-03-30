@@ -115,7 +115,8 @@ module.exports = {
                                         currentMaxDateCourseCode = allCourses[i];
                                     }
                                 }
-                                console.log("FINAL DATE OF "+allCourses[i]+" is "+result.rows[0].final_date.getDate());
+                                let date = result.rows[0].final_date.getDate() +"/"+ result.rows[0].final_date.getMonth()+1 +"/"+ result.rows[0].final_date.getFullYear();
+                                console.log("FINAL DATE OF "+allCourses[i]+" is "+ date);
                             }
                             
                         }
