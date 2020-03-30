@@ -96,9 +96,10 @@ module.exports = {
                 let currentMaxDate;
                 console.log("COURSES ---> "+allCourses);
                 console.log("TYPE OF COURSES ---> "+ typeof allCourses);
+                let sql;
                 for(let i=0; i<allCourses.length; i++){
                     console.log(allCourses[i]);
-                    let sql =`SELECT final_date FROM public.finals WHERE course_code='${allCourses[i]}'`;
+                    sql =`SELECT final_date FROM public.finals WHERE course_code='${allCourses[i]}'`;
                     console.log("SQL ---> "+sql);
                     client.query(sql,
                         function(err, result) {
@@ -114,7 +115,7 @@ module.exports = {
                                         currentMaxDateCourseCode = allCourses[i];
                                     }
                                 }
-                                console.log("FINAL DATE OF "+allCourses[i]+" is "+result.rows[0].final_date);
+                                console.log("FINAL DATE OF "+allCourses[i]+" is "+result.rows[0].final_date.getDate());
                             }
                             
                         }
@@ -122,7 +123,6 @@ module.exports = {
                 }
                 console.log("COURSE OF MAX DATE --> "+currentMaxDate);
                 callback([currentMaxDate,currentMaxDateCourseCode]);
-
             }
              
         });
