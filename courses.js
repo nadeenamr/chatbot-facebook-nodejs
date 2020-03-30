@@ -156,7 +156,7 @@ module.exports = {
                 let index = allCourses.indexOf(courses[i]);
                 courseFinalDates.push(allDates[index]);
             }
-            let maxDate = new Date(courseFinalDates[0]);
+            var maxDate = new Date(courseFinalDates[0]);
             let maxDateIndex = 0;
             for(let i=1; i<courseFinalDates.length; i++){
                 if(maxDate<new Date(courseFinalDates[i])){
@@ -165,9 +165,9 @@ module.exports = {
                     maxDateIndex = i;
                 }
             }
-            let day = maxDate.getDate();
-            let month = 1 + parseInt(maxDate.getMonth());
-            let year = maxDate.getFullYear();
+            var day = maxDate.getDate();
+            var month = 1 + parseInt(maxDate.getMonth());
+            var year = maxDate.getFullYear();
             console.log("CODE == "+courses[maxDateIndex]+"  DATE == "+maxDate);
             callback([courses[maxDateIndex],day+"/"+month+"/"+year]);
             
