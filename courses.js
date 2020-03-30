@@ -97,7 +97,7 @@ module.exports = {
                 console.log("TYPE OF COURSES ---> "+ typeof allCourses);
                 for(let i=0; i<allCourses.length; i++){
                     console.log(allCourses[i]);
-                    let sql =`SELECT final_date FROM finals WHERE course_code='${allCourses[i]}'`;
+                    let sql =`SELECT final_date FROM finals WHERE course_code='${allCourses[i].toUpperCase()}'`;
                     client.query(sql,
                         function(err, result) {
                             if (err) {
