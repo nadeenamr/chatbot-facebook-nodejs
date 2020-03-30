@@ -85,7 +85,7 @@ module.exports = {
         pool.end();
     },
 
-    getFinalDate: function(course_code){
+    getFinalDate: function(callback, course_code){
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
@@ -96,9 +96,9 @@ module.exports = {
                     function(err, result) {
                         if (err) {
                             console.log(err);
-                            return 'CANNOT FIND COURSE WITH THIS CODE '+course_code;
+                            callback('CANNOT FIND COURSE WITH THIS CODE '+course_code);
                         } else {
-                            return result.rows[0].final_date;
+                            callback(result.rows[0].final_date.getDate()+"/"+(1+parseInt(result.rows[0].final_date.getMonth()))+"/"+result.rows[0].final_date.getFullYear());
                         };
                     });
                 
@@ -108,7 +108,7 @@ module.exports = {
         pool.end();
     },
 
-    getCourseName: function(course_code) {
+    getCourseName: function(callback, course_code) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
@@ -119,9 +119,50 @@ module.exports = {
                     function(err, result) {
                         if (err) {
                             console.log(err);
-                            return 'CANNOT FIND COURSE WITH THIS CODE '+course_code;
+                            callback('CANNOT FIND COURSE WITH THIS CODE '+course_code);
                         } else {
-                            return result.rows[0].course_name;
+                            callback(result.rows[0].course_name);
+                        };
+                    });
+        });
+        pool.end();
+    },
+
+    getLastFinalInfo: function(callback, courses){
+        this.getAllFinals(function(coursesAndDates){
+            let courseFinalDates = [];
+            let allCourses = coursesAndDates[0];
+            let allDates = coursesAndDates[1];
+            for(let i=0; i<courses.length; i++){
+                courseFinalDates.push(allDates(allCourses.indexOf(courses[i])));
+            }
+            callback(courseFinalDates);
+
+        },courses[i])
+        
+    },
+
+    getAllFinals: function(callback, courses) {
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }
+            client
+                .query(
+                    `SELECT course_code,final_date FROM public.finals`,
+                    function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            callback('');
+                        } else {
+                            let courses = [];
+                            let dates = [];
+                            for (let i = 0; i < result.rows.length; i++) {
+                                courses.push(result.rows[i].course_code);
+                                dates.push(result.rows[i].final_date);
+                            }
+                            callback([courses,dates]);
                         };
                     });
         });
