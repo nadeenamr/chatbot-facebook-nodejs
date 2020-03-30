@@ -131,11 +131,15 @@ module.exports = {
                                             console.log(err);
                                             callback('CANNOT FIND LANGUAGE COURSE WITH THIS CODE '+course_code);
                                         } else {
+                                            console.log("ITS A LANG COURSE");
                                             callback(result.rows[0].course_name);
                                         };
                                     });
+                            }else{
+                                console.log("ITS A CS COURSE");
+                                callback(result.rows[0].course_name);
                             }
-                            callback(result.rows[0].course_name);
+                            
                         };
                     });
         });
