@@ -114,6 +114,7 @@ module.exports = {
                         }
                     );
                 }
+                console.log("DATES ---> "+dates);
                 let currentMaxDateIndex = 0; // if have more than 1 final in 1 day
                 let currentMaxDate = dates[0];
                 for(let i=1; i<dates.length; i++){
