@@ -255,7 +255,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){
 					const wink = emoji.get('wink');
-					let reply = `Here's a smooth schedule that I wiped up just for you `+wink+`\nCourses: ${allCourses}.\nWhat do you think?`;
+					let reply = `Here's a suggested schedule for next semester `+wink+`\nCourses: ${allCourses}.`;
 					sendTextMessage(sender, reply);
 					sendGifMessage("https://media.giphy.com/media/g0NZy8CjNDQ2K2DnG5/giphy.gif", sender);
 				}, studentIDAndTranscript);
