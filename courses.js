@@ -289,6 +289,7 @@ module.exports = {
             let allDates = coursesAndDates[1];
             for(let i=0; i<courses.length; i++){
                 let index = allCourses.indexOf(courses[i]);
+                console.log(allDates[index]);
                 courseMidtermDates.push(allDates[index]);
             }
             let maxDate = courseMidtermDates[0];
