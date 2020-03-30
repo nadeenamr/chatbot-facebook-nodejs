@@ -805,6 +805,9 @@ function receivedPostback(event) {
 	var payload = event.postback.payload;
 
 	switch (payload) {
+		case "Get started":
+				sendToApiAi(senderID, "Hello");
+			break;
 		case "GET_DMET_SEM_COURSES": 
 				sendToApiAi(senderID, "dmet semester courses");
 			break;
