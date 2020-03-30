@@ -165,6 +165,7 @@ module.exports = {
                     console.log(maxDate+" < "+courseFinalDates[i]);
                     maxDate = courseFinalDates[i];
                     maxDateIndex = i;
+                }
                 if(temp1[2]==temp2[2] && temp1[1]<temp2[1]){ // same year, month is greater
                     console.log(maxDate+" < "+courseFinalDates[i]);
                     maxDate = courseFinalDates[i];
