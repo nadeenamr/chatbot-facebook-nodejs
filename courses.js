@@ -130,7 +130,7 @@ module.exports = {
 
     getLastFinalInfo: function(callback, courses){
         this.getAllFinals(function(coursesAndDates){
-            console.log(coursesAndDates);
+            //console.log(coursesAndDates);
             let courseFinalDates = [];
             let allCourses = coursesAndDates[0];
             console.log(allCourses);
@@ -138,6 +138,7 @@ module.exports = {
             console.log(allDates);
             for(let i=0; i<courses.length; i++){
                 let index = allCourses.indexOf(courses[i]);
+                console.log(index);
                 console.log(allDates[index]);
                 courseFinalDates.push(allDates[index]);
             }
@@ -164,7 +165,7 @@ module.exports = {
                             let dates = [];
                             for (let i = 0; i < result.rows.length; i++) {
                                 courses.push(result.rows[i].course_code);
-                                dates.push(result.rows[i].final_date);
+                                dates.push(result.rows[i].final_date.getDate()+"/"+(1+parseInt(result.rows[i].final_date.getMonth()))+"/"+result.rows[i].final_date.getFullYear());
                             }
                             callback([courses,dates]);
                         };
