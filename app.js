@@ -290,7 +290,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "takingStudentUsername":
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentUsername']){
 				students.saveStudentUsername(contexts[0].parameters['studentUsername'], sender);
-				sendTextMessage(sender, "Perfect "+'👌🏼'+" I have everything I need. Tell me, how can I be of service to you?");
+				sendTextMessage(sender, "Perfect "+'👌🏼'+" I have everything I need! Tell me, how can I be of service to you?");
 			}
 			break;
 		case "course_prereq": 
