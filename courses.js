@@ -133,10 +133,12 @@ module.exports = {
             //console.log(coursesAndDates);
             let courseFinalDates = [];
             let allCourses = coursesAndDates[0];
+            console.log(courses);
             console.log(allCourses);
             let allDates = coursesAndDates[1];
-            console.log(allDates);
+            //console.log(allDates);
             for(let i=0; i<courses.length; i++){
+                //for
                 let index = allCourses.indexOf(courses[i]);
                 console.log(index);
                 console.log(allDates[index]);
