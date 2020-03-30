@@ -156,11 +156,11 @@ module.exports = {
                 let index = allCourses.indexOf(courses[i]);
                 courseFinalDates.push(allDates[index]);
             }
-            let maxDate = courseFinalDates[0];
+            let maxDate = new Date(courseFinalDates[0]);
             let maxDateIndex = 0;
             for(let i=1; i<courseFinalDates.length; i++){
-                if(maxDate<courseFinalDates[i]){
-                    console.log(maxDate+" < "+courseFinalDates[i]);
+                if(maxDate<new Date(courseFinalDates[i])){
+                    console.log(maxDate+" < "+new Date(courseFinalDates[i]));
                     maxDate = courseFinalDates[i];
                     maxDateIndex = i;
                 }
@@ -190,7 +190,7 @@ module.exports = {
                             let dates = [];
                             for (let i = 0; i < result.rows.length; i++) {
                                 courses.push(result.rows[i].course_code);
-                                dates.push(result.rows[i].final_date.getDate()+"/"+(1+parseInt(result.rows[i].final_date.getMonth()))+"/"+result.rows[i].final_date.getFullYear());
+                                dates.push(result.rows[i].final_date.getFullYear()+","+(1+parseInt(result.rows[i].final_date.getMonth()))+","+result.rows[i].final_date.getDate());
                             }
                             callback([courses,dates]);
                         };
