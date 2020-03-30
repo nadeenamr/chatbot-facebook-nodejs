@@ -92,7 +92,7 @@ module.exports = {
                 return console.error('Error acquiring client', err.stack);
             }else{
                 let dates = [];
-                for(i=0; i<courses.length; i++){
+                for(let i=0; i<courses.length; i++){
                     let sql =`SELECT final_date FROM finals WHERE course_code='${courses[i]}'`;
                     client.query(sql,
                         function(err, result) {
@@ -108,7 +108,7 @@ module.exports = {
                 }
                 let currentMaxDateIndex = 0; // if have more than 1 final in 1 day
                 let currentMaxDate = dates[0];
-                for(i=1; i<dates.length; i++){
+                for(let i=1; i<dates.length; i++){
                     if(currentMaxDate<dates[i]){
                         currentMaxDate = dates[i];
                         currentMaxDateIndex = i;
