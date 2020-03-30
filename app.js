@@ -269,7 +269,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						sendGifMessage("https://giphy.com/gifs/cbc-schittscreek-schitts-creek-88iGfhImcQ7mkbyuiS",sender);
 					}else{
 						if(isRegular[0]=="old"){
-							reply = "Welcome back "+ isRegular[1] +"! "+emoji.get('wave')+"\nHow can I help you today? "+emoji.get('woman_office_worker');
+							reply = "Welcome back "+ isRegular[1] +"! "+emoji.get('wave')+"\nHow can I help you today? "+emoji.get('man_office_worker');
 							//sendGifMessage("https://media.giphy.com/media/lTkG4o9F8TVLgDDdng/giphy.gif",sender); 
 							sendTextMessage(sender, reply);							
 						}else{
