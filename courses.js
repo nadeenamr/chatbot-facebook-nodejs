@@ -281,6 +281,51 @@ module.exports = {
         
     },
 
+    getLastMidtermInfo: function(callback, courses){
+        this.getAllMidterms(function(coursesAndDates){
+            let courseMidtermDates = [];
+            let allCourses = coursesAndDates[0];
+            console.log(courses);
+            let allDates = coursesAndDates[1];
+            for(let i=0; i<courses.length; i++){
+                let index = allCourses.indexOf(courses[i]);
+                courseMidtermDates.push(allDates[index]);
+            }
+            let maxDate = courseMidtermDates[0];
+            let maxDateIndex = 0;
+            for(let i=1; i<courses.length; i++){
+                //console.log(maxDate+" < "+courseMidtermDates[i]);
+                let temp1 = maxDate.split("/");
+                let temp2 = courseMidtermDates[i].split("/");
+                if(parseInt(temp1[2])<parseInt(temp2[2])){ // year is smaller
+                    console.log(maxDate+" < "+courseMidtermDates[i] + " FIRST IF STAT");
+                    maxDate = courseMidtermDates[i];
+                    maxDateIndex = i;
+                }else{
+                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])<parseInt(temp2[1])){ // same year, month is smaller
+                        console.log(maxDate+" < "+courseMidtermDates[i] + " SECOND IF STAT");
+                        maxDate = courseMidtermDates[i];
+                        maxDateIndex = i;
+                    }else{
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])<parseInt(temp2[0])){ // same year, same month, day is smaller
+                            console.log(maxDate+" < "+courseMidtermDates[i]  + " THIRD IF STAT");
+                            maxDate = courseMidtermDates[i];
+                            maxDateIndex = i;
+                        }else{
+                            console.log(maxDate+" > "+courseMidtermDates[i]);
+                        }
+                    }
+                    
+                }
+                
+            }
+            console.log("CODE == "+courses[maxDateIndex]+"  DATE == "+maxDate);
+            callback([courses[maxDateIndex],maxDate]);
+            
+        });
+        
+    },
+
     getAllMidterms: function(callback) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
