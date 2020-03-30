@@ -97,7 +97,8 @@ module.exports = {
                 console.log("TYPE OF COURSES ---> "+ typeof allCourses);
                 for(let i=0; i<allCourses.length; i++){
                     console.log(allCourses[i]);
-                    let sql =`SELECT final_date FROM finals WHERE course_code='${allCourses[i]}'`;
+                    let sql =`SELECT final_date FROM public.finals WHERE course_code='${allCourses[i]}'`;
+                    console.log("SQL ---> "+sql);
                     client.query(sql,
                         function(err, result) {
                             if (err) {
@@ -106,7 +107,7 @@ module.exports = {
                             } else {
                                 console.log("RESULT ---> "+result);
                                 console.log("RESULT.ROWS[0] ---> "+result.rows[0]);
-                                console.log(result.rows[0].final_date);
+                                console.log("FINAL DATE OF "+allCourses[i]+" is "+result.rows[0].final_date);
                                 dates.push(result.rows[0].final_date);
                             }
                             
