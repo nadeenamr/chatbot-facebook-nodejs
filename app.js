@@ -14,6 +14,7 @@ const students = require('./students');
 const courses = require('./courses');
 const prolog = require('./prolog');
 const emoji = require('node-emoji');
+const emojinames = require("emoji-names");
 
 pg.defaults.ssl = true;
 
@@ -269,7 +270,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						sendGifMessage("https://giphy.com/gifs/cbc-schittscreek-schitts-creek-88iGfhImcQ7mkbyuiS",sender);
 					}else{
 						if(isRegular[0]=="old"){
-							reply = "Welcome back "+ isRegular[1] +"! "+emoji.get('wave')+"\nHow can I help you today? "+emoji.get('man_office_worker');
+							reply = "Welcome back "+ isRegular[1] +"! "+emoji.get('wave')+"\nHow can I help you today? "+'👩🏼‍💼';
 							//sendGifMessage("https://media.giphy.com/media/lTkG4o9F8TVLgDDdng/giphy.gif",sender); 
 							sendTextMessage(sender, reply);							
 						}else{
