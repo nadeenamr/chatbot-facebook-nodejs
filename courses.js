@@ -91,8 +91,9 @@ module.exports = {
             if (err) {
                 return console.error('Error acquiring client', err.stack);
             }else{
-                let dates = [];
                 let allCourses = courses.toUpperCase().split(", ");
+                let currentMaxDateCourseCode = allCourses[0]; // if have more than 1 final in 1 day
+                let currentMaxDate;
                 console.log("COURSES ---> "+allCourses);
                 console.log("TYPE OF COURSES ---> "+ typeof allCourses);
                 for(let i=0; i<allCourses.length; i++){
@@ -105,27 +106,22 @@ module.exports = {
                                 console.log(err);
                                 callback('CANNOT FIND FINAL DATE FOR THIS COURSE '+allCourses[i]);
                             } else {
-                                console.log("RESULT ---> "+result);
-                                console.log("RESULT.ROWS[0] ---> "+result.rows[0]);
+                                if(i==0){
+                                    currentMaxDate = result.rows[0].final_date;
+                                }else{
+                                    if(currentMaxDate<result.rows[i].final_date){
+                                        currentMaxDate = result.rows[i].final_date;
+                                        currentMaxDateCourseCode = allCourses[i];
+                                    }
+                                }
                                 console.log("FINAL DATE OF "+allCourses[i]+" is "+result.rows[0].final_date);
-                                dates.push(result.rows[0].final_date);
                             }
                             
                         }
                     );
                 }
-                console.log("DATES --> "+dates);
-                
-                let currentMaxDateIndex = 0; // if have more than 1 final in 1 day
-                let currentMaxDate = dates[0];
-                for(let i=1; i<dates.length; i++){
-                    if(currentMaxDate<dates[i]){
-                        currentMaxDate = dates[i];
-                        currentMaxDateIndex = i;
-                    }
-                }
-                console.log("COURSE OF MAX DATE --> "+allCourses[currentMaxDateIndex]);
-                callback([currentMaxDate,allCourses[currentMaxDateIndex]]);
+                console.log("COURSE OF MAX DATE --> "+currentMaxDate);
+                callback([currentMaxDate,currentMaxDateCourseCode]);
 
             }
              
