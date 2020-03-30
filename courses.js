@@ -148,10 +148,9 @@ module.exports = {
                     maxDateIndex = i;
                 }
             }
-            this.getCourseName(function(courseName){
-                callback([courses[maxDateIndex],courseName,maxDate]);
-            },courses[maxDateIndex]);
-        })
+            callback([courses[maxDateIndex],maxDate]);
+            
+        });
         
     },
 
