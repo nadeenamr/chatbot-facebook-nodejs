@@ -201,7 +201,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getFirstMidtermInfo(function(firstCodeDate){
 						courses.getCourseName(function(courseName){
-							let reply = `Lets see here... your first midterm is ${firstCodeDate[0]}: ${courseName} and so far it's expected to be on ${firstCodeDate[1]} (although keep an eye out for any adjustments given the current "situation") `;
+							let reply = `Lets see here... your first midterm is ${firstCodeDate[0]}: ${courseName} and so far it's expected to be on ${firstCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
 							sendTextMessage(sender,reply);
 							sendGifMessage("https://media.giphy.com/media/25EAreLnZIFWasblJe/giphy.gif",sender);
 						},firstCodeDate[0]);
@@ -215,7 +215,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getLastMidtermInfo(function(lastCodeDate){
 						courses.getCourseName(function(courseName){
-							let reply = `Lets see here... your last midterm is ${lastCodeDate[0]}: ${courseName} and so far it's expected to be on ${lastCodeDate[1]} (although keep an eye out for any adjustments given the current "situation") `;
+							let reply = `Lets see here... your last midterm is ${lastCodeDate[0]}: ${courseName} and so far it's expected to be on ${lastCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
 							sendTextMessage(sender,reply);
 							sendGifMessage("https://media.giphy.com/media/3o84UdRSymVQCrZT6E/giphy.gif",sender);
 						},lastCodeDate[0]);
@@ -229,7 +229,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getFirstFinalInfo(function(firstCodeDate){
 						courses.getCourseName(function(courseName){
-							let reply = `Lets see here... your first final is ${firstCodeDate[0]}: ${courseName} and so far it's expected to be on ${firstCodeDate[1]} (although keep an eye out for any adjustments given the current "situation") `;
+							let reply = `Lets see here... your first final is ${firstCodeDate[0]}: ${courseName} and so far it's expected to be on ${firstCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
 							sendTextMessage(sender,reply);
 							sendGifMessage("https://media.giphy.com/media/25EAreLnZIFWasblJe/giphy.gif",sender);
 						},firstCodeDate[0]);
@@ -243,7 +243,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getLastFinalInfo(function(finalCodeDate){
 						courses.getCourseName(function(courseName){
-							let reply = `Lets see here... your last final is ${finalCodeDate[0]}: ${courseName} and so far it's expected to be on ${finalCodeDate[1]} (although keep an eye out for any adjustments given the current "situation") `;
+							let reply = `Lets see here... your last final is ${finalCodeDate[0]}: ${courseName} and so far it's expected to be on ${finalCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
 							sendTextMessage(sender,reply);
 							sendGifMessage("https://media.giphy.com/media/3o84UdRSymVQCrZT6E/giphy.gif",sender);
 						},finalCodeDate[0]);
@@ -817,9 +817,21 @@ function receivedPostback(event) {
 		case "GET_PREREQ": 
 		sendToApiAi(senderID, "prerequisite");
 			break;
-		case "GET_INFO": 
-			
-		break;
+		case "GET_FIRST_FINAL": 
+			sendToApiAi(senderID, "first final");
+			break;
+		case "GET_LAST_FINAL": 
+				sendToApiAi(senderID, "last final");
+			break;
+		case "GET_FIRST_MIDTERM": 
+			sendToApiAi(senderID, "first midterm");
+			break;
+		case "GET_LAST_MIDTERM": 
+				sendToApiAi(senderID, "last midterm");
+			break;
+		case "GET_SCHEDULE": 
+			sendToApiAi(senderID, "schedule");
+			break;
 		default:
 			//unindentified payload
 			sendTextMessage(senderID, "I'm not sure what you want. Can you be more specific?");
