@@ -121,6 +121,8 @@ module.exports = {
                             console.log(err);
                             callback('CANNOT FIND COURSE WITH THIS CODE '+course_code);
                         } else {
+                            console.log("RESULT -- "+result);
+                            console.log("RESULT ROWS[0] -- "+result.rows[0]);
                             if(result.length==0){
                                 client.query(
                                     'SELECT course_name FROM public.language_courses WHERE course_code=$1', [course_code], // assuming the last final is never a language course
