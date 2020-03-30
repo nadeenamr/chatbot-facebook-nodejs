@@ -148,6 +148,7 @@ module.exports = {
                     maxDateIndex = i;
                 }
             }
+            console.log("CODE == "+courses[maxDateIndex+"  DATE == "+maxDate]);
             callback([courses[maxDateIndex],maxDate]);
             
         });
