@@ -107,14 +107,13 @@ module.exports = {
                             } else {
                                 console.log("RESULT ---> "+result);
                                 console.log("RESULT.ROWS[0] ---> "+result.rows[0]);
-                                console.log("FINAL DATE OF "+allCourses[i]+" is "+result.rows[0].final_date.getDate());
+                                console.log("FINAL DATE OF "+allCourses[i]+" is "+result.rows[0].final_date);
                                 dates.push(result.rows[0].final_date);
                             }
                             
                         }
                     );
                 }
-                console.log("DATES ---> "+dates);
                 let currentMaxDateIndex = 0; // if have more than 1 final in 1 day
                 let currentMaxDate = dates[0];
                 for(let i=1; i<dates.length; i++){
@@ -123,22 +122,6 @@ module.exports = {
                         currentMaxDateIndex = i;
                     }
                 }
-
-                var dd = currentMaxDate.getDate();
-
-                var mm = currentMaxDate.getMonth()+1; 
-                var yyyy = currentMaxDate.getFullYear();
-                if(dd<10) 
-                {
-                    dd='0'+dd;
-                } 
-
-                if(mm<10) 
-                {
-                    mm='0'+mm;
-                } 
-                currentMaxDate = dd+'/'+mm+'/'+yyyy;
-                console.log("MAX DATE IS --> "+currentMaxDate);
                 callback([currentMaxDate,allCourses[currentMaxDateIndex]]);
 
             }
