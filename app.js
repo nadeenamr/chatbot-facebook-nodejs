@@ -197,6 +197,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){
 					courses.getLastFinal(function(lastFinalDateAndCourseCode){
+						console.log("ALLCOURSES ---> "+allCourses);
 						courses.getCourseName(function(courseName){
 							let reply = `If I'm not mistaken, I believe your last final is ${lastFinalDateAndCourseCode[1]}:${courseName} and it's on ${lastFinalDateAndCourseCode[0]}.`;
 							sendTextMessage(sender, reply);

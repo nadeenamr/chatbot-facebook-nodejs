@@ -92,6 +92,7 @@ module.exports = {
                 return console.error('Error acquiring client', err.stack);
             }else{
                 let dates = [];
+                console.log("COURSES ---> "+courses);
                 for(let i=0; i<courses.length; i++){
                     let sql =`SELECT final_date FROM finals WHERE course_code='${courses[i]}'`;
                     client.query(sql,
@@ -100,6 +101,9 @@ module.exports = {
                                 console.log(err);
                                 callback('CANNOT FIND FINAL DATE FOR THIS COURSE '+courses[i]);
                             } else {
+                                console.log("RESULT ---> "+result);
+                                console.log("RESULT.ROWS[0] ---> "+result.rows[0]);
+                                console.log(result.rows[0].final_date);
                                 dates.push(result.rows[0].final_date);
                             }
                             
