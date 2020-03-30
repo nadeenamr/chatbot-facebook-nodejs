@@ -122,7 +122,22 @@ module.exports = {
                         currentMaxDateIndex = i;
                     }
                 }
-                console.log("MAX DATE IS --> "+currentMaxDate.format('D MMM, YYYY'));
+
+                var dd = currentMaxDate.getDate();
+
+                var mm = currentMaxDate.getMonth()+1; 
+                var yyyy = currentMaxDate.getFullYear();
+                if(dd<10) 
+                {
+                    dd='0'+dd;
+                } 
+
+                if(mm<10) 
+                {
+                    mm='0'+mm;
+                } 
+                currentMaxDate = dd+'/'+mm+'/'+yyyy;
+                console.log("MAX DATE IS --> "+currentMaxDate);
                 callback([currentMaxDate,allCourses[currentMaxDateIndex]]);
 
             }
