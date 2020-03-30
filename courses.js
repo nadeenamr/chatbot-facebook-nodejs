@@ -150,16 +150,15 @@ module.exports = {
             let allDates = coursesAndDates[1];
             for(let i=0; i<courses.length; i++){
                 let index = allCourses.indexOf(courses[i]);
-                console.log(index);
-                console.log(allDates[index]);
                 courseFinalDates.push(allDates[index]);
             }
-            let maxDate = courseFinalDates[0];
+            let maxDate = new Date(courseFinalDates[0]);
             let maxDateIndex = 0;
             for(let i=1; i<courseFinalDates.length; i++){
-                if(maxDate<courseFinalDates[i]){
-                    console.log(maxDate+" < "+courseFinalDates[i]);
-                    maxDate = courseFinalDates[i];
+                let temp = new Date(courseFinalDates[i]);
+                if(maxDate<temp){
+                    console.log(maxDate+" < "+temp);
+                    maxDate = temp;
                     maxDateIndex = i;
                 }
             }
