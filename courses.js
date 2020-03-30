@@ -91,6 +91,7 @@ module.exports = {
             if (err) {
                 return console.error('Error acquiring client', err.stack);
             }else{
+                let dates = [];
                 let allCourses = courses.toUpperCase().split(", ");
                 let currentMaxDateCourseCode = allCourses[0]; // if have more than 1 final in 1 day
                 let currentMaxDate;
@@ -118,12 +119,14 @@ module.exports = {
                                 }
                                 */
                                 let date = result.rows[0].final_date.getDate() +"/"+ (1+parseInt(result.rows[0].final_date.getMonth())) +"/"+ result.rows[0].final_date.getFullYear();
+                                dates.push(date);
                                 console.log("FINAL DATE OF "+allCourses[i]+" is "+ date);
                             }
                             
                         }
                     );
                 }
+                console.log("DATES --> "+dates);
                 console.log("COURSE OF MAX DATE --> "+currentMaxDate);
                 callback([currentMaxDate,currentMaxDateCourseCode]);
             }
