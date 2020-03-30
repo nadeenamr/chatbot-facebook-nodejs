@@ -212,8 +212,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){
 					const wink = emoji.get('wink');
-					console.log(wink);
-					let reply = `Here's a smooth schedule that I wiped up just for you `+wink+`\n Courses: ${allCourses}. What do you think?`;
+					let reply = `Here's a smooth schedule that I wiped up just for you `+wink+`\nCourses: ${allCourses}.\nWhat do you think?`;
 					sendTextMessage(sender, reply);
 					sendGifMessage("https://media.giphy.com/media/g0NZy8CjNDQ2K2DnG5/giphy.gif", sender);
 				}, studentIDAndTranscript);
@@ -224,14 +223,19 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let reply;
 					if(isRegular[0]=="new"){
 						reply = "Welcome "+ isRegular[1] +"! I'm your MET Mentor! I can answer any questions you might have and offer support/advice for MET students. Please enter your GUC ID so I am able to access your records."; 
+						sendTextMessage(sender, reply);
+						sendGifMessage("https://giphy.com/gifs/cbc-schittscreek-schitts-creek-88iGfhImcQ7mkbyuiS",sender);
 					}else{
 						if(isRegular[0]=="old"){
 							reply = "Welcome back "+ isRegular[1] +"! How can I help you today?"; 
+							sendTextMessage(sender, reply);
+							sendGifMessage("https://media.giphy.com/media/lTkG4o9F8TVLgDDdng/giphy.gif",sender);
 						}else{
-							reply = "OTHER!";
+							reply = "Hello There! How may I help you";
+							sendTextMessage(sender, reply);
 						}
 					}
-					sendTextMessage(sender, reply);
+					
 				}, sender);
 			break;
 		case "takingStudentID":
@@ -243,7 +247,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "takingStudentUsername":
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentUsername']){
 				students.saveStudentUsername(contexts[0].parameters['studentUsername'], sender);
-				sendTextMessage(sender, "Perfect! I have everything I need. Tell me, how can I be of service to you?");
+				sendTextMessage(sender, "Perfect "+emoji.get('Ok Hand')+" I have everything I need. Tell me, how can I be of service to you?");
 			}
 			break;
 		case "course_prereq": 
