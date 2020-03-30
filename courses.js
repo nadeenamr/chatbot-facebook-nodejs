@@ -107,7 +107,7 @@ module.exports = {
                             } else {
                                 console.log("RESULT ---> "+result);
                                 console.log("RESULT.ROWS[0] ---> "+result.rows[0]);
-                                console.log("FINAL DATE OF "+allCourses[i]+" is "+result.rows[0].final_date);
+                                console.log("FINAL DATE OF "+allCourses[i]+" is "+result.rows[0].final_date.getDate());
                                 dates.push(result.rows[0].final_date);
                             }
                             
