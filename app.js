@@ -13,6 +13,7 @@ const userData = require('./user');
 const students = require('./students');
 const courses = require('./courses');
 const prolog = require('./prolog');
+const emoji = require('node-emoji');
 
 pg.defaults.ssl = true;
 
@@ -199,7 +200,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getLastFinalInfo(function(finalCodeDate){
 						courses.getCourseName(function(courseName){
-							let reply = `According to my calculations, your last final is ${finalCodeDate[0]}: ${courseName} and it's expected to be on ${finalCodeDate[1]}.`;
+							let reply = `Lets see here... your last final is ${finalCodeDate[0]}: ${courseName} and so far it's expected to be on ${finalCodeDate[1]} (although keep an eye out for any adjustments given the current "situation") `;
 							sendTextMessage(sender,reply);
 							sendGifMessage("https://media.giphy.com/media/3o84UdRSymVQCrZT6E/giphy.gif",sender);
 						},finalCodeDate[0]);
@@ -210,8 +211,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "mySchedule":
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){
-					let reply = `These are your courses for the next semester: ${allCourses}.`;
+					const wink = emoji.get('wink');
+					console.log(wink);
+					let reply = `Here's a smooth schedule that I wiped up just for you `+wink+`\n Courses: ${allCourses}. What do you think?`;
 					sendTextMessage(sender, reply);
+					sendGifMessage("https://media.giphy.com/media/g0NZy8CjNDQ2K2DnG5/giphy.gif", sender);
 				}, studentIDAndTranscript);
 			}, sender);
 			break;
