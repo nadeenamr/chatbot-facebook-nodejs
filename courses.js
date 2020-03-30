@@ -130,11 +130,15 @@ module.exports = {
 
     getLastFinalInfo: function(callback, courses){
         this.getAllFinals(function(coursesAndDates){
+            console.log(coursesAndDates);
             let courseFinalDates = [];
             let allCourses = coursesAndDates[0];
+            console.log(allCourses);
             let allDates = coursesAndDates[1];
+            console.log(allDates);
             for(let i=0; i<courses.length; i++){
                 let index = allCourses.indexOf(courses[i]);
+                console.log(allDates[index]);
                 courseFinalDates.push(allDates[index]);
             }
             callback(courseFinalDates);
