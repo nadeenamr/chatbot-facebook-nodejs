@@ -283,18 +283,19 @@ module.exports = {
 
     getLastMidtermInfo: function(callback, courses){
         this.getAllMidterms(function(coursesAndDates){
+            let coursesMinusDeutsch = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404'});
             let courseMidtermDates = [];
             let allCourses = coursesAndDates[0];
-            console.log(courses);
+            console.log(coursesMinusDeutsch);
             let allDates = coursesAndDates[1];
-            for(let i=0; i<courses.length; i++){
-                let index = allCourses.indexOf(courses[i]);
+            for(let i=0; i<coursesMinusDeutsch.length; i++){
+                let index = allCourses.indexOf(coursesMinusDeutsch[i]);
                 console.log(allDates[index]);
                 courseMidtermDates.push(allDates[index]);
             }
             let maxDate = courseMidtermDates[0];
             let maxDateIndex = 0;
-            for(let i=1; i<courses.length; i++){
+            for(let i=1; i<coursesMinusDeutsch.length; i++){
                 //console.log(maxDate+" < "+courseMidtermDates[i]);
                 let temp1 = maxDate.split("/");
                 let temp2 = courseMidtermDates[i].split("/");
@@ -320,8 +321,8 @@ module.exports = {
                 }
                 
             }
-            console.log("CODE == "+courses[maxDateIndex]+"  DATE == "+maxDate);
-            callback([courses[maxDateIndex],maxDate]);
+            console.log("CODE == "+coursesMinusDeutsch[maxDateIndex]+"  DATE == "+maxDate);
+            callback([coursesMinusDeutsch[maxDateIndex],maxDate]);
             
         });
         
