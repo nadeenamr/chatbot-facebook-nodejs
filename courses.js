@@ -92,15 +92,16 @@ module.exports = {
                 return console.error('Error acquiring client', err.stack);
             }else{
                 let dates = [];
-                console.log("COURSES ---> "+courses);
-                console.log("TYPE OF COURSES ---> "+ typeof courses);
+                let allCourses = courses.split(",");
+                console.log("COURSES ---> "+allCourses);
+                console.log("TYPE OF COURSES ---> "+ typeof allCourses);
                 for(let i=0; i<courses.length; i++){
-                    let sql =`SELECT final_date FROM finals WHERE course_code='${courses[i]}'`;
+                    let sql =`SELECT final_date FROM finals WHERE course_code='${allCourses[i]}'`;
                     client.query(sql,
                         function(err, result) {
                             if (err) {
                                 console.log(err);
-                                callback('CANNOT FIND FINAL DATE FOR THIS COURSE '+courses[i]);
+                                callback('CANNOT FIND FINAL DATE FOR THIS COURSE '+allCourses[i]);
                             } else {
                                 console.log("RESULT ---> "+result);
                                 console.log("RESULT.ROWS[0] ---> "+result.rows[0]);
@@ -119,7 +120,7 @@ module.exports = {
                         currentMaxDateIndex = i;
                     }
                 }
-                callback([currentMaxDate,courses[currentMaxDateIndex]]);
+                callback([currentMaxDate,allCourses[currentMaxDateIndex]]);
 
             }
              
