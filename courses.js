@@ -152,14 +152,12 @@ module.exports = {
                 let index = allCourses.indexOf(courses[i]);
                 courseFinalDates.push(allDates[index]);
             }
-            let maxDate = new Date(courseFinalDates[0]);
+            let maxDate = courseFinalDates[0];
             let maxDateIndex = 0;
             for(let i=1; i<courseFinalDates.length; i++){
-                let temp = new Date(courseFinalDates[i]);
-                console.log("NEW DATE -- "+temp);
-                if(maxDate<temp){
-                    console.log(maxDate+" < "+temp);
-                    maxDate = temp;
+                if(maxDate<courseFinalDates[i]){
+                    console.log(maxDate+" < "+courseFinalDates[i]);
+                    maxDate = courseFinalDates[i];
                     maxDateIndex = i;
                 }
             }
