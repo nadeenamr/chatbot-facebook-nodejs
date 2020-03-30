@@ -238,17 +238,18 @@ module.exports = {
 
     getFirstMidtermInfo: function(callback, courses){
         this.getAllMidterms(function(coursesAndDates){
+            let coursesMinusDeutsch = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404'});
             let courseMidtermDates = [];
             let allCourses = coursesAndDates[0];
-            console.log(courses);
+            console.log(coursesMinusDeutsch);
             let allDates = coursesAndDates[1];
-            for(let i=0; i<courses.length; i++){
-                let index = allCourses.indexOf(courses[i]);
+            for(let i=0; i<coursesMinusDeutsch.length; i++){
+                let index = allCourses.indexOf(coursesMinusDeutsch[i]);
                 courseMidtermDates.push(allDates[index]);
             }
             let minDate = courseMidtermDates[0];
             let minDateIndex = 0;
-            for(let i=1; i<courses.length; i++){
+            for(let i=1; i<coursesMinusDeutsch.length; i++){
                 //console.log(minDate+" < "+courseMidtermDates[i]);
                 let temp1 = minDate.split("/");
                 let temp2 = courseMidtermDates[i].split("/");
@@ -274,8 +275,8 @@ module.exports = {
                 }
                 
             }
-            console.log("CODE == "+courses[minDateIndex]+"  DATE == "+minDate);
-            callback([courses[minDateIndex],minDate]);
+            console.log("CODE == "+coursesMinusDeutsch[minDateIndex]+"  DATE == "+minDate);
+            callback([coursesMinusDeutsch[minDateIndex],minDate]);
             
         });
         
