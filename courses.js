@@ -156,6 +156,7 @@ module.exports = {
             let maxDateIndex = 0;
             for(let i=1; i<courseFinalDates.length; i++){
                 let temp = new Date(courseFinalDates[i]);
+                console.log("NEW DATE -- "+temp);
                 if(maxDate<temp){
                     console.log(maxDate+" < "+temp);
                     maxDate = temp;
