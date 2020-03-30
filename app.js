@@ -196,12 +196,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "myLastFinal":
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){
-					let courseList = allCourses.split(", ");
+					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getLastFinalInfo(function(finalCodeNameDate){
 						//let reply = `According to my calculations, your last final is ${finalCodeNameDate[0]}:${finalCodeNameDate[1]} and it's expected to be on ${finalCodeNameDate[2]}.`;
 						//sendTextMessage(sender,reply);
 						sendTextMessage(sender,""+finalCodeNameDate);
-					},courseList.toUpperCase());
+					},courseList);
 				}, studentIDAndTranscript); 
 			}, sender);
 			break;

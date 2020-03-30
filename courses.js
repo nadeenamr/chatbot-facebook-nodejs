@@ -130,6 +130,7 @@ module.exports = {
 
     getLastFinalInfo: function(callback, courses){
         this.getAllFinals(function(coursesAndDates){
+            
             //console.log(coursesAndDates);
             let courseFinalDates = [];
             let allCourses = coursesAndDates[0];
