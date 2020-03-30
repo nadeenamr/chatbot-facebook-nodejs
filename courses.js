@@ -165,8 +165,11 @@ module.exports = {
                     maxDateIndex = i;
                 }
             }
+            let day = maxDate.getDate();
+            let month = 1 + parseInt(maxDate.getMonth());
+            let year = maxDate.getFullYear();
             console.log("CODE == "+courses[maxDateIndex]+"  DATE == "+maxDate);
-            callback([courses[maxDateIndex],maxDate.getDay()+"/"+(1+parseInt(maxDate.getMonth))+"/"+maxDate.getFullYear]);
+            callback([courses[maxDateIndex],day+"/"+month+"/"+year]);
             
         });
         
