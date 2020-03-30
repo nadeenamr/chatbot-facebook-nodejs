@@ -85,57 +85,30 @@ module.exports = {
         pool.end();
     },
 
-    getLastFinal: function(callback, courses){
+    getFinalDate: function(course_code){
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
                 return console.error('Error acquiring client', err.stack);
             }else{
-                let dates;
-                let allCourses = courses.toUpperCase().split(", ");
-                let currentMaxDateCourseCode = allCourses[0]; // if have more than 1 final in 1 day
-                let currentMaxDate;
-                console.log("COURSES ---> "+allCourses);
-                console.log("TYPE OF COURSES ---> "+ typeof allCourses);
-                let sql;
-                for(let i=0; i<allCourses.length; i++){
-                    console.log(allCourses[i]);
-                    sql =`SELECT final_date FROM public.finals WHERE course_code='${allCourses[i]}'`;
-                    console.log("SQL ---> "+sql);
-                    client.query(sql,
-                        function(err, result) {
-                            if (err) {
-                                console.log(err);
-                                callback('CANNOT FIND FINAL DATE FOR THIS COURSE '+allCourses[i]);
-                            } else {
-                                /*
-                                if(i==0){
-                                    currentMaxDate = result.rows[0].final_date;
-                                }else{
-                                    if(currentMaxDate<result.rows[i].final_date){
-                                        currentMaxDate = result.rows[i].final_date;
-                                        currentMaxDateCourseCode = allCourses[i];
-                                    }
-                                }
-                                */
-                                let date = result.rows[0].final_date.getDate() +"/"+ (1+parseInt(result.rows[0].final_date.getMonth())) +"/"+ result.rows[0].final_date.getFullYear();
-                                dates += date+",";
-                                console.log("FINAL DATE OF "+allCourses[i]+" is "+ date);
-                            }
-                            
-                        }
-                    );
-                }
-                console.log("DATES --> "+dates);
-                console.log("COURSE OF MAX DATE --> "+currentMaxDate);
-                callback([currentMaxDate,currentMaxDateCourseCode]);
+                client.query(
+                    'SELECT final_date FROM public.finals WHERE course_code=$1', [course_code], // assuming the last final is never a language course
+                    function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            return 'CANNOT FIND COURSE WITH THIS CODE '+course_code;
+                        } else {
+                            return result.rows[0].final_date;
+                        };
+                    });
+                
             }
              
         });
         pool.end();
     },
 
-    getCourseName: function(callback, course_code) {
+    getCourseName: function(course_code) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
@@ -146,9 +119,9 @@ module.exports = {
                     function(err, result) {
                         if (err) {
                             console.log(err);
-                            callback('CANNOT FIND COURSE WITH THIS CODE '+course_code);
+                            return 'CANNOT FIND COURSE WITH THIS CODE '+course_code;
                         } else {
-                            callback(result.rows[0].course_name);
+                            return result.rows[0].course_name;
                         };
                     });
         });
