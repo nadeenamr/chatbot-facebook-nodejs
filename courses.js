@@ -166,7 +166,7 @@ module.exports = {
                 }
             }
             console.log("CODE == "+courses[maxDateIndex]+"  DATE == "+maxDate);
-            callback([courses[maxDateIndex],maxDate]);
+            callback([courses[maxDateIndex],maxDate.getDate()+"/"+(1+parseInt(maxDate.getMonth))+"/"+maxDate.getFullYear]);
             
         });
         

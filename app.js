@@ -199,7 +199,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getLastFinalInfo(function(finalCodeDate){
 						courses.getCourseName(function(courseName){
-							let reply = `According to my calculations, your last final is ${finalCodeDate[0]}:${courseName} and it's expected to be on ${finalCodeDate[1]}.`;
+							let reply = `According to my calculations, your last final is ${finalCodeDate[0]}: ${courseName} and it's expected to be on ${finalCodeDate[1]}.`;
 							sendTextMessage(sender,reply);
 						},finalCodeDate[0]);
 					},courseList);
