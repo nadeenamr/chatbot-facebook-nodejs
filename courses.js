@@ -92,12 +92,12 @@ module.exports = {
                 return console.error('Error acquiring client', err.stack);
             }else{
                 let dates = [];
-                let allCourses = courses.split(",");
+                let allCourses = courses.toUpperCase().split(",");
                 console.log("COURSES ---> "+allCourses);
                 console.log("TYPE OF COURSES ---> "+ typeof allCourses);
                 for(let i=0; i<allCourses.length; i++){
                     console.log(allCourses[i]);
-                    let sql =`SELECT final_date FROM finals WHERE course_code='${allCourses[i].toUpperCase()}'`;
+                    let sql =`SELECT final_date FROM finals WHERE course_code='${allCourses[i]}'`;
                     client.query(sql,
                         function(err, result) {
                             if (err) {
