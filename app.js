@@ -815,7 +815,7 @@ function receivedPostback(event) {
 				sendToApiAi(senderID, "What is the difference between CS and DMET?");
 			break;
 		case "GET_PREREQ": 
-				sendGifMessage("https://media.giphy.com/media/F6PFPjc3K0CPe/giphy.gif", senderID);
+		sendToApiAi(senderID, "prerequisite");
 			break;
 		case "GET_INFO": 
 			
