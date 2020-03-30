@@ -137,12 +137,11 @@ module.exports = {
                 courseFinalDates.push(allDates(allCourses.indexOf(courses[i])));
             }
             callback(courseFinalDates);
-
-        },courses[i])
+        })
         
     },
 
-    getAllFinals: function(callback, courses) {
+    getAllFinals: function(callback) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
