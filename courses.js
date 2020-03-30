@@ -135,7 +135,7 @@ module.exports = {
             let allDates = coursesAndDates[1];
             for(let i=0; i<courses.length; i++){
                 let index = allCourses.indexOf(courses[i]);
-                courseFinalDates.push(allDates(index));
+                courseFinalDates.push(allDates[index]);
             }
             callback(courseFinalDates);
         })
