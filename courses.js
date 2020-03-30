@@ -162,17 +162,17 @@ module.exports = {
                 //console.log(maxDate+" < "+courseFinalDates[i]);
                 let temp1 = maxDate.split("/");
                 let temp2 = courseFinalDates[i].split("/");
-                if(temp1[2]<temp2[2]){ // year is greater
+                if(parseInt(temp1[2])<parseInt(temp2[2])){ // year is greater
                     console.log(maxDate+" < "+courseFinalDates[i] + " FIRST IF STAT");
                     maxDate = courseFinalDates[i];
                     maxDateIndex = i;
                 }else{
-                    if(temp1[2]==temp2[2] && temp1[1]<temp2[1]){ // same year, month is greater
+                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])<parseInt(temp2[1])){ // same year, month is greater
                         console.log(maxDate+" < "+courseFinalDates[i] + " SECOND IF STAT");
                         maxDate = courseFinalDates[i];
                         maxDateIndex = i;
                     }else{
-                        if(temp1[2]==temp2[2] && temp1[1]==temp2[1] && temp1[0]<temp2[0]){ // same year, same month, day is greater
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])<parseInt(temp2[0])){ // same year, same month, day is greater
                             console.log(maxDate+" < "+courseFinalDates[i]  + " THIRD IF STAT");
                             maxDate = courseFinalDates[i];
                             maxDateIndex = i;
