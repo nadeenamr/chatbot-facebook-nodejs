@@ -199,6 +199,20 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				setTimeout(function(){ sendTextMessage(sender, reply); }, 6000);
 				}, parameters['semesters']);
 			break;
+		case "myNextQuiz": 
+			students.getStudentTranscript(function(studentIDAndTranscript){
+				prolog.getStudentNextSchedule(function(allCourses){
+					let courseList = allCourses.toUpperCase().split(", ");
+					courses.getNextQuizInfo(function(nextCodeDate){
+						courses.getCourseName(function(courseName){
+							let reply = `OK, so according to my calculations, your first quiz is quiz 1 of ${nextCodeDate[0]}: ${courseName} and so far it's expected to be on ${nextCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
+							sendTextMessage(sender,reply);
+							sendGifMessage("https://media.giphy.com/media/HPF6ivflFs7U4/giphy.gif",sender);
+						},nextCodeDate[0]);
+					},courseList);
+				}, studentIDAndTranscript); 
+			}, sender);
+			break;
 		case "myFirstQuiz":
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){

@@ -467,6 +467,79 @@ module.exports = {
         
     },
 
+    getNextQuizInfo: function(callback, courses){
+        this.getAllQuizzes(function(coursesAndDates){
+            let coursesMinusLanguages = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404' && course!='AE101' && course!='AS102' && course!='SM101' && course!='CPS402' && course!='RPW401'});
+            let courseQuizDates = [];
+            let allCourses = coursesAndDates[0];
+            console.log(coursesMinusLanguages);
+            let allDates = coursesAndDates[1];
+            for(let i=0; i<coursesMinusLanguages.length; i++){
+                let index = allCourses.indexOf(coursesMinusLanguages[i]);
+                courseQuizDates.push(allDates[index]);
+            }
+
+            for(let i=0;i<courseQuizDates.length; i++){
+                if(courseQuizDates[i]==undefined){
+                    coursesMinusLanguages[i] = undefined;
+                }
+            }
+
+            let coursesMinusLanguages1 = coursesMinusLanguages.filter(function(course){ return course!=undefined});
+            let courseQuizDates1 = courseQuizDates.filter(function(date){ return date!=undefined});
+
+            let futureQuizzesCourses = [];
+            let futureQuizzesDates = [];
+            let today = new Date();
+            for(let i=0; i<courseQuizDates1.length; i++){ // filtering quizzes to the ones after today
+                if(courseQuizDates1[i]>today){ // this quiz hasn't come yet
+                    futureQuizzesCourses.push(coursesMinusLanguages1[i]);
+                    futureQuizzesDates.push(courseQuizDates1[i]);
+                }
+            }
+
+            let index = 0;
+            let minDate = futureQuizzesDates[index];
+            while(minDate==undefined){
+                index++;
+                minDate = futureQuizzesDates[index];
+            }
+            let minDateIndex = index;
+            for(let i=index+1; i<futureQuizzesCourses.length; i++){
+                //console.log(minDate+" < "+futureQuizzesDates[i]);
+                if(futureQuizzesDates[i]!=undefined){
+                    let temp1 = minDate.split("/");
+                    let temp2 = futureQuizzesDates[i].split("/");
+                    if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
+                        console.log(minDate+" > "+futureQuizzesDates[i] + " FIRST IF STAT");
+                        minDate = futureQuizzesDates[i];
+                        minDateIndex = i;
+                    }else{
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
+                            console.log(minDate+" > "+futureQuizzesDates[i] + " SECOND IF STAT");
+                            minDate = futureQuizzesDates[i];
+                            minDateIndex = i;
+                        }else{
+                            if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
+                                console.log(minDate+" > "+futureQuizzesDates[i]  + " THIRD IF STAT");
+                                minDate = futureQuizzesDates[i];
+                                minDateIndex = i;
+                            }else{
+                                console.log(minDate+" < "+futureQuizzesDates[i]);
+                            }
+                        }
+                        
+                    }
+                }
+                   
+            }
+            console.log("CODE == "+futureQuizzesCourses[minDateIndex]+"  DATE == "+minDate);
+            callback([futureQuizzesCourses[minDateIndex],minDate]);
+            
+        });
+        
+    },
+
     getAllQuizzes: function(callback) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
