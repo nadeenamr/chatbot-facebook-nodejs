@@ -189,17 +189,14 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 	console.log("Received echo for message %s and app %d with metadata %s", messageId, appId, metadata);
 }
 
-function getHistory(sender){
-	return "FUNCTION WORKS and this is sender : "+sender;
-}
-
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "getSemesterCourses":
 			courses.readAllCSSemesterCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
-				let reply = `Courses in the ${parameters['semesters']} semester curriculum are: ${allCoursesString}.`;
-				sendTextMessage(sender, reply);
+				let reply = `Courses in semester ${parameters['semesters']} curriculum are: ${allCoursesString}.`;
+				sendGifMessage("https://media.giphy.com/media/l2QEkuf4oMtqSuKR2/giphy.gif",sender);
+				setTimeout(function(){ sendTextMessage(sender, reply); }, 3000);
 				}, parameters['semesters']);
 			break;
 		case "myFirstMidterm":
