@@ -156,33 +156,40 @@ module.exports = {
                 let index = allCourses.indexOf(courses[i]);
                 courseFinalDates.push(allDates[index]);
             }
-            let minDate = courseFinalDates[0];
-            let minDateIndex = 0;
+            let index = 0;
+            let minDate = courseFinalDates[index];
+            while(minDate==undefined){
+                index++;
+                minDate = courseFinalDates[index];
+            }
+            let minDateIndex = index;
             for(let i=1; i<courses.length; i++){
                 //console.log(minDate+" < "+courseFinalDates[i]);
-                let temp1 = minDate.split("/");
-                let temp2 = courseFinalDates[i].split("/");
-                if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
-                    console.log(minDate+" > "+courseFinalDates[i] + " FIRST IF STAT");
-                    minDate = courseFinalDates[i];
-                    minDateIndex = i;
-                }else{
-                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
-                        console.log(minDate+" > "+courseFinalDates[i] + " SECOND IF STAT");
+                if(courseFinalDates[i]!=undefined){
+                    let temp1 = minDate.split("/");
+                    let temp2 = courseFinalDates[i].split("/");
+                    if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
+                        console.log(minDate+" > "+courseFinalDates[i] + " FIRST IF STAT");
                         minDate = courseFinalDates[i];
                         minDateIndex = i;
                     }else{
-                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
-                            console.log(minDate+" > "+courseFinalDates[i]  + " THIRD IF STAT");
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
+                            console.log(minDate+" > "+courseFinalDates[i] + " SECOND IF STAT");
                             minDate = courseFinalDates[i];
                             minDateIndex = i;
                         }else{
-                            console.log(minDate+" < "+courseFinalDates[i]);
+                            if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
+                                console.log(minDate+" > "+courseFinalDates[i]  + " THIRD IF STAT");
+                                minDate = courseFinalDates[i];
+                                minDateIndex = i;
+                            }else{
+                                console.log(minDate+" < "+courseFinalDates[i]);
+                            }
                         }
+                        
                     }
-                    
                 }
-                
+               
             }
             console.log("CODE == "+courses[minDateIndex]+"  DATE == "+minDate);
             callback([courses[minDateIndex],minDate]);
@@ -201,31 +208,38 @@ module.exports = {
                 let index = allCourses.indexOf(courses[i]);
                 courseFinalDates.push(allDates[index]);
             }
-            let maxDate = courseFinalDates[0];
-            let maxDateIndex = 0;
+            let index = 0;
+            let maxDate = courseFinalDates[index];
+            while(maxDate==undefined){
+                index++;
+                maxDate = courseFinalDates[index];
+            }
+            let maxDateIndex = index;
             for(let i=1; i<courses.length; i++){
                 //console.log(maxDate+" < "+courseFinalDates[i]);
-                let temp1 = maxDate.split("/");
-                let temp2 = courseFinalDates[i].split("/");
-                if(parseInt(temp1[2])<parseInt(temp2[2])){ // year is greater
-                    console.log(maxDate+" < "+courseFinalDates[i] + " FIRST IF STAT");
-                    maxDate = courseFinalDates[i];
-                    maxDateIndex = i;
-                }else{
-                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])<parseInt(temp2[1])){ // same year, month is greater
-                        console.log(maxDate+" < "+courseFinalDates[i] + " SECOND IF STAT");
+                if(courseFinalDates[i]!=undefined){
+                    let temp1 = maxDate.split("/");
+                    let temp2 = courseFinalDates[i].split("/");
+                    if(parseInt(temp1[2])<parseInt(temp2[2])){ // year is greater
+                        console.log(maxDate+" < "+courseFinalDates[i] + " FIRST IF STAT");
                         maxDate = courseFinalDates[i];
                         maxDateIndex = i;
                     }else{
-                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])<parseInt(temp2[0])){ // same year, same month, day is greater
-                            console.log(maxDate+" < "+courseFinalDates[i]  + " THIRD IF STAT");
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])<parseInt(temp2[1])){ // same year, month is greater
+                            console.log(maxDate+" < "+courseFinalDates[i] + " SECOND IF STAT");
                             maxDate = courseFinalDates[i];
                             maxDateIndex = i;
                         }else{
-                            console.log(maxDate+" > "+courseFinalDates[i]);
+                            if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])<parseInt(temp2[0])){ // same year, same month, day is greater
+                                console.log(maxDate+" < "+courseFinalDates[i]  + " THIRD IF STAT");
+                                maxDate = courseFinalDates[i];
+                                maxDateIndex = i;
+                            }else{
+                                console.log(maxDate+" > "+courseFinalDates[i]);
+                            }
                         }
+                        
                     }
-                    
                 }
                 
             }
@@ -247,31 +261,38 @@ module.exports = {
                 let index = allCourses.indexOf(coursesMinusDeutsch[i]);
                 courseMidtermDates.push(allDates[index]);
             }
-            let minDate = courseMidtermDates[0];
-            let minDateIndex = 0;
+            let index = 0;
+            let minDate = courseMidtermDates[index];
+            while(minDate==undefined){
+                index++;
+                minDate = courseMidtermDates[index];
+            }
+            let minDateIndex = index;
             for(let i=1; i<coursesMinusDeutsch.length; i++){
                 //console.log(minDate+" < "+courseMidtermDates[i]);
-                let temp1 = minDate.split("/");
-                let temp2 = courseMidtermDates[i].split("/");
-                if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
-                    console.log(minDate+" > "+courseMidtermDates[i] + " FIRST IF STAT");
-                    minDate = courseMidtermDates[i];
-                    minDateIndex = i;
-                }else{
-                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
-                        console.log(minDate+" > "+courseMidtermDates[i] + " SECOND IF STAT");
+                if(courseMidtermDates[i]!=undefined){
+                    let temp1 = minDate.split("/");
+                    let temp2 = courseMidtermDates[i].split("/");
+                    if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
+                        console.log(minDate+" > "+courseMidtermDates[i] + " FIRST IF STAT");
                         minDate = courseMidtermDates[i];
                         minDateIndex = i;
                     }else{
-                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
-                            console.log(minDate+" > "+courseMidtermDates[i]  + " THIRD IF STAT");
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
+                            console.log(minDate+" > "+courseMidtermDates[i] + " SECOND IF STAT");
                             minDate = courseMidtermDates[i];
                             minDateIndex = i;
                         }else{
-                            console.log(minDate+" < "+courseMidtermDates[i]);
+                            if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
+                                console.log(minDate+" > "+courseMidtermDates[i]  + " THIRD IF STAT");
+                                minDate = courseMidtermDates[i];
+                                minDateIndex = i;
+                            }else{
+                                console.log(minDate+" < "+courseMidtermDates[i]);
+                            }
                         }
+                        
                     }
-                    
                 }
                 
             }
@@ -295,32 +316,40 @@ module.exports = {
                 console.log(allDates[index]);
                 courseMidtermDates.push(allDates[index]);
             }
-            let maxDate = courseMidtermDates[0];
-            let maxDateIndex = 0;
+            let index = 0;
+            let maxDate = courseMidtermDates[index];
+            while(maxDate==undefined){
+                index++;
+                maxDate = courseMidtermDates[index];
+            }
+            let maxDateIndex = index;
             for(let i=1; i<coursesMinusDeutsch.length; i++){
                 //console.log(maxDate+" < "+courseMidtermDates[i]);
-                let temp1 = maxDate.split("/");
-                let temp2 = courseMidtermDates[i].split("/");
-                if(parseInt(temp1[2])<parseInt(temp2[2])){ // year is smaller
-                    console.log(maxDate+" < "+courseMidtermDates[i] + " FIRST IF STAT");
-                    maxDate = courseMidtermDates[i];
-                    maxDateIndex = i;
-                }else{
-                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])<parseInt(temp2[1])){ // same year, month is smaller
-                        console.log(maxDate+" < "+courseMidtermDates[i] + " SECOND IF STAT");
+                if(courseMidtermDates[i]!=undefined){
+                    let temp1 = maxDate.split("/");
+                    let temp2 = courseMidtermDates[i].split("/");
+                    if(parseInt(temp1[2])<parseInt(temp2[2])){ // year is smaller
+                        console.log(maxDate+" < "+courseMidtermDates[i] + " FIRST IF STAT");
                         maxDate = courseMidtermDates[i];
                         maxDateIndex = i;
                     }else{
-                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])<parseInt(temp2[0])){ // same year, same month, day is smaller
-                            console.log(maxDate+" < "+courseMidtermDates[i]  + " THIRD IF STAT");
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])<parseInt(temp2[1])){ // same year, month is smaller
+                            console.log(maxDate+" < "+courseMidtermDates[i] + " SECOND IF STAT");
                             maxDate = courseMidtermDates[i];
                             maxDateIndex = i;
                         }else{
-                            console.log(maxDate+" > "+courseMidtermDates[i]);
+                            if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])<parseInt(temp2[0])){ // same year, same month, day is smaller
+                                console.log(maxDate+" < "+courseMidtermDates[i]  + " THIRD IF STAT");
+                                maxDate = courseMidtermDates[i];
+                                maxDateIndex = i;
+                            }else{
+                                console.log(maxDate+" > "+courseMidtermDates[i]);
+                            }
                         }
+                        
                     }
-                    
                 }
+                
                 
             }
             console.log("CODE == "+coursesMinusDeutsch[maxDateIndex]+"  DATE == "+maxDate);
@@ -396,31 +425,38 @@ module.exports = {
                 console.log(allDates[index]);
                 courseQuizDates.push(allDates[index]);
             }
-            let maxDate = courseQuizDates[0];
-            let maxDateIndex = 0;
+            let index = 0;
+            let maxDate = courseQuizDates[index];
+            while(maxDate==undefined){
+                index++;
+                maxDate = courseQuizDates[index];
+            }
+            let maxDateIndex = index;
             for(let i=1; i<coursesMinusLanguages.length; i++){
                 //console.log(maxDate+" < "+courseQuizDates[i]);
-                let temp1 = maxDate.split("/");
-                let temp2 = courseQuizDates[i].split("/");
-                if(parseInt(temp1[2])<parseInt(temp2[2])){ // year is smaller
-                    console.log(maxDate+" < "+courseQuizDates[i] + " FIRST IF STAT");
-                    maxDate = courseQuizDates[i];
-                    maxDateIndex = i;
-                }else{
-                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])<parseInt(temp2[1])){ // same year, month is smaller
-                        console.log(maxDate+" < "+courseQuizDates[i] + " SECOND IF STAT");
+                if(courseQuizDates[i]!=undefined){
+                    let temp1 = maxDate.split("/");
+                    let temp2 = courseQuizDates[i].split("/");
+                    if(parseInt(temp1[2])<parseInt(temp2[2])){ // year is smaller
+                        console.log(maxDate+" < "+courseQuizDates[i] + " FIRST IF STAT");
                         maxDate = courseQuizDates[i];
                         maxDateIndex = i;
                     }else{
-                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])<parseInt(temp2[0])){ // same year, same month, day is smaller
-                            console.log(maxDate+" < "+courseQuizDates[i]  + " THIRD IF STAT");
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])<parseInt(temp2[1])){ // same year, month is smaller
+                            console.log(maxDate+" < "+courseQuizDates[i] + " SECOND IF STAT");
                             maxDate = courseQuizDates[i];
                             maxDateIndex = i;
                         }else{
-                            console.log(maxDate+" > "+courseQuizDates[i]);
+                            if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])<parseInt(temp2[0])){ // same year, same month, day is smaller
+                                console.log(maxDate+" < "+courseQuizDates[i]  + " THIRD IF STAT");
+                                maxDate = courseQuizDates[i];
+                                maxDateIndex = i;
+                            }else{
+                                console.log(maxDate+" > "+courseQuizDates[i]);
+                            }
                         }
+                        
                     }
-                    
                 }
                 
             }
