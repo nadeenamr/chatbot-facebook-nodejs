@@ -831,9 +831,7 @@ function receivedPostback(event) {
 	var timeOfPostback = event.timestamp;
 
 	setSessionAndUser(senderID);
-	// The 'payload' param is a developer-defined field which is set in a postback 
-	// button for Structured Messages. 
-	var payload = event.postback.payload;
+	var payload = event.postback.payload; // The 'payload' param is a developer-defined field which is set in a postback button for Structured Messages. 
 
 	switch (payload) {
 		case "Get started":
