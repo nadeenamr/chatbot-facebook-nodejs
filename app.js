@@ -205,7 +205,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getFirstQuizInfo(function(firstCodeDate){
 						courses.getCourseName(function(courseName){
-							let reply = `OK, so according to my calculations, your first quiz is ${firstCodeDate[0]}: ${courseName} and so far it's expected to be on ${firstCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
+							let reply = `OK, so according to my calculations, your first quiz is quiz 1 of ${firstCodeDate[0]}: ${courseName} and so far it's expected to be on ${firstCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
 							sendTextMessage(sender,reply);
 							sendGifMessage("https://media.giphy.com/media/HPF6ivflFs7U4/giphy.gif",sender);
 						},firstCodeDate[0]);
@@ -219,7 +219,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getLastQuizInfo(function(lastCodeDate){
 						courses.getCourseName(function(courseName){
-							let reply = `OK, so according to my calculations, the last quiz in the semester for you is ${lastCodeDate[0]}: ${courseName} and so far it's expected to be on ${lastCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
+							let reply = `OK, so according to my calculations, the last quiz in the semester for you is quiz 3 of ${lastCodeDate[0]}: ${courseName} and so far it's expected to be on ${lastCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
 							sendTextMessage(sender,reply);
 							sendGifMessage("https://media.giphy.com/media/hYrwRki5WYoZW/giphy.gif",sender);
 						},lastCodeDate[0]);
