@@ -195,6 +195,13 @@ function getHistory(sender){
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "getSemesterCourses":
+			courses.readAllCSSemesterCourses(function(allCourses){
+				let allCoursesString = allCourses.join(", ");
+				let reply = `Courses in the ${parameters['semesters']} semester curriculum are: ${allCoursesString}.`;
+				sendTextMessage(sender, reply);
+				}, parameters['semesters']);
+			break;
 		case "myFirstMidterm":
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){
@@ -283,7 +290,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "takingStudentID":
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentID']){
 				students.saveStudentID(contexts[0].parameters['studentID'], sender);
-				sendTextMessage(sender, "Amazing! I also need is your GUC username");
+				sendTextMessage(sender, "Amazing! I also need your GUC username");
 			}
 			break;
 		case "takingStudentUsername":
