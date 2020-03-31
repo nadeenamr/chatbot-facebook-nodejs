@@ -341,33 +341,40 @@ module.exports = {
                 let index = allCourses.indexOf(coursesMinusLanguages[i]);
                 courseQuizDates.push(allDates[index]);
             }
-            let minDate = courseQuizDates[0];
-            let minDateIndex = 0;
-            for(let i=1; i<coursesMinusLanguages.length; i++){
+            let index = 0;
+            let minDate = courseQuizDates[index];
+            while(minDate==undefined){
+                index++;
+                minDate = courseQuizDates[index];
+            }
+            let minDateIndex = index;
+            for(let i=index+1; i<coursesMinusLanguages.length; i++){
                 //console.log(minDate+" < "+courseQuizDates[i]);
-                let temp1 = minDate.split("/");
-                let temp2 = courseQuizDates[i].split("/");
-                if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
-                    console.log(minDate+" > "+courseQuizDates[i] + " FIRST IF STAT");
-                    minDate = courseQuizDates[i];
-                    minDateIndex = i;
-                }else{
-                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
-                        console.log(minDate+" > "+courseQuizDates[i] + " SECOND IF STAT");
+                if(courseQuizDates[i]!=undefined){
+                    let temp1 = minDate.split("/");
+                    let temp2 = courseQuizDates[i].split("/");
+                    if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
+                        console.log(minDate+" > "+courseQuizDates[i] + " FIRST IF STAT");
                         minDate = courseQuizDates[i];
                         minDateIndex = i;
                     }else{
-                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
-                            console.log(minDate+" > "+courseQuizDates[i]  + " THIRD IF STAT");
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
+                            console.log(minDate+" > "+courseQuizDates[i] + " SECOND IF STAT");
                             minDate = courseQuizDates[i];
                             minDateIndex = i;
                         }else{
-                            console.log(minDate+" < "+courseQuizDates[i]);
+                            if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
+                                console.log(minDate+" > "+courseQuizDates[i]  + " THIRD IF STAT");
+                                minDate = courseQuizDates[i];
+                                minDateIndex = i;
+                            }else{
+                                console.log(minDate+" < "+courseQuizDates[i]);
+                            }
                         }
+                        
                     }
-                    
                 }
-                
+                   
             }
             console.log("CODE == "+coursesMinusLanguages[minDateIndex]+"  DATE == "+minDate);
             callback([coursesMinusLanguages[minDateIndex],minDate]);
