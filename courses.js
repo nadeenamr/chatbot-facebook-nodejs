@@ -330,6 +330,127 @@ module.exports = {
         
     },
 
+    getFirstQuizInfo : function(callback, courses){
+        this.getAllMidterms(function(coursesAndDates){
+            let coursesMinusLanguages = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404' && course!='AE101' && course!='AS102' && course!='SM101' && course!='CPS402' && course!='RPW401'});
+            let courseQuizDates = [];
+            let allCourses = coursesAndDates[0];
+            console.log(coursesMinusLanguages);
+            let allDates = coursesAndDates[1];
+            for(let i=0; i<coursesMinusLanguages.length; i++){
+                let index = allCourses.indexOf(coursesMinusLanguages[i]);
+                courseQuizDates.push(allDates[index]);
+            }
+            let minDate = courseQuizDates[0];
+            let minDateIndex = 0;
+            for(let i=1; i<coursesMinusLanguages.length; i++){
+                //console.log(minDate+" < "+courseQuizDates[i]);
+                let temp1 = minDate.split("/");
+                let temp2 = courseQuizDates[i].split("/");
+                if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
+                    console.log(minDate+" > "+courseQuizDates[i] + " FIRST IF STAT");
+                    minDate = courseQuizDates[i];
+                    minDateIndex = i;
+                }else{
+                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
+                        console.log(minDate+" > "+courseQuizDates[i] + " SECOND IF STAT");
+                        minDate = courseQuizDates[i];
+                        minDateIndex = i;
+                    }else{
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
+                            console.log(minDate+" > "+courseQuizDates[i]  + " THIRD IF STAT");
+                            minDate = courseQuizDates[i];
+                            minDateIndex = i;
+                        }else{
+                            console.log(minDate+" < "+courseQuizDates[i]);
+                        }
+                    }
+                    
+                }
+                
+            }
+            console.log("CODE == "+coursesMinusLanguages[minDateIndex]+"  DATE == "+minDate);
+            callback([coursesMinusLanguages[minDateIndex],minDate]);
+            
+        });
+        
+    },
+
+    getLastQuizInfo: function(callback, courses){
+        this.getAllMidterms(function(coursesAndDates){
+            let coursesMinusLanguages = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404' && course!='AE101' && course!='AS102' && course!='SM101' && course!='CPS402' && course!='RPW401'});
+            let courseQuizDates = [];
+            let allCourses = coursesAndDates[0];
+            console.log(allCourses);
+            console.log(coursesMinusLanguages);
+            let allDates = coursesAndDates[1];
+            for(let i=0; i<coursesMinusLanguages.length; i++){
+                let index = allCourses.indexOf(coursesMinusLanguages[i]);
+                console.log(allDates[index]);
+                courseQuizDates.push(allDates[index]);
+            }
+            let maxDate = courseQuizDates[0];
+            let maxDateIndex = 0;
+            for(let i=1; i<coursesMinusLanguages.length; i++){
+                //console.log(maxDate+" < "+courseQuizDates[i]);
+                let temp1 = maxDate.split("/");
+                let temp2 = courseQuizDates[i].split("/");
+                if(parseInt(temp1[2])<parseInt(temp2[2])){ // year is smaller
+                    console.log(maxDate+" < "+courseQuizDates[i] + " FIRST IF STAT");
+                    maxDate = courseQuizDates[i];
+                    maxDateIndex = i;
+                }else{
+                    if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])<parseInt(temp2[1])){ // same year, month is smaller
+                        console.log(maxDate+" < "+courseQuizDates[i] + " SECOND IF STAT");
+                        maxDate = courseQuizDates[i];
+                        maxDateIndex = i;
+                    }else{
+                        if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])<parseInt(temp2[0])){ // same year, same month, day is smaller
+                            console.log(maxDate+" < "+courseQuizDates[i]  + " THIRD IF STAT");
+                            maxDate = courseQuizDates[i];
+                            maxDateIndex = i;
+                        }else{
+                            console.log(maxDate+" > "+courseQuizDates[i]);
+                        }
+                    }
+                    
+                }
+                
+            }
+            console.log("CODE == "+coursesMinusLanguages[maxDateIndex]+"  DATE == "+maxDate);
+            callback([coursesMinusLanguages[maxDateIndex],maxDate]);
+            
+        });
+        
+    },
+
+    getAllQuizzes: function(callback) {
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }
+            client
+                .query(
+                    `SELECT course_code,quiz_date FROM public.quizzes`,
+                    function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            callback('');
+                        } else {
+                            let courses = [];
+                            let dates = [];
+                            for (let i = 0; i < result.rows.length; i++) {
+                                courses.push(result.rows[i].course_code);
+                                dates.push(result.rows[i].quiz_date.getDate()+"/"+(1+parseInt(result.rows[i].quiz_date.getMonth()))+"/"+result.rows[i].quiz_date.getFullYear());
+                            }
+                            callback([courses,dates]);
+                        };
+                    });
+        });
+        pool.end();
+    },
+
     getAllMidterms: function(callback) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {

@@ -417,10 +417,11 @@ var program =
       "\n\n failed_course(123,csen102,o).";      
       
 
-session.consult(program+"\n\n"+notWorking5.toLowerCase());
+session.consult(program);
 
 // Query the goal
-session.query("getSchedule("+notWorking5ID+",X).");
+//session.query("getSchedule("+notWorking5ID+",X).");
+session.query("permutation([1,3,4,2], [X,Z,V,Y]).");
 
 // Show answers
 session.answers(x => console.log(pl.format_answer(x)));

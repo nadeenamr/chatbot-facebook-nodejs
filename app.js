@@ -199,6 +199,34 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				setTimeout(function(){ sendTextMessage(sender, reply); }, 6000);
 				}, parameters['semesters']);
 			break;
+		case "myFirstQuiz":
+			students.getStudentTranscript(function(studentIDAndTranscript){
+				prolog.getStudentNextSchedule(function(allCourses){
+					let courseList = allCourses.toUpperCase().split(", ");
+					courses.getFirstQuizInfo(function(firstCodeDate){
+						courses.getCourseName(function(courseName){
+							let reply = `OK, so according to my calculations, your first quiz is ${firstCodeDate[0]}: ${courseName} and so far it's expected to be on ${firstCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
+							sendTextMessage(sender,reply);
+							sendGifMessage("https://media.giphy.com/media/HPF6ivflFs7U4/giphy.gif",sender);
+						},firstCodeDate[0]);
+					},courseList);
+				}, studentIDAndTranscript); 
+			}, sender);
+			break;
+		case "myLastQuiz":
+			students.getStudentTranscript(function(studentIDAndTranscript){
+				prolog.getStudentNextSchedule(function(allCourses){
+					let courseList = allCourses.toUpperCase().split(", ");
+					courses.getLastQuizInfo(function(lastCodeDate){
+						courses.getCourseName(function(courseName){
+							let reply = `OK, so according to my calculations, the last quiz in the semester for you is ${lastCodeDate[0]}: ${courseName} and so far it's expected to be on ${lastCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
+							sendTextMessage(sender,reply);
+							sendGifMessage("https://media.giphy.com/media/hYrwRki5WYoZW/giphy.gif",sender);
+						},lastCodeDate[0]);
+					},courseList);
+				}, studentIDAndTranscript); 
+			}, sender);
+			break;
 		case "myFirstMidterm":
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(allCourses){
@@ -207,7 +235,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						courses.getCourseName(function(courseName){
 							let reply = `Lets see here... your first midterm is ${firstCodeDate[0]}: ${courseName} and so far it's expected to be on ${firstCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
 							sendTextMessage(sender,reply);
-							sendGifMessage("https://media.giphy.com/media/25EAreLnZIFWasblJe/giphy.gif",sender);
+							sendGifMessage("https://media.giphy.com/media/ZY2SFqgEjg0d3YuDfI/giphy.gif",sender);
 						},firstCodeDate[0]);
 					},courseList);
 				}, studentIDAndTranscript); 
@@ -221,7 +249,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						courses.getCourseName(function(courseName){
 							let reply = `Lets see here... your last midterm is ${lastCodeDate[0]}: ${courseName} and so far it's expected to be on ${lastCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
 							sendTextMessage(sender,reply);
-							sendGifMessage("https://media.giphy.com/media/3o84UdRSymVQCrZT6E/giphy.gif",sender);
+							sendGifMessage("https://media.giphy.com/media/iaAllc4p32AXC/giphy.gif",sender);
 						},lastCodeDate[0]);
 					},courseList);
 				}, studentIDAndTranscript); 
@@ -819,9 +847,6 @@ function receivedPostback(event) {
 			break;
 		case "GET_CS_DMET_DIFF":
 				sendToApiAi(senderID, "What is the difference between CS and DMET?");
-			break;
-		case "GET_PREREQ": 
-		sendToApiAi(senderID, "prerequisite");
 			break;
 		case "GET_FIRST_FINAL": 
 			sendToApiAi(senderID, "first final");
