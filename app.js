@@ -196,7 +196,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let allCoursesString = allCourses.join(", ");
 				let reply = `Courses in semester ${parameters['semesters']} curriculum are: ${allCoursesString}.`;
 				sendGifMessage("https://media.giphy.com/media/l2QEkuf4oMtqSuKR2/giphy.gif",sender);
-				setTimeout(function(){ sendTextMessage(sender, reply); }, 3000);
+				setTimeout(function(){ sendTextMessage(sender, reply); }, 5000);
 				}, parameters['semesters']);
 			break;
 		case "myFirstMidterm":
