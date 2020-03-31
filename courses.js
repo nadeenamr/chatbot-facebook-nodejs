@@ -489,7 +489,8 @@ module.exports = {
 
             let coursesMinusLanguages1 = coursesMinusLanguages.filter(function(course){ return course!=undefined});
             let courseQuizDates1 = courseQuizDates.filter(function(date){ return date!=undefined});
-            console.log("FILTERED UNDEFINED COURSES --> "+courseQuizDates1);
+            console.log("FILTERED UNDEFINED COURSES DATES --> "+courseQuizDates1);
+            console.log("FILTERED UNDEFINED COURSES --> "+coursesMinusLanguages1);
             let futureQuizzesCourses = [];
             let futureQuizzesDates = [];
             let today = new Date();
@@ -535,6 +536,7 @@ module.exports = {
                 }
                    
             }
+            console.log("THE FILTERED COURSE LIST --> "+futureQuizzesCourses +" OF LENGTH "+futureQuizzesCourses.length);
             console.log("CODE == "+futureQuizzesCourses[minDateIndex]+"  DATE == "+minDate);
             callback([futureQuizzesCourses[minDateIndex],minDate]);
             
