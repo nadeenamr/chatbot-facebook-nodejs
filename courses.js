@@ -331,7 +331,7 @@ module.exports = {
     },
 
     getFirstQuizInfo : function(callback, courses){
-        this.getAllMidterms(function(coursesAndDates){
+        this.getAllQuizzes(function(coursesAndDates){
             let coursesMinusLanguages = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404' && course!='AE101' && course!='AS102' && course!='SM101' && course!='CPS402' && course!='RPW401'});
             let courseQuizDates = [];
             let allCourses = coursesAndDates[0];
@@ -377,7 +377,7 @@ module.exports = {
     },
 
     getLastQuizInfo: function(callback, courses){
-        this.getAllMidterms(function(coursesAndDates){
+        this.getAllQuizzes(function(coursesAndDates){
             let coursesMinusLanguages = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404' && course!='AE101' && course!='AS102' && course!='SM101' && course!='CPS402' && course!='RPW401'});
             let courseQuizDates = [];
             let allCourses = coursesAndDates[0];
