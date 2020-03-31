@@ -196,7 +196,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let allCoursesString = allCourses.join(", ");
 				let reply = `Courses in semester ${parameters['semesters']} curriculum are: ${allCoursesString}.`;
 				sendGifMessage("https://media.giphy.com/media/l2QEkuf4oMtqSuKR2/giphy.gif",sender);
-				setTimeout(function(){ sendTextMessage(sender, reply); }, 5000);
+				setTimeout(function(){ sendTextMessage(sender, reply); }, 6000);
 				}, parameters['semesters']);
 			break;
 		case "myFirstMidterm":
@@ -296,13 +296,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				sendTextMessage(sender, "Perfect "+'👌🏼'+" I have everything I need! Tell me, how can I be of service to you?");
 			}
 			break;
-		case "course_prereq": 
+		case "getCoursePrerequisite": 
 			courses.readCoursePrereqs(function(codes){
 				if(codes==""){
 					sendTextMessage(sender, "This course has no prerequisites.");
 				}else{
 					let allCoursesString = codes.join(", ");
-					let reply = `Prerequisite courses' code(s) are: ${allCoursesString}.`;
+					let reply = `Prerequisite courses are: ${allCoursesString}.`;
 					sendTextMessage(sender, reply);
 				}
 			}, parameters['courses']);
