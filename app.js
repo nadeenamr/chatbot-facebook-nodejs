@@ -205,9 +205,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getNextQuizInfo(function(nextCodeDate){
 						courses.getCourseName(function(courseName){
-							let reply = `OK, so according to my calculations, your first quiz is quiz 1 of ${nextCodeDate[0]}: ${courseName} and so far it's expected to be on ${nextCodeDate[1]} (although keep an eye out for any adjustments through the guc mail) `;
+							let today = new Date();
+							let reply = `OK.. So today is ${today.getDate()}/${1+today.getMonth()}/${today.getFullYear()} which makes the next quiz on ${nextCodeDate[1]} which is ${nextCodeDate[0]}: ${courseName} and so far it's expected to be  (although keep an eye out for any adjustments through the guc mail) `;
 							sendTextMessage(sender,reply);
-							sendGifMessage("https://media.giphy.com/media/HPF6ivflFs7U4/giphy.gif",sender);
+							sendGifMessage("https://media.giphy.com/media/DwrnYsZCXspu8/giphy.gif",sender);
 						},nextCodeDate[0]);
 					},courseList);
 				}, studentIDAndTranscript); 
