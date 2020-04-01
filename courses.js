@@ -469,6 +469,8 @@ module.exports = {
 
     getNextQuizInfo: function(callback, courses){
         this.getAllQuizzes(function(coursesAndDates){
+            
+            //removing all language courses from the schedule
             let coursesMinusLanguages = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404' && course!='AE101' && course!='AS102' && course!='SM101' && course!='CPS402' && course!='RPW401'});
             
             let courseQuizDates = [];
@@ -486,6 +488,7 @@ module.exports = {
                         courseQuizDates.push(allDates[index]);
                         courseQuizCodes.push(thisCourse);
                     }
+                    index = allCourses.indexOf(thisCourse);
                 }     
             }
 
