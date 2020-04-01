@@ -488,6 +488,8 @@ module.exports = {
                         courseQuizDates.push(allDates[index]);
                         courseQuizCodes.push(thisCourse);
                     }
+                    allCourses.splice(index,1);
+                    allDates.splice(index,1);
                     index = allCourses.indexOf(thisCourse);
                 }     
             }
