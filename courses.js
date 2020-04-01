@@ -474,7 +474,7 @@ module.exports = {
             let courseQuizDates = [];
             let courseQuizCodes = [];
             let allCourses = coursesAndDates[0];
-            console.log(allCourses);
+            //console.log(allCourses);
             let allDates = coursesAndDates[1];
             for(let i=0; i<coursesMinusLanguages.length; i++){
                 let thisCourse = coursesMinusLanguages[i];
@@ -493,16 +493,16 @@ module.exports = {
                 }
             }
 
-            let coursesMinusLanguages1 = courseQuizCodes.filter(function(course){ return course!=undefined});
+            coursesMinusLanguages = courseQuizCodes.filter(function(course){ return course!=undefined});
             let courseQuizDates1 = courseQuizDates.filter(function(date){ return date!=undefined});
             console.log("FILTERED UNDEFINED COURSES DATES --> "+courseQuizDates1);
-            console.log("FILTERED UNDEFINED COURSES --> "+coursesMinusLanguages1);
+            console.log("FILTERED UNDEFINED COURSES --> "+coursesMinusLanguages);
             let futureQuizzesCourses = [];
             let futureQuizzesDates = [];
             let today = new Date();
             for(let i=0; i<courseQuizDates1.length; i++){ // filtering quizzes to the ones after today
                 if(courseQuizDates1[i]>today){ // this quiz hasn't come yet
-                    futureQuizzesCourses.push(coursesMinusLanguages1[i]);
+                    futureQuizzesCourses.push(coursesMinusLanguages[i]);
                     futureQuizzesDates.push(courseQuizDates1[i]);
                 }
             }
