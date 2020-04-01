@@ -484,7 +484,7 @@ module.exports = {
                 let index = allCourses.indexOf(thisCourse);
                 while(index!=-1){
                     temp1 = allDates[index].split("/");
-                    if((parseInt(temp1[2])==parseInt(today[2]) && parseInt(temp1[1])>parseInt(today[1])) || (parseInt(temp1[2])>parseInt(today[2])) || (parseInt(temp1[2])==parseInt(today[2]) && parseInt(temp1[1])==parseInt(today[1]) && parseInt(temp1[0])>parseInt(temp2[0])) ){ // quiz is any time after today
+                    if((parseInt(temp1[2])==parseInt(today[2]) && parseInt(temp1[1])>parseInt(today[1])) || (parseInt(temp1[2])>parseInt(today[2])) || (parseInt(temp1[2])==parseInt(today[2]) && parseInt(temp1[1])==parseInt(today[1]) && parseInt(temp1[0])>parseInt(today[0])) ){ // quiz is any time after today
                         courseQuizDates.push(allDates[index]);
                         courseQuizCodes.push(thisCourse);
                     }
@@ -497,9 +497,9 @@ module.exports = {
             console.log("FILTERED COURSES DATES --> "+courseQuizDates);
             console.log("FILTERED COURSES --> "+courseQuizCodes);
 
-            callback([courseQuizCodes,courseQuizDates]);
+            //callback([courseQuizCodes,courseQuizDates]);
 
-            /*
+            
 
             let index = 0;
             let minDate = courseQuizDates[index];
@@ -539,7 +539,7 @@ module.exports = {
             console.log("CODE == "+courseQuizCodes[minDateIndex]+"  DATE == "+minDate);
             callback([courseQuizCodes[minDateIndex],minDate]);
 
-            */
+            
             
         });
         
