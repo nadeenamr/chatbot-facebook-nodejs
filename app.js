@@ -204,7 +204,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				prolog.getStudentNextSchedule(function(allCourses){
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getNextQuizInfo(function(nextCodeDate){
-						sendTextMessage(sender,nextCodeDate);
+						sendTextMessage(sender,"RETURNED --> "+nextCodeDate);
 						/*
 						courses.getCourseName(function(courseName){
 							let today = new Date();
