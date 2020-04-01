@@ -484,8 +484,8 @@ module.exports = {
                 }
             }
 
-            //console.log("UNFILTERED COURSES DATES --> "+courseQuizDates);
-            //console.log("UNFILTERED COURSES --> "+courseQuizCodes);
+            console.log("UNFILTERED COURSES DATES --> "+courseQuizDates);
+            console.log("UNFILTERED COURSES --> "+courseQuizCodes);
 
             let futureQuizzesCourses = [];
             let futureQuizzesDates = [];
@@ -501,8 +501,8 @@ module.exports = {
                 }
             }
 
-            //console.log("FILTERED COURSES DATES --> "+futureQuizzesDates);
-            //console.log("FILTERED COURSES --> "+futureQuizzesCourses);
+            console.log("FILTERED COURSES DATES --> "+futureQuizzesDates);
+            console.log("FILTERED COURSES --> "+futureQuizzesCourses);
 
             let index = 0;
             let minDate = futureQuizzesDates[index];
