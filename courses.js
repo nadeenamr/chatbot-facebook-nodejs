@@ -475,62 +475,49 @@ module.exports = {
             let courseQuizCodes = [];
             let allCourses = coursesAndDates[0];
             let allDates = coursesAndDates[1];
+            let today = [new Date().getDate(), 1+new Date().getMonth(), new Date().getFullYear()];
+            let temp1;
             for(let i=0; i<coursesMinusLanguages.length; i++){
                 let thisCourse = coursesMinusLanguages[i];
                 let index = allCourses.indexOf(thisCourse);
                 while(index!=-1){
-                    courseQuizDates.push(allDates[index]);
-                    courseQuizCodes.push(thisCourse);
-                }
+                    temp1 = allDates[index].split("/");
+                    if( (parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])) || (parseInt(temp1[2])>parseInt(temp2[2])) || (parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])) ){ // quiz is any time after today
+                        courseQuizDates.push(allDates[index]);
+                        courseQuizCodes.push(thisCourse);
+                    }
+                }     
             }
-
-            console.log("UNFILTERED COURSES DATES --> "+courseQuizDates);
-            console.log("UNFILTERED COURSES --> "+courseQuizCodes);
-
-            let futureQuizzesCourses = [];
-            let futureQuizzesDates = [];
-            let today = new Date();
-            let temp1;
-            let temp2;
-            for(let i=0; i<courseQuizDates.length; i++){ // filtering quizzes to the ones after today
-                temp1 = courseQuizDates[i].split("/");
-                temp2 = today.split("/");
-                if( (parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])) || (parseInt(temp1[2])>parseInt(temp2[2])) || (parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])) ){ // quiz is any time after today
-                    futureQuizzesCourses.push(courseQuizCodes[i]);
-                    futureQuizzesDates.push(courseQuizDates[i]);
-                }
-            }
-
-            console.log("FILTERED COURSES DATES --> "+futureQuizzesDates);
-            console.log("FILTERED COURSES --> "+futureQuizzesCourses);
+            console.log("FILTERED COURSES DATES --> "+courseQuizDates);
+            console.log("FILTERED COURSES --> "+courseQuizCodes);
 
             let index = 0;
-            let minDate = futureQuizzesDates[index];
+            let minDate = courseQuizDates[index];
             while(minDate==undefined){
                 index++;
-                minDate = futureQuizzesDates[index];
+                minDate = courseQuizDates[index];
             }
             let minDateIndex = index;
-            for(let i=index+1; i<futureQuizzesCourses.length; i++){
-                if(futureQuizzesDates[i]!=undefined){
+            for(let i=index+1; i<courseQuizCodes.length; i++){
+                if(courseQuizDates[i]!=undefined){
                     temp1 = minDate.split("/");
-                    temp2 = futureQuizzesDates[i].split("/");
+                    temp2 = courseQuizDates[i].split("/");
                     if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
-                        console.log(minDate+" > "+futureQuizzesDates[i] + " FIRST IF STAT");
-                        minDate = futureQuizzesDates[i];
+                        console.log(minDate+" > "+courseQuizDates[i] + " FIRST IF STAT");
+                        minDate = courseQuizDates[i];
                         minDateIndex = i;
                     }else{
                         if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])){ // same year, month is smaller
-                            console.log(minDate+" > "+futureQuizzesDates[i] + " SECOND IF STAT");
-                            minDate = futureQuizzesDates[i];
+                            console.log(minDate+" > "+courseQuizDates[i] + " SECOND IF STAT");
+                            minDate = courseQuizDates[i];
                             minDateIndex = i;
                         }else{
                             if(parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])){ // same year, same month, day is smaller
-                                console.log(minDate+" > "+futureQuizzesDates[i]  + " THIRD IF STAT");
-                                minDate = futureQuizzesDates[i];
+                                console.log(minDate+" > "+courseQuizDates[i]  + " THIRD IF STAT");
+                                minDate = courseQuizDates[i];
                                 minDateIndex = i;
                             }else{
-                                console.log(minDate+" < "+futureQuizzesDates[i]);
+                                console.log(minDate+" < "+courseQuizDates[i]);
                             }
                         }
                         
@@ -539,8 +526,8 @@ module.exports = {
                    
             }
             
-            console.log("CODE == "+futureQuizzesCourses[minDateIndex]+"  DATE == "+minDate);
-            callback([futureQuizzesCourses[minDateIndex],minDate]);
+            console.log("CODE == "+courseQuizCodes[minDateIndex]+"  DATE == "+minDate);
+            callback([courseQuizCodes[minDateIndex],minDate]);
             
         });
         
