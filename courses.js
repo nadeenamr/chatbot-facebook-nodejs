@@ -470,24 +470,30 @@ module.exports = {
     getNextQuizInfo: function(callback, courses){
         this.getAllQuizzes(function(coursesAndDates){
             let coursesMinusLanguages = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404' && course!='AE101' && course!='AS102' && course!='SM101' && course!='CPS402' && course!='RPW401'});
-            let courseQuizDates = [];
-            let allCourses = coursesAndDates[0];
             console.log(coursesMinusLanguages);
-            let allDates = coursesAndDates[1];
+            let courseQuizDates = [];
+            let courseQuizCodes = [];
+            let allCourses = coursesAndDates[0];
             console.log(allCourses);
+            let allDates = coursesAndDates[1];
             for(let i=0; i<coursesMinusLanguages.length; i++){
-                let index = allCourses.indexOf(coursesMinusLanguages[i]);
-                courseQuizDates.push(allDates[index]);
+                let thisCourse = coursesMinusLanguages[i];
+                let index = allCourses.indexOf(thisCourse);
+                while(index!=-1){
+                    courseQuizDates.push(allDates[index]);
+                    courseQuizCodes.push(thisCourse);
+                }
+                
             }
             console.log("GOT DATES --> "+courseQuizDates);
 
             for(let i=0;i<courseQuizDates.length; i++){
                 if(courseQuizDates[i]==undefined){
-                    coursesMinusLanguages[i] = undefined;
+                    courseQuizCodes[i] = undefined;
                 }
             }
 
-            let coursesMinusLanguages1 = coursesMinusLanguages.filter(function(course){ return course!=undefined});
+            let coursesMinusLanguages1 = courseQuizCodes.filter(function(course){ return course!=undefined});
             let courseQuizDates1 = courseQuizDates.filter(function(date){ return date!=undefined});
             console.log("FILTERED UNDEFINED COURSES DATES --> "+courseQuizDates1);
             console.log("FILTERED UNDEFINED COURSES --> "+coursesMinusLanguages1);
