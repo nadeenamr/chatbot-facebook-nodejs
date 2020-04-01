@@ -474,7 +474,6 @@ module.exports = {
             let courseQuizDates = [];
             let courseQuizCodes = [];
             let allCourses = coursesAndDates[0];
-            //console.log(allCourses);
             let allDates = coursesAndDates[1];
             for(let i=0; i<coursesMinusLanguages.length; i++){
                 let thisCourse = coursesMinusLanguages[i];
@@ -487,6 +486,8 @@ module.exports = {
             }
             console.log("GOT DATES --> "+courseQuizDates);
 
+            /*
+
             for(let i=0;i<courseQuizDates.length; i++){
                 if(courseQuizDates[i]==undefined){
                     courseQuizCodes[i] = undefined;
@@ -495,15 +496,21 @@ module.exports = {
 
             coursesMinusLanguages = courseQuizCodes.filter(function(course){ return course!=undefined});
             let courseQuizDates1 = courseQuizDates.filter(function(date){ return date!=undefined});
-            console.log("FILTERED UNDEFINED COURSES DATES --> "+courseQuizDates1);
-            console.log("FILTERED UNDEFINED COURSES --> "+coursesMinusLanguages);
+
+            */
+            console.log("FILTERED UNDEFINED COURSES DATES --> "+courseQuizDates);
+            console.log("FILTERED UNDEFINED COURSES --> "+courseQuizCodes);
             let futureQuizzesCourses = [];
             let futureQuizzesDates = [];
             let today = new Date();
-            for(let i=0; i<courseQuizDates1.length; i++){ // filtering quizzes to the ones after today
-                if(courseQuizDates1[i]>today){ // this quiz hasn't come yet
-                    futureQuizzesCourses.push(coursesMinusLanguages[i]);
-                    futureQuizzesDates.push(courseQuizDates1[i]);
+            let temp1;
+            let temp2;
+            for(let i=0; i<courseQuizDates.length; i++){ // filtering quizzes to the ones after today
+                temp1 = courseQuizDates[i].split("/");
+                temp2 = today.split("/");
+                if( (parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])>parseInt(temp2[1])) || (parseInt(temp1[2])>parseInt(temp2[2])) || (parseInt(temp1[2])==parseInt(temp2[2]) && parseInt(temp1[1])==parseInt(temp2[1]) && parseInt(temp1[0])>parseInt(temp2[0])) ){ // quiz is any time after today
+                    futureQuizzesCourses.push(courseQuizCodes[i]);
+                    futureQuizzesDates.push(courseQuizDates[i]);
                 }
             }
             console.log("GOT FUTURE QUIZZES --> "+futureQuizzesCourses);
@@ -517,8 +524,8 @@ module.exports = {
             for(let i=index+1; i<futureQuizzesCourses.length; i++){
                 //console.log(minDate+" < "+futureQuizzesDates[i]);
                 if(futureQuizzesDates[i]!=undefined){
-                    let temp1 = minDate.split("/");
-                    let temp2 = futureQuizzesDates[i].split("/");
+                    temp1 = minDate.split("/");
+                    temp2 = futureQuizzesDates[i].split("/");
                     if(parseInt(temp1[2])>parseInt(temp2[2])){ // year is smaller
                         console.log(minDate+" > "+futureQuizzesDates[i] + " FIRST IF STAT");
                         minDate = futureQuizzesDates[i];
