@@ -204,12 +204,15 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				prolog.getStudentNextSchedule(function(allCourses){
 					let courseList = allCourses.toUpperCase().split(", ");
 					courses.getNextQuizInfo(function(nextCodeDate){
+						sendTextMessage(sender,nextCodeDate);
+						/*
 						courses.getCourseName(function(courseName){
 							let today = new Date();
 							let reply = `OK.. So today is ${today.getDate()}/${1+today.getMonth()}/${today.getFullYear()} which makes the next quiz on ${nextCodeDate[1]} which is ${nextCodeDate[0]}: ${courseName} and so far it's expected to be  (although keep an eye out for any adjustments through the guc mail) `;
-							sendGifMessage("https://media.giphy.com/media/DwrnYsZCXspu8/giphy.gif",sender);
 							sendTextMessage(sender,reply);
+							sendGifMessage("https://media.giphy.com/media/DwrnYsZCXspu8/giphy.gif",sender);
 						},nextCodeDate[0]);
+						*/
 					},courseList);
 				}, studentIDAndTranscript); 
 			}, sender);
