@@ -470,7 +470,7 @@ module.exports = {
     getNextQuizInfo: function(callback, courses){
         this.getAllQuizzes(function(coursesAndDates){
             let coursesMinusLanguages = courses.filter(function(course){ return course!='DE101' && course!='DE202' && course!='DE303' && course!='DE404' && course!='AE101' && course!='AS102' && course!='SM101' && course!='CPS402' && course!='RPW401'});
-            console.log(coursesMinusLanguages);
+            
             let courseQuizDates = [];
             let courseQuizCodes = [];
             let allCourses = coursesAndDates[0];
@@ -482,24 +482,11 @@ module.exports = {
                     courseQuizDates.push(allDates[index]);
                     courseQuizCodes.push(thisCourse);
                 }
-                
-            }
-            console.log("GOT DATES --> "+courseQuizDates);
-
-            /*
-
-            for(let i=0;i<courseQuizDates.length; i++){
-                if(courseQuizDates[i]==undefined){
-                    courseQuizCodes[i] = undefined;
-                }
             }
 
-            coursesMinusLanguages = courseQuizCodes.filter(function(course){ return course!=undefined});
-            let courseQuizDates1 = courseQuizDates.filter(function(date){ return date!=undefined});
+            console.log("UNFILTERED COURSES DATES --> "+courseQuizDates);
+            console.log("UNFILTERED COURSES --> "+courseQuizCodes);
 
-            */
-            console.log("FILTERED UNDEFINED COURSES DATES --> "+courseQuizDates);
-            console.log("FILTERED UNDEFINED COURSES --> "+courseQuizCodes);
             let futureQuizzesCourses = [];
             let futureQuizzesDates = [];
             let today = new Date();
@@ -513,7 +500,10 @@ module.exports = {
                     futureQuizzesDates.push(courseQuizDates[i]);
                 }
             }
-            console.log("GOT FUTURE QUIZZES --> "+futureQuizzesCourses);
+
+            console.log("FILTERED COURSES DATES --> "+futureQuizzesDates);
+            console.log("FILTERED COURSES --> "+futureQuizzesCourses);
+
             let index = 0;
             let minDate = futureQuizzesDates[index];
             while(minDate==undefined){
@@ -522,7 +512,6 @@ module.exports = {
             }
             let minDateIndex = index;
             for(let i=index+1; i<futureQuizzesCourses.length; i++){
-                //console.log(minDate+" < "+futureQuizzesDates[i]);
                 if(futureQuizzesDates[i]!=undefined){
                     temp1 = minDate.split("/");
                     temp2 = futureQuizzesDates[i].split("/");
@@ -549,7 +538,7 @@ module.exports = {
                 }
                    
             }
-            console.log("THE FILTERED COURSE LIST --> "+futureQuizzesCourses +" OF LENGTH "+futureQuizzesCourses.length);
+            
             console.log("CODE == "+futureQuizzesCourses[minDateIndex]+"  DATE == "+minDate);
             callback([futureQuizzesCourses[minDateIndex],minDate]);
             
