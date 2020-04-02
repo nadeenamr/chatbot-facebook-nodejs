@@ -30,7 +30,7 @@ module.exports = {
                                 if(parseInt(start_date.getDate())==parseInt(end_date.getDate()) && parseInt(start_date.getMonth())==parseInt(end_date.getMonth()) && parseInt(start_date.getFullYear())==parseInt(end_date.getFullYear())){
                                     holidays += holiday+" is on "+start_date+"\n";
                                 }else{
-                                    holidays += holiday+" is from "+start_date+" till "+end_date+"\n";
+                                    holidays += holiday+" is from "+start_date+" till "+end_date.getDate()+"/"+(1+parseInt(end_date.getMonth()))+"/"+end_date.getFullYear()+"\n";
                                 }
                                 
                             }
