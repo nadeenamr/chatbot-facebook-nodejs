@@ -192,6 +192,12 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "getNextHoliday": 
+				holidays.getNextHoliday(function(nextHoliday){
+					sendTextMessage(sender, "I think the upcoming holiday is "+nextHoliday+"\nCan it get here any sooner?!");
+					sendGifMessage("https://media.giphy.com/media/igt9q5hbSqb6KqmQLN/giphy.gif", sender);
+				});
+			break;
 		case "getSpecificHoliday":
 				holidays.getSpecificHoliday(function(thisHoliday){
 					sendTextMessage(sender, thisHoliday);
