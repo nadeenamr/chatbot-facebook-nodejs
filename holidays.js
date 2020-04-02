@@ -22,15 +22,17 @@ module.exports = {
                             callback('');
                         } else {
                             let holidays;
-                            let holiday, start_date, end_date, sentence;
+                            let holiday, start_date, end_date, sdate, edate;
                             for (let i = 0; i < result.rows.length; i++) {
                                 holiday = result.rows[i].holiday_name;
                                 start_date = result.rows[i].holiday_start_date;
                                 end_date = result.rows[i].holiday_end_date;
+                                sdate = start_date.getDate()+"/"+(1+parseInt(start_date.getMonth()))+"/"+start_date.getFullYear();
                                 if(parseInt(start_date.getDate())==parseInt(end_date.getDate()) && parseInt(start_date.getMonth())==parseInt(end_date.getMonth()) && parseInt(start_date.getFullYear())==parseInt(end_date.getFullYear())){
-                                    holidays += holiday+" is on "+start_date+"\n";
+                                    holidays += holiday+" is on "+sdate+"\n";
                                 }else{
-                                    holidays += holiday+" is from "+start_date+" till "+end_date.getDate()+"/"+(1+parseInt(end_date.getMonth()))+"/"+end_date.getFullYear()+"\n";
+                                    edate = end_date.getDate()+"/"+(1+parseInt(end_date.getMonth()))+"/"+end_date.getFullYear();
+                                    holidays += holiday+" is from "+sdate+" till "+edate+"\n";
                                 }
                                 
                             }
