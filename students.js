@@ -59,6 +59,39 @@ module.exports = {
         });
     },
 
+    isStudentFreshman: function(callback, userId){
+        var pool = new pg.Pool(config.PG_CONFIG);
+        pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('Error acquiring client', err.stack);
+            }
+
+            let sql1 = `SELECT student_id FROM students WHERE facebook_id='${userId}' LIMIT 1`;
+            client.query(sql1,
+                    function(err, result) {
+                        if (err) {
+                            console.log('Query error: ' + err);
+                        } else {
+                            let sql;
+                            if (result.rows.length === 0) {
+                                callback("This user has not provided their GUC ID yet :(");
+                            } else {
+                                let studentID = result.rows[0].student_id;
+                                let studentGroup = parseInt(studentID.substring(0, 2));
+                                if(studentGroup==49){
+                                    callback(true);
+                                }else{
+                                    callback(false);
+                                }
+                                
+                            }
+                        }
+                    }
+                    );
+        });
+        pool.end();
+    },
+
     saveStudentID: function(studentID, userId) {
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {

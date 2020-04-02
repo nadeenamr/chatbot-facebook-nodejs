@@ -15,6 +15,7 @@ const courses = require('./courses');
 const prolog = require('./prolog');
 const emoji = require('node-emoji');
 const emojinames = require("emoji-names");
+const holidays = require('./holidays');
 
 pg.defaults.ssl = true;
 
@@ -191,6 +192,21 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "getAllHolidays":
+			holidays.getAllHolidays(function(AllHolidays){
+				sendTextMessage(sender, "Here are the upcoming Holidays/Days Off:\n"+AllHolidays);
+				sendGifMessage("https://media.giphy.com/media/l4EoR5ozddwYTjMGY/giphy.gif", sender);
+			});
+			break;
+		case "getMakeupDates":
+			students.isStudentFreshman(function(Freshman){
+				if(Freshman){
+					sendTextMessage(sender, "")
+				}else{
+					sendTextMessage(sender, "");
+				}
+			}, sender);
+			break;
 		case "getSemesterCourses":
 			courses.readAllCSSemesterCourses(function(allCourses){
 				let allCoursesString = allCourses.join(", ");
