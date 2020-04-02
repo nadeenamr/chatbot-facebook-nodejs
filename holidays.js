@@ -29,10 +29,10 @@ module.exports = {
                                 end_date = result.rows[i].holiday_end_date;
                                 sdate = start_date.getDate()+"/"+(1+parseInt(start_date.getMonth()))+"/"+start_date.getFullYear();
                                 if(parseInt(start_date.getDate())==parseInt(end_date.getDate()) && parseInt(start_date.getMonth())==parseInt(end_date.getMonth()) && parseInt(start_date.getFullYear())==parseInt(end_date.getFullYear())){
-                                    holidays += holiday+" is on "+sdate+"\n";
+                                    holidays += "\n"+holiday+" is on "+sdate;
                                 }else{
                                     edate = end_date.getDate()+"/"+(1+parseInt(end_date.getMonth()))+"/"+end_date.getFullYear();
-                                    holidays += holiday+" is from "+sdate+" till "+edate+"\n";
+                                    holidays += "\n"+holiday+" is from "+sdate+" till "+edate;
                                 }
                                 
                             }

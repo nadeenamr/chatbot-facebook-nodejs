@@ -194,7 +194,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "getAllHolidays":
 			holidays.getAllHolidays(function(AllHolidays){
-				sendTextMessage(sender, "Here are the upcoming Holidays/Days Off:\n"+AllHolidays);
+				sendTextMessage(sender, "Here are the upcoming Holidays/Days Off:"+AllHolidays);
 				sendGifMessage("https://media.giphy.com/media/l4EoR5ozddwYTjMGY/giphy.gif", sender);
 			});
 			break;
