@@ -192,9 +192,14 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "getSpecificHoliday":
+				holidays.getSpecificHoliday(function(thisHoliday){
+					sendTextMessage(sender, thisHoliday);
+				}, parameters['holidays']);
+			break;
 		case "getAllHolidays":
 			holidays.getAllHolidays(function(AllHolidays){
-				sendTextMessage(sender, "Here are the upcoming Holidays/Days Off:"+AllHolidays);
+				sendTextMessage(sender, "Here's a list of the upcoming Holidays/Days Off:"+AllHolidays);
 				sendGifMessage("https://media.giphy.com/media/l4EoR5ozddwYTjMGY/giphy.gif", sender);
 			});
 			break;
