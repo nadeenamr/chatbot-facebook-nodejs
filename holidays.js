@@ -21,7 +21,7 @@ module.exports = {
                             console.log(err);
                             callback('');
                         } else {
-                            let holidays;
+                            let holidays = "";
                             let holiday, start_date, end_date, sdate, edate;
                             for (let i = 0; i < result.rows.length; i++) {
                                 holiday = result.rows[i].holiday_name;
@@ -29,10 +29,10 @@ module.exports = {
                                 end_date = result.rows[i].holiday_end_date;
                                 sdate = start_date.getDate()+"/"+(1+parseInt(start_date.getMonth()))+"/"+start_date.getFullYear();
                                 if(parseInt(start_date.getDate())==parseInt(end_date.getDate()) && parseInt(start_date.getMonth())==parseInt(end_date.getMonth()) && parseInt(start_date.getFullYear())==parseInt(end_date.getFullYear())){
-                                    holidays += "\n"+holiday+" is on "+sdate;
+                                    holidays += "\n 🎑 "+holiday+" is on "+sdate;
                                 }else{
                                     edate = end_date.getDate()+"/"+(1+parseInt(end_date.getMonth()))+"/"+end_date.getFullYear();
-                                    holidays += "\n"+holiday+" is from "+sdate+" till "+edate;
+                                    holidays += "\n 🎑 "+holiday+" is from "+sdate+" till "+edate;
                                 }
                                 
                             }
