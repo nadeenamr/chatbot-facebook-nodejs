@@ -192,12 +192,23 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "getMakeupDates":
+				students.isStudentFreshman(function(Freshman){
+					if(Freshman){
+						sendTextMessage(sender, "Makeup exams for semester 1 courses will start on the 15th of February till the 20th.");
+						sendGifMessage("https://media.giphy.com/media/j0MLDsJIKioY8/giphy.gif", sender);
+					}else{
+						sendTextMessage(sender, "Makeup exams for enrolled winter semesters (i.e. 3, 5, 7 and 9) will start from the 22nd of January till the 30th while semester 1 courses will start on the 15th of February till the 20th.");
+						sendGifMessage("https://media.giphy.com/media/j0MLDsJIKioY8/giphy.gif", sender);
+					}
+				}, sender);
+			break;
 		case "getSwitchingDeadline":
 				students.isStudentFreshman(function(Freshman){
 					if(Freshman){
 						sendTextMessage(sender, "Tutorial/Group switching applications are recieved at latest by Wednesday the 9th of February. Hope you catch it 🤞🤞");
 					}else{
-						sendTextMessage(sender, "Tutorial/Group switching applications are recieved at latest by Wednesday the 29th of February. Hope you catch it 🤞🤞");
+						sendTextMessage(sender, "Tutorial/Group switching applications are recieved at latest by Wednesday the 29th of January. Hope you catch it 🤞🤞");
 					}
 				}, sender);
 			break;
