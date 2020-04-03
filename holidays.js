@@ -115,6 +115,7 @@ module.exports = {
                                 holidayEndDate = result.rows[i].holiday_end_date;
                                 if((todayYear==holidayYear && holidayMonth>todayMonth) || (holidayYear>todayYear) || (holidayYear==todayYear && holidayMonth==todayMonth && holidayDay>todayDay) ){ 
                                     holidays += [holidayName, holidayDay, holidayMonth, holidayYear, holidayEndDate];
+                                    console.log(holidayName+","+holidayDay+","+ holidayMonth+","+ holidayYear+","+ holidayEndDate);
                                 }
                             }
 
