@@ -101,6 +101,9 @@ module.exports = {
                             let todayMonth = 1 + parseInt(today.getMonth());
                             let todayYear = today.getFullYear();
 
+                            console.log(result);
+                            console.log(result.rows[0]);
+
                             for (let i = 0; i < result.rows.length; i++) { // get all dates greater than today
                                 holidayName = result.rows[i].holiday_name;
                                 holidayDay = result.rows[i].holiday_start_date.getDate();
