@@ -127,7 +127,7 @@ module.exports = {
                             let nearestDay = string[1];
                             let nearestMonth = string[2];
                             let nearestYear = string[3];
-                            let nearestEndDate = string[4];
+                            let nearestEndDate = new Date(string[4]);
 
                             console.log("NEAREST BEFORE = "+nearestName+","+nearestDay+","+ nearestMonth+","+ nearestYear+","+ nearestEndDate);
 
