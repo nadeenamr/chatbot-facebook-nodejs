@@ -192,6 +192,24 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "getSwitchingDeadline":
+				students.isStudentFreshman(function(Freshman){
+					if(Freshman){
+						sendTextMessage(sender, "Tutorial/Group switching applications are recieved at latest by Wednesday the 9th of February. Hope you catch it 🤞🤞");
+					}else{
+						sendTextMessage(sender, "Tutorial/Group switching applications are recieved at latest by Wednesday the 29th of February. Hope you catch it 🤞🤞");
+					}
+				}, sender);
+			break;
+		case "whenTutorialsStart":
+				students.isStudentFreshman(function(Freshman){
+					if(Freshman){
+						sendTextMessage(sender, "Okay, so the semester itself starts on the 15th of February. That's the start of lecture week and language tutorials. However, regular tutorials will start on the 22nd.")
+					}else{
+						sendTextMessage(sender, "Okay, so the semester itself starts on the 26th of January. That's the start of lecture week and german tutorials. However, regular and english tutorials will start on the 1st of February.");
+					}
+				}, sender);
+			break;
 		case "getNextHoliday": 
 				holidays.getNextHoliday(function(nextHoliday){
 					sendTextMessage(sender, "I think the upcoming holiday is "+nextHoliday+"\nCan it get here any sooner?!");
