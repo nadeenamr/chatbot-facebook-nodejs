@@ -114,25 +114,28 @@ module.exports = {
                                 holidayYear = result.rows[i].holiday_start_date.getFullYear();
                                 holidayEndDate = result.rows[i].holiday_end_date;
                                 if((todayYear==holidayYear && holidayMonth>todayMonth) || (holidayYear>todayYear) || (holidayYear==todayYear && holidayMonth==todayMonth && holidayDay>todayDay) ){ 
-                                    holidays += [holidayName, holidayDay, holidayMonth, holidayYear, holidayEndDate];
-                                    console.log(holidayName+","+holidayDay+","+ holidayMonth+","+ holidayYear+","+ holidayEndDate);
+                                    holidays += holidayName+","+holidayDay+","+ holidayMonth+","+ holidayYear+","+ holidayEndDate;
+                                    //console.log(holidayName+","+holidayDay+","+ holidayMonth+","+ holidayYear+","+ holidayEndDate);
                                 }
                             }
 
-                            let nearestName = holidays[0][0];
-                            let nearestDay = holidays[0][1];
-                            let nearestMonth = holidays[0][2];
-                            let nearestYear = holidays[0][3];
-                            let nearestEndDate = holidays[0][4];
+                            let string = holidays[0].split(",");
+
+                            let nearestName = string[0];
+                            let nearestDay = string[1];
+                            let nearestMonth = string[2];
+                            let nearestYear = string[3];
+                            let nearestEndDate = string[4];
 
                             console.log("NEAREST BEFORE = "+nearestName+","+nearestDay+","+ nearestMonth+","+ nearestYear+","+ nearestEndDate);
 
                             for(let i=1; i<holidays.length; i++){ // get the smallest
-                                holidayName = holidays[i][0];
-                                holidayDay = holidays[i][1];
-                                holidayMonth = holidays[i][2];
-                                holidayYear = holidays[i][3];
-                                holidayEndDate = holidays[i][4];
+                                string = holidays[i].split(",");
+                                holidayName = string[0];
+                                holidayDay = string[1];
+                                holidayMonth = string[2];
+                                holidayYear = string[3];
+                                holidayEndDate = string[4];
                                 if((nearestYear==holidayYear && nearestMonth>holidayMonth) || (nearestYear>holidayYear) || (nearestYear==holidayYear && holidayMonth==nearestMonth && nearestDay>holidayDay) ){ 
                                     nearestName = holidayName;
                                     nearestDay = holidayDay;
