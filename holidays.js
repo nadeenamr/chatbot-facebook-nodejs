@@ -140,6 +140,9 @@ module.exports = {
                                 }
                             }
 
+                            console.log("NEAREST = "+nearestName+","+nearestDay+","+ nearestMonth+","+ nearestYear+","+ nearestEndDate);
+
+
                             let edd = nearestEndDate.getDate();
                             let edm = 1 + parseInt(nearestEndDate.getMonth());
                             let edy = nearestEndDate.getFullYear();
