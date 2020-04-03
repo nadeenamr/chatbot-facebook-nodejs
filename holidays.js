@@ -153,6 +153,7 @@ module.exports = {
                             let edd = nearestEndDate.getDate();
                             let edm = 1 + parseInt(nearestEndDate.getMonth());
                             let edy = nearestEndDate.getFullYear();
+                            console.log(edd+" "+edm+" "+edy)
 
                             if(nearestDay==edd && nearestMonth==edm && nearestYear==edy){
                                 callback(nearestName+" is on "+nearestDay+"/"+nearestMonth+"/"+nearestYear);
