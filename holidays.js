@@ -125,6 +125,8 @@ module.exports = {
                             let nearestYear = holidays[0][3];
                             let nearestEndDate = holidays[0][4];
 
+                            console.log("NEAREST BEFORE = "+nearestName+","+nearestDay+","+ nearestMonth+","+ nearestYear+","+ nearestEndDate);
+
                             for(let i=1; i<holidays.length; i++){ // get the smallest
                                 holidayName = holidays[i][0];
                                 holidayDay = holidays[i][1];
@@ -140,7 +142,7 @@ module.exports = {
                                 }
                             }
 
-                            console.log("NEAREST = "+nearestName+","+nearestDay+","+ nearestMonth+","+ nearestYear+","+ nearestEndDate);
+                            console.log("NEAREST AFTER = "+nearestName+","+nearestDay+","+ nearestMonth+","+ nearestYear+","+ nearestEndDate);
 
 
                             let edd = nearestEndDate.getDate();
