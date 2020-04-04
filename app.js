@@ -201,6 +201,15 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					}
 				}, sender);
 			break;
+		case "addingCoursesDeadline":
+				students.isStudentFreshman(function(Freshman){
+					if(Freshman){
+						sendTextMessage(sender, "The deadline for removing courses from your schedule is on Thursday the 12th of March");
+					}else{
+						sendTextMessage(sender, "The deadline for removing courses from your schedule is on Thursday the 20th of February");
+					}
+				}, sender);
+			break;
 		case "getMakeupDates":
 				students.isStudentFreshman(function(Freshman){
 					if(Freshman){
@@ -406,6 +415,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				students.saveStudentUsername(contexts[0].parameters['studentUsername'], sender);
 				sendTextMessage(sender, "Perfect "+'👌🏼'+" I have everything I need! Tell me, how can I be of service to you?");
 			}
+			break;
+		case "howAreYou": 
+				sendGifMessage("https://giphy.com/gifs/tvland-leah-remini-king-of-queens-kingofqueens-j6xCsZQP9LRIHE4cvC", sender);
+				sendTextMessage(sender, "How are you feeling?");
 			break;
 		case "getCoursePrerequisite": 
 			courses.readCoursePrereqs(function(codes){
