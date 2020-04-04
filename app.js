@@ -201,12 +201,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					}
 				}, sender);
 			break;
-		case "addingCoursesDeadline":
+		case "droppingCoursesDeadline":
 				students.isStudentFreshman(function(Freshman){
 					if(Freshman){
-						sendTextMessage(sender, "The deadline for removing courses from your schedule is on Thursday the 12th of March");
+						sendTextMessage(sender, "The deadline for dropping courses from your schedule is on Thursday the 12th of March");
 					}else{
-						sendTextMessage(sender, "The deadline for removing courses from your schedule is on Thursday the 20th of February");
+						sendTextMessage(sender, "The deadline for dropping courses from your schedule is on Thursday the 20th of February");
 					}
 				}, sender);
 			break;
