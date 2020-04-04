@@ -418,7 +418,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "howAreYou": 
 				sendGifMessage("https://giphy.com/gifs/tvland-leah-remini-king-of-queens-kingofqueens-j6xCsZQP9LRIHE4cvC", sender);
-				sendTextMessage(sender, "How are you feeling?");
+				setTimeout(function(){ sendTextMessage(sender, "How are you feeling?"); }, 5000);
 			break;
 		case "getCoursePrerequisite": 
 			courses.readCoursePrereqs(function(codes){
