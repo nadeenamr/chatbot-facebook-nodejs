@@ -192,6 +192,15 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "midtermsStart":
+				students.isStudentFreshman(function(Freshman){
+					if(Freshman){
+						sendTextMessage(sender, "English & Scientific Method midterms start from 21st till 30th of March.\nThe revision week for midterms lasts from 28th of March till the 2nd of April.\nThe core midterms start from the 4th till 9th of April.\nCheck your GUC mail to recieve the detailed midterm schedule 👍🏼");
+					}else{
+						sendTextMessage(sender, "English & Scientific Method midterms start from 17th till 23rd of March.\nThe core midterms start from the 7th till 16th of March.\nCheck your GUC mail to recieve the detailed midterm schedule 👍🏼");
+					}
+				}, sender);
+			break;
 		case "addingCoursesDeadline":
 				students.isStudentFreshman(function(Freshman){
 					if(Freshman){
@@ -414,6 +423,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			if(isDefined(contexts[0])&&contexts[0].parameters['studentUsername']){
 				students.saveStudentUsername(contexts[0].parameters['studentUsername'], sender);
 				sendTextMessage(sender, "Perfect "+'👌🏼'+" I have everything I need! Tell me, how can I be of service to you?");
+				sendGifMessage("https://media.giphy.com/media/XFuQ4InwtXBE4DDPHM/giphy.gif", sender);
 			}
 			break;
 		case "howAreYou": 
