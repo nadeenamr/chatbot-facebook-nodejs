@@ -709,7 +709,7 @@ module.exports = {
   getStudentNextSchedule: function(callback, studentIDAndTranscript) {
     var scheduleQuery = "getSchedule2("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
     //console.log(studentIDAndTranscript[1]);
-    var outputSchedule = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+    var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
     callback(outputSchedules);                         
   }
   
