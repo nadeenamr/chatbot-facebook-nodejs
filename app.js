@@ -399,7 +399,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "mySchedule":
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(SchedulesAndExtraHours){
-					let reply = `Here are the suggested schedules for the next semester `+emoji.get('wink'));
+					let reply = `Here are the suggested schedules for the next semester `+emoji.get('wink');
 					for(let i = 0; i<SchedulesAndExtraHours.length; i++){
 						reply += "\n-"+SchedulesAndExtraHours[i];
 					}
