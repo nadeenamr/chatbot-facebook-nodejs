@@ -708,8 +708,8 @@ module.exports = {
 
   getStudentNextSchedule: function(callback, studentIDAndTranscript) {
     var scheduleQuery = "getSchedule2("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
-    //console.log(studentIDAndTranscript[1]);
     var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+    console.log("ouput schedules --> "+outputSchedules);
     callback(outputSchedules);                         
   }
   
