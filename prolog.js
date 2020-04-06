@@ -681,7 +681,7 @@ function executeQuery(program, thisQuery) {
    console.log("QUERY ENTERED: "+thisQuery);
     console.log("UNFORMATED PROLOG ANSWER---> "+str);
     var temp1 = str.split("[");
-    if(temp1[0].substring(0,1)=='S'){
+    if(temp1[0].substring(0,1)=='S' && str!="false." && str!="limit exceeded ;"){
           var temp2 = temp1[1].split("]");
           var schedule = temp2[0];
           temp1 = temp2[1].split("= ");
