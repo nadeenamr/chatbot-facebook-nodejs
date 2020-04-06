@@ -662,7 +662,7 @@ function executeQuery(program, thisQuery) {
 
   session.query(thisQuery); // Query the goal
 
-  var list = [];
+  var list = "";
 
   session.answers(x => { // Show answers
       /*
@@ -689,10 +689,10 @@ function executeQuery(program, thisQuery) {
           var extraHours = temp2[0];
           if(extraHours>0){
                 console.log("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
-            list.push("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
+            list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours";
           }else{
             console.log("schedule is ["+schedule+"] with no extra credit hours");
-            list.push("schedule is ["+schedule+"] with no extra credit hours");
+            list += "\n - schedule is ["+schedule+"] with no extra credit hours";
           }  
           console.log("LIST NOW --> "+list);
     }
