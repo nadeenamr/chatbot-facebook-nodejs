@@ -678,6 +678,8 @@ function executeQuery(program, thisQuery) {
     }
     */
    var str = pl.format_answer(x);
+   console.log("QUERY ENTERED: "+thisQuery);
+    console.log("UNFORMATED PROLOG ANSWER---> "+str);
     var temp1 = str.split("[");
     if(temp1[0].substring(0,1)=='S'){
           var temp2 = temp1[1].split("]");
@@ -686,10 +688,13 @@ function executeQuery(program, thisQuery) {
           temp2 = temp1[1].split(" ;");
           var extraHours = temp2[0];
           if(extraHours>0){
+                console.log("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
             list.push("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
           }else{
+            console.log("schedule is ["+schedule+"] with no extra credit hours");
             list.push("schedule is ["+schedule+"] with no extra credit hours");
           }  
+          console.log("LIST NOW --> "+list);
     }
   });
 
@@ -705,7 +710,7 @@ module.exports = {
     var scheduleQuery = "getSchedule2("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
     //console.log(studentIDAndTranscript[1]);
     var outputSchedule = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
-    callback(outputSchedule);                         
+    callback(outputSchedules);                         
   }
   
 }

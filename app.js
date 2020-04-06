@@ -399,6 +399,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "mySchedule":
 			students.getStudentTranscript(function(studentIDAndTranscript){
 				prolog.getStudentNextSchedule(function(SchedulesAndExtraHours){
+					console.log("ANSWER FROM PROLOG.JS --> "+SchedulesAndExtraHours);
 					let reply = "Here are the suggested schedules for the next semester 😉";
 					for(let i = 0; i<SchedulesAndExtraHours.length; i++){
 						reply += "\n - "+SchedulesAndExtraHours[i];
