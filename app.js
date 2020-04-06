@@ -192,6 +192,18 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "finalsStart":
+				students.isStudentFreshman(function(Freshman){
+					if(Freshman){
+						sendTextMessage(sender, "English & Scientific Method final exams start from the 9th till the 21st of May.\nLast Day of Lectures, Tutorials and Submission of Assignments is on the 21st May.\nRevision week is from the 23rd of May till the 2nd of June.\nGerman final exams will proceed from the 23rd of May till the 2nd of June.\nFinals will take place from the 3rd till the 14th of June");
+						sendGifMessage("https://media.giphy.com/media/l0HlD5ciWWhlrAwOQ/giphy.gif", sender);
+						
+					}else{
+						sendTextMessage(sender, "English & Scientific Method final exams & RPW final paper handing in start from the 21st till the 27th of April.\n CPS Final Individual Presentations will commence from the 14th of April till the 5th of May.\nLast Day of Lectures, Tutorials and Submission of Assignments is on the 27th April.\nRevision week is from the 28rd of April till the 5th of May.\nGerman final exams will proceed from the 28th of April till the 5th of May.\nFinals will take place from the 6th till the 21st of May");
+						sendGifMessage("https://media.giphy.com/media/l0HlD5ciWWhlrAwOQ/giphy.gif", sender);
+					}
+				}, sender);
+			break;
 		case "midtermsStart":
 				students.isStudentFreshman(function(Freshman){
 					if(Freshman){
@@ -386,8 +398,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "mySchedule":
 			students.getStudentTranscript(function(studentIDAndTranscript){
-				prolog.getStudentNextSchedule(function(allCourses){
-					let reply = `Here's a suggested schedule for the next semester `+emoji.get('wink')+`\nCourses: ${allCourses}.`;
+				prolog.getStudentNextSchedule(function(SchedulesAndExtraHours){
+					let reply = `Here are the suggested schedules for the next semester `+emoji.get('wink'));
+					for(let i = 0; i<SchedulesAndExtraHours.length; i++){
+						reply += "\n-"+SchedulesAndExtraHours[i];
+					}
 					sendTextMessage(sender, reply);
 					sendGifMessage("https://media.giphy.com/media/g0NZy8CjNDQ2K2DnG5/giphy.gif",sender);
 				}, studentIDAndTranscript);

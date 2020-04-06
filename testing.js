@@ -100,6 +100,13 @@ var program =
       "cs_course(csen901,9,4)."+
       "cs_course(csen903,9,4)."+
 
+      "cs_course(electiveI,9,4)."+ /* CSEN90- or DMET90- */
+      "cs_course(electiveII,9,4)."+ /* CSEN90- or DMET90- */
+
+      "cs_course(electiveI,10,4)."+ /* CSEN10-- or DMET10-- */
+      "cs_course(electiveII,10,4)."+ /* CSEN10-- or DMET10-- */
+      "cs_course(seminar,10,2)."+ /* CSEN10-- or DMET10-- */
+
       "cs_course(huma1001,10,4)."+
       "cs_course(csen1001,10,4)."+
       "cs_course(csen1002,10,4)."+
@@ -187,6 +194,7 @@ var program =
             "setof(X,Y^failed_course(StudentID,X,Y),Courses). "+
 
       /*--- getSchedule ---*/
+      /*
 
       "getSchedule(StudentID,Courses):- "+
             "getScheduleHelper(StudentID,Courses). "+
@@ -222,8 +230,241 @@ var program =
             "filterSameSemesterCategory(PossibleCourses,WantedSemester,PossibleFilteredCourses), "+
             "addCSCourses(StudentID,LangCourses,PossibleFilteredCourses,Courses). "+
 
-      /*--- addCSCourses ---*/
+      */
+      /*--- getSchedule2() ---*/
 
+      "getSchedule2(StudentID,Courses,ExtraHours):-"+
+            "getSchedule2Helper(StudentID,Courses,ExtraHours)."+
+
+      "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+
+            "student(StudentID,_,cs,CurrentSemester,_),"+
+            "getMaxHours(StudentID,Semester,TotalAllowedCH),"+
+            "WantedSemester is CurrentSemester+1,"+
+            "getNextDECourse(StudentID,DECourse),"+
+            "getNextENGCourse(StudentID,ENGCourse),"+
+            "append(DECourse,ENGCourse,LangCourses),"+
+            "cs_collective_credithours(LangCourses,LangCH),"+
+            "NetTotalAllowedCH is TotalAllowedCH - LangCH,"+ /* step 1 done */
+            "soFarCourses(CurrentSemester,AllPastCourses),"+
+            "studentPassedCourses(StudentID,PassedCourses),"+
+            "subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses),"+
+            "cannotTake(StudentID,CantTakeCourses),"+
+            "subtract(NotTakenOrFailedCourses,CantTakeCourses,AllowedPastCourses),"+
+            "filterSameSemesterCategory(AllowedPastCourses,WantedSemester,SemesterFilteredCourses),"+
+            "cs_collective_credithours(SemesterFilteredCourses,PastCSCH),"+ /* step 2 done */
+            "NetTotalAllowedCH > PastCSCH,"+
+            "append(LangCourses, SemesterFilteredCourses,LangAndPastCourses),"+
+            "LeftTotalAllowedCH is NetTotalAllowedCH - PastCSCH,"+
+            "cs_semester_courses(WantedSemester,SemCourses),"+
+            "subtract(SemCourses,CantTakeCourses,AllowedSemesterCourses),"+
+            "cs_collective_credithours(AllowedSemesterCourses,SemCSCH),"+
+            "LeftTotalAllowedCH < SemCSCH,"+
+            "multipleSchedules(LangAndPastCourses,AllowedSemesterCourses,LeftTotalAllowedCH,Courses),"+
+            "cs_collective_credithours(Courses,WithExtraHours),"+
+            "cs_semester(Semester,NormalHours),"+
+            "ExtraHours is WithExtraHours - NormalHours."+
+
+      "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+
+            "student(StudentID,_,cs,CurrentSemester,_),"+
+            "getMaxHours(StudentID,Semester,TotalAllowedCH),"+
+            "WantedSemester is CurrentSemester+1,"+
+            "getNextDECourse(StudentID,DECourse),"+
+            "getNextENGCourse(StudentID,ENGCourse),"+
+            "append(DECourse,ENGCourse,LangCourses),"+
+            "cs_collective_credithours(LangCourses,LangCH),"+
+            "NetTotalAllowedCH is TotalAllowedCH - LangCH,"+ /* step 1 done */
+            "soFarCourses(CurrentSemester,AllPastCourses),"+
+            "studentPassedCourses(StudentID,PassedCourses),"+
+            "subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses),"+
+            "cannotTake(StudentID,CantTakeCourses),"+
+            "subtract(NotTakenOrFailedCourses,CantTakeCourses,AllowedPastCourses),"+
+            "filterSameSemesterCategory(AllowedPastCourses,WantedSemester,SemesterFilteredCourses),"+
+            "cs_collective_credithours(SemesterFilteredCourses,PastCSCH),"+ /* step 2 done */
+            "NetTotalAllowedCH > PastCSCH,"+
+            "append(LangCourses, SemesterFilteredCourses,LangAndPastCourses),"+
+            "LeftTotalAllowedCH is NetTotalAllowedCH - PastCSCH,"+
+            "cs_semester_courses(WantedSemester,SemCourses),"+
+            "subtract(SemCourses,CantTakeCourses,AllowedSemesterCourses),"+
+            "cs_collective_credithours(AllowedSemesterCourses,SemCSCH),"+
+            "LeftTotalAllowedCH >= SemCSCH,"+
+            "append(LangAndPastCourses,AllowedSemesterCourses,Courses),"+
+            "cs_collective_credithours(Courses,WithExtraHours),"+
+            "cs_semester(Semester,NormalHours),"+
+            "ExtraHours is WithExtraHours - NormalHours."+
+
+      "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+
+            "student(StudentID,_,cs,CurrentSemester,_),"+
+            "getMaxHours(StudentID,Semester,TotalAllowedCH),"+
+            "WantedSemester is CurrentSemester+1,"+
+            "getNextDECourse(StudentID,DECourse),"+
+            "getNextENGCourse(StudentID,ENGCourse),"+
+            "append(DECourse,ENGCourse,LangCourses),"+
+            "cs_collective_credithours(LangCourses,LangCH),"+
+            "NetTotalAllowedCH is TotalAllowedCH - LangCH,"+ /* step 1 done */
+            "soFarCourses(CurrentSemester,AllPastCourses),"+
+            "studentPassedCourses(StudentID,PassedCourses),"+
+            "subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses),"+
+            "cannotTake(StudentID,CantTakeCourses),"+
+            "subtract(NotTakenOrFailedCourses,CantTakeCourses,AllowedPastCourses),"+ /* step 2 done */
+            "filterSameSemesterCategory(AllowedPastCourses,WantedSemester,SemesterFilteredCourses),"+
+            "cs_collective_credithours(SemesterFilteredCourses,PastCSCH),"+
+            "NetTotalAllowedCH = PastCSCH,"+
+            "append(LangCourses,SemesterFilteredCourses,Courses),"+
+            "cs_collective_credithours(Courses,WithExtraHours),"+
+            "cs_semester(Semester,NormalHours),"+
+            "ExtraHours is WithExtraHours - NormalHours."+
+
+      "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+
+            "student(StudentID,_,cs,CurrentSemester,_),"+
+            "getMaxHours(StudentID,Semester,TotalAllowedCH),"+
+            "WantedSemester is CurrentSemester+1,"+
+            "getNextDECourse(StudentID,DECourse),"+
+            "getNextENGCourse(StudentID,ENGCourse),"+
+            "append(DECourse,ENGCourse,LangCourses),"+
+            "cs_collective_credithours(LangCourses,LangCH),"+
+            "NetTotalAllowedCH is TotalAllowedCH - LangCH,"+ /* step 1 done */
+            "soFarCourses(CurrentSemester,AllPastCourses),"+
+            "studentPassedCourses(StudentID,PassedCourses),"+
+            "subtract(AllPastCourses,PassedCourses,NotTakenOrFailedCourses),"+
+            "cannotTake(StudentID,CantTakeCourses),"+
+            "subtract(NotTakenOrFailedCourses,CantTakeCourses,AllowedPastCourses),"+ /* step 2 done */
+            "filterSameSemesterCategory(AllowedPastCourses,WantedSemester,SemesterFilteredCourses),"+
+            "cs_collective_credithours(SemesterFilteredCourses,PastCSCH),"+
+            "NetTotalAllowedCH < PastCSCH,"+
+            "multipleSchedules(LangCourses,SemesterFilteredCourses,NetTotalAllowedCH,Courses),"+
+            "cs_collective_credithours(Courses,WithExtraHours),"+
+            "cs_semester(Semester,NormalHours),"+
+            "ExtraHours is WithExtraHours - NormalHours."+
+
+      "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+ /* student has no failed courses */
+            "student(StudentID,_,cs,CurrentSemester,_),"+
+            "getMaxHours(StudentID,Semester,TotalAllowedCH),"+
+            "WantedSemester is CurrentSemester+1,"+
+            "getNextDECourse(StudentID,DECourse),"+
+            "getNextENGCourse(StudentID,ENGCourse),"+
+            "append(DECourse,ENGCourse,LangCourses),"+
+            "cs_collective_credithours(LangCourses,LangCH),"+
+            "NetTotalAllowedCH is TotalAllowedCH - LangCH,"+ /* step 1 done */
+            "soFarCourses(CurrentSemester,AllPastCourses),"+
+            "studentPassedCourses(StudentID,PassedCourses),"+
+            "subtract(AllPastCourses,PassedCourses,AllowedPastCourses),"+
+            "\+cannotTake(StudentID,_),"+ /* step 2 done for student without cannotTakeCourses*/
+            "filterSameSemesterCategory(AllowedPastCourses,WantedSemester,FilteredPastCourses),"+
+            "cs_collective_credithours(FilteredPastCourses,PastCSCH),"+
+            "NetTotalAllowedCH = PastCSCH,"+
+            "append(LangCourses,FilteredPastCourses,Courses),"+
+            "cs_collective_credithours(Courses,WithExtraHours),"+
+            "cs_semester(Semester,NormalHours),"+
+            "ExtraHours is WithExtraHours - NormalHours."+
+
+      "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+ /* student has no failed courses */
+            "student(StudentID,_,cs,CurrentSemester,_),"+
+            "getMaxHours(StudentID,Semester,TotalAllowedCH),"+
+            "WantedSemester is CurrentSemester+1,"+
+            "getNextDECourse(StudentID,DECourse),"+
+            "getNextENGCourse(StudentID,ENGCourse),"+
+            "append(DECourse,ENGCourse,LangCourses),"+
+            "cs_collective_credithours(LangCourses,LangCH),"+
+            "NetTotalAllowedCH is TotalAllowedCH - LangCH,"+ /* step 1 done */
+            "soFarCourses(CurrentSemester,AllPastCourses),"+
+            "studentPassedCourses(StudentID,PassedCourses),"+
+            "subtract(AllPastCourses,PassedCourses,AllowedPastCourses),"+
+            "\+cannotTake(StudentID,_),"+ /* step 2 done for student without cannotTakeCourses*/
+            "filterSameSemesterCategory(AllowedPastCourses,WantedSemester,FilteredPastCourses),"+
+            "cs_collective_credithours(FilteredPastCourses,PastCSCH),"+
+            "NetTotalAllowedCH < PastCSCH,"+
+            "multipleSchedules(LangCourses,FilteredPastCourses,NetTotalAllowedCH,Courses),"+
+            "cs_collective_credithours(Courses,WithExtraHours),"+
+            "cs_semester(Semester,NormalHours),"+
+            "ExtraHours is WithExtraHours - NormalHours."+
+
+      "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+ /* student has no failed courses */
+            "student(StudentID,_,cs,CurrentSemester,_),"+
+            "getMaxHours(StudentID,Semester,TotalAllowedCH),"+
+            "WantedSemester is CurrentSemester+1,"+
+            "getNextDECourse(StudentID,DECourse),"+
+            "getNextENGCourse(StudentID,ENGCourse),"+
+            "append(DECourse,ENGCourse,LangCourses),"+
+            "cs_collective_credithours(LangCourses,LangCH),"+
+            "NetTotalAllowedCH is TotalAllowedCH - LangCH,"+ /* step 1 done */
+            "soFarCourses(CurrentSemester,AllPastCourses),"+
+            "studentPassedCourses(StudentID,PassedCourses),"+
+            "subtract(AllPastCourses,PassedCourses,AllowedPastCourses),"+
+            "\+cannotTake(StudentID,_),"+
+            "filterSameSemesterCategory(AllowedPastCourses,WantedSemester,SemesterFilteredCourses),"+
+            "cs_collective_credithours(SemesterFilteredCourses,PastCSCH),"+ /* step 2 done for student without cannotTakeCourses*/
+            "NetTotalAllowedCH > PastCSCH,"+
+            "append(LangCourses, SemesterFilteredCourses,LangAndPastCourses),"+
+            "LeftTotalAllowedCH is NetTotalAllowedCH - PastCSCH,"+
+            "cs_semester_courses(WantedSemester,AllowedSemesterCourses),"+
+            "cs_collective_credithours(AllowedSemesterCourses,SemCSCH),"+ /* step 3 done without cannotTakeCourses*/
+            "LeftTotalAllowedCH < SemCSCH,"+
+            "multipleSchedules(LangAndPastCourses,AllowedSemesterCourses,LeftTotalAllowedCH,Courses),"+
+            "cs_collective_credithours(Courses,WithExtraHours),"+
+            "cs_semester(Semester,NormalHours),"+
+            "ExtraHours is WithExtraHours - NormalHours."+
+
+      "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+ /* student has no failed courses */
+            "student(StudentID,_,cs,CurrentSemester,_),"+
+            "getMaxHours(StudentID,Semester,TotalAllowedCH),"+
+            "WantedSemester is CurrentSemester+1,"+
+            "getNextDECourse(StudentID,DECourse),"+
+            "getNextENGCourse(StudentID,ENGCourse),"+
+            "append(DECourse,ENGCourse,LangCourses),"+
+            "cs_collective_credithours(LangCourses,LangCH),"+
+            "NetTotalAllowedCH is TotalAllowedCH - LangCH,"+ /* step 1 done */
+            "soFarCourses(CurrentSemester,AllPastCourses),"+
+            "studentPassedCourses(StudentID,PassedCourses),"+
+            "subtract(AllPastCourses,PassedCourses,AllowedPastCourses),"+
+            "\+cannotTake(StudentID,_),"+
+            "filterSameSemesterCategory(AllowedPastCourses,WantedSemester,SemesterFilteredCourses),"+
+            "cs_collective_credithours(SemesterFilteredCourses,PastCSCH),"+ /* step 2 done for student without cannotTakeCourses*/
+            "NetTotalAllowedCH > PastCSCH,"+
+            "append(LangCourses, SemesterFilteredCourses,LangAndPastCourses),"+
+            "LeftTotalAllowedCH is NetTotalAllowedCH - PastCSCH,"+
+            "cs_semester_courses(WantedSemester,AllowedSemesterCourses),"+
+            "cs_collective_credithours(AllowedSemesterCourses,SemCSCH),"+ /* step 3 done without cannotTakeCourses*/
+            "LeftTotalAllowedCH >= SemCSCH,"+
+            "append(LangAndPastCourses,AllowedSemesterCourses,Courses),"+
+            "cs_collective_credithours(Courses,WithExtraHours),"+
+            "cs_semester(Semester,NormalHours),"+
+            "ExtraHours is WithExtraHours - NormalHours."+
+
+      "multipleSchedules(LangAndPastCourses,AllowedSemesterCourses,LeftTotalAllowedCH,Courses):-"+
+            "sum_of(AllowedSemesterCourses,LeftTotalAllowedCH,Results),"+
+            "append(LangAndPastCourses,Results,Courses)."+
+
+
+      "sum_of(List,MaxCH,Res):-"+
+            "sum_helper(List,MaxCH,[],[],Res)."+
+
+      "sum_helper([],MaxCH,Unused,Acc,Acc):-"+
+            "cs_collective_credithours(Acc,CH),"+
+            "CH=<MaxCH,"+
+            "cannotAddMore(Acc,MaxCH,Unused)."+
+
+      "sum_helper([H|T],MaxCH,Unused,Acc,Res):-"+
+            "cs_collective_credithours(Acc,SumSoFar),"+
+            "SumSoFar=<MaxCH,"+
+            "append(Acc,[H],NewAcc),"+
+            "sum_helper(T,MaxCH,Unused,NewAcc,Res)."+
+
+      "sum_helper([H|T],MaxCH,Unused,Acc,Res):-"+
+            "cs_collective_credithours(Acc,CHSumSoFar),"+
+            "CHSumSoFar=<MaxCH,"+
+            "append(Unused,[H],Unused2),"+
+            "sum_helper(T,MaxCH,Unused2,Acc,Res)."+
+
+	"cannotAddMore(_,_,[])."+
+
+	"cannotAddMore(Acc,MaxCH,[H|T]):-"+
+            "append(Acc,[H],Temp),"+
+            "cs_collective_credithours(Temp,CH),"+
+            "CH>MaxCH,"+
+            "cannotAddMore(Acc,MaxCH,T)."+
+
+      /*--- addCSCourses ---*/
+      /*
       "addCSCourses(_,List,[],List). "+
 
       "addCSCourses(StudentID,List,[Course|T2],Courses):- "+ 
@@ -242,6 +483,7 @@ var program =
             "Temp=<MaxHours, "+
             "addCSCourses(StudentID,[Course|List],T2,Courses). "+
 
+      */
       /*--- isSameSemesterCategory ---*/
 
       "isSameSemesterCategory(CourseSemesterNumber,CurrentSemesterNumber,1):- "+
@@ -268,21 +510,21 @@ var program =
 
       /*--- getMaxHours ---*/
 
-      "getMaxHours(StudentID,SemesterHours):- "+ // probation students get no extra credit hours
+      "getMaxHours(StudentID,Semester,SemesterHours):- "+ // probation students get no extra credit hours
             "student(StudentID,_,cs,_,StudentGPA), "+
             "StudentGPA>3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
             "cs_semester(Semester,SH), "+
             "SemesterHours is SH*0.75."+
             
-      "getMaxHours(StudentID,SemesterHours):- "+ 
+      "getMaxHours(StudentID,Semester,SemesterHours):- "+ 
             "student(StudentID,_,cs,_,StudentGPA), "+
             "StudentGPA=<3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
             "cs_semester(Semester,SemesterHours), "+
             "SemesterHours>=34. "+
 
-      "getMaxHours(StudentID,34):- "+
+      "getMaxHours(StudentID,Semester,34):- "+
             "student(StudentID,_,cs,_,StudentGPA), "+
             "StudentGPA=<3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
@@ -291,7 +533,7 @@ var program =
             "SemesterHours<34,"+
             "Temp>34. "+
 
-      "getMaxHours(StudentID,TotalHours):- "+
+      "getMaxHours(StudentID,Semester,TotalHours):- "+
             "student(StudentID,_,cs,_,StudentGPA), "+
             "StudentGPA=<3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
@@ -417,37 +659,71 @@ var program =
       "\n\n failed_course(123,csen102,o).";      
       
 
-session.consult(program);
+var transcript = `student(43-7148,nada,cs,5,3).
+
+passed_course(43-7148,cps402).
+passed_course(43-7148,as102).
+passed_course(43-7148,ae101).
+passed_course(43-7148,sm101).
+passed_course(43-7148,chemp102).
+passed_course(43-7148,chemt102).
+passed_course(43-7148,engd301).
+passed_course(43-7148,csen102).
+passed_course(43-7148,math103).
+passed_course(43-7148,phys101).
+passed_course(43-7148,csen202).
+passed_course(43-7148,math203).
+passed_course(43-7148,phys202).
+passed_course(43-7148,edpt201).
+passed_course(43-7148,csen301).
+passed_course(43-7148,elct301).
+passed_course(43-7148,math301).
+passed_course(43-7148,physp301).
+passed_course(43-7148,physt301).
+passed_course(43-7148,csis402).
+passed_course(43-7148,csen401).
+passed_course(43-7148,csen403).
+failed_course(43-7148,elct401,o).
+failed_course(43-7148,math401,o).
+failed_course(43-7148,comm401,o).
+failed_course(43-7148,csen501,o).
+failed_course(43-7148,csen605,a).
+failed_course(43-7148,csen503,a).
+failed_course(43-7148,dmet501,a).
+failed_course(43-7148,math501,a).
+failed_course(43-7148,csen502,o).
+failed_course(43-7148,elct201,o).
+failed_course(43-7148,rpw401,a).
+failed_course(43-7148,de202,a).`;
+
+session.consult(program+transcript);
 
 // Query the goal
-//session.query("getSchedule("+notWorking5ID+",X).");
-session.query("permutation([1,3,4,2], [X,Z,V,Y]).");
+session.query("getSchedule2(43-7148,Schedule,ExtraHours).");
+//session.query("permutation([1,3,4,2], [X,Z,V,Y]).");
 
 // Show answers
-session.answers(x => console.log(pl.format_answer(x)));
+//session.answers(x => console.log(pl.format_answer(x)));
 
-/*
-
-var schedule;
-var list = [];
 
 session.answers(x => { // Show answers
     var str = pl.format_answer(x);
-    console.log("UNFORMATED PROLOG ANSWER---> "+str);
-    if(str!="limit exceeded ;"){
-      var res = str.split("=");
-      if(str!="false."){
-          str = res[1].split("[");
-          var length = str[1].length;
-          var substring = str[1].substring(0,length-3);
-          schedule = substring;        
-      }
-    }  
-    console.log("UNFORMATED PROLOG ANSWER--->" +schedule); 
-    list.push(schedule); 
+    var temp1 = str.split("[");
+    if(temp1[0].substring(0,1)=='S'){
+          var temp2 = temp1[1].split("]");
+          var schedule = temp2[0];
+          temp1 = temp2[1].split("= ");
+          temp2 = temp1[1].split(" ;");
+          var extraHours = temp2[0];
+          if(extraHours>0){
+            console.log("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
+          }else{
+            console.log("schedule is ["+schedule+"] with no extra credit hours");
+          }  
+    }
+    
 });
 
-console.log("FINAL LIST: " +list);
 
-*/
+
   
