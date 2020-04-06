@@ -664,17 +664,17 @@ function executeQuery(program, thisQuery) {
 
   var list = "";
 
-  let square = session.answers( x => { // Show answers
-    var str = pl.format_answer(x);
+  session.answers( x => { // Show answers
+    let str = pl.format_answer(x);
     //console.log("QUERY ENTERED: "+thisQuery);
     console.log("UNFORMATED PROLOG ANSWER---> "+str);
-    var temp1 = str.split("[");
+    let temp1 = str.split("[");
     if(temp1[0].substring(0,1)=='S'){
-          var temp2 = temp1[1].split("]");
-          var schedule = temp2[0];
+          let temp2 = temp1[1].split("]");
+          let schedule = temp2[0];
           temp1 = temp2[1].split("= ");
           temp2 = temp1[1].split(" ;");
-          var extraHours = temp2[0];
+          let extraHours = temp2[0];
           if(extraHours>0){
                 console.log("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
             list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours\n";
@@ -687,13 +687,14 @@ function executeQuery(program, thisQuery) {
           list += "";
     }
 
-    square: list;
   });
 
-  console.log( "FORMATED PROLOG ANSWER---> " +list);
   
-  //return list; 
-  return square;
+  setTimeout(function(){console.log( "FORMATED PROLOG ANSWER---> " +list);},2000);
+  
+  
+  
+setTimeout(function(){return list;},3000);
 
 } 
 

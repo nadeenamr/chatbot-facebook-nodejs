@@ -705,29 +705,31 @@ session.consult(program+transcript);
 session.query("getSchedule2(43-7148,Schedule,ExtraHours).");
 
 // Show answers
-session.answers(x => console.log(pl.format_answer(x)));
+//session.answers(x => console.log(pl.format_answer(x)));
 
-/*
+var myArray = []
 
 session.answers(x => { // Show answers
-    var str = pl.format_answer(x);
-    var temp1 = str.split("[");
+    let str = pl.format_answer(x);
+    let temp1 = str.split("[");
     if(temp1[0].substring(0,1)=='S'){
-          var temp2 = temp1[1].split("]");
-          var schedule = temp2[0];
+          let temp2 = temp1[1].split("]");
+          let schedule = temp2[0];
           temp1 = temp2[1].split("= ");
           temp2 = temp1[1].split(" ;");
-          var extraHours = temp2[0];
+          let extraHours = temp2[0];
           if(extraHours>0){
-            console.log("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
+            myArray.push("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
           }else{
-            console.log("schedule is ["+schedule+"] with no extra credit hours");
+            myArray.push("schedule is ["+schedule+"] with no extra credit hours");
           }  
     }
     
 });
 
-*/
+setTimeout(function(){console.log("outside answer ==> "+myArray);},3000);
+
+
 
 
 
