@@ -707,7 +707,7 @@ session.query("getSchedule2(43-7148,Schedule,ExtraHours).");
 // Show answers
 //session.answers(x => console.log(pl.format_answer(x)));
 
-var myArray = []
+var myArray = "";
 
 session.answers(x => { // Show answers
     let str = pl.format_answer(x);
@@ -719,9 +719,9 @@ session.answers(x => { // Show answers
           temp2 = temp1[1].split(" ;");
           let extraHours = temp2[0];
           if(extraHours>0){
-            myArray.push("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
+            myArray += "schedule is ["+schedule+"] with "+extraHours+" extra credit hours";
           }else{
-            myArray.push("schedule is ["+schedule+"] with no extra credit hours");
+            myArray += "schedule is ["+schedule+"] with no extra credit hours";
           }  
     }
     

@@ -690,11 +690,11 @@ function executeQuery(program, thisQuery) {
   });
 
   
-  setTimeout(function(){console.log( "FORMATED PROLOG ANSWER---> " +list);},2000);
+  //setTimeout(function(){console.log( "FORMATED PROLOG ANSWER---> " +list);},2000);
   
   
   
-setTimeout(function(){return list;},3000);
+setTimeout(function(){return list.length;},3000);
 
 } 
 
