@@ -665,7 +665,12 @@ function executeQuery(program, thisQuery) {
   var list = "";
 
   session.answers( x => { // Show answers
-    var str = pl.format_answer(x);
+    pl.format_answer(x,test => console.log(test,"test"));
+    
+      //var str = pl.format_answer(x);
+
+      /*
+
     //console.log("QUERY ENTERED: "+thisQuery);
     console.log("UNFORMATED PROLOG ANSWER---> "+str);
     var temp1 = str.split("[");
@@ -686,6 +691,9 @@ function executeQuery(program, thisQuery) {
     }else{
           list += "";
     }
+
+      */
+
   });
 
   console.log( "FORMATED PROLOG ANSWER---> " +list);

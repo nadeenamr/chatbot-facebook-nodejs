@@ -705,8 +705,9 @@ session.consult(program+transcript);
 session.query("getSchedule2(43-7148,Schedule,ExtraHours).");
 
 // Show answers
-//session.answers(x => console.log(pl.format_answer(x)));
+session.answers(x => console.log(pl.format_answer(x)));
 
+/*
 
 session.answers(x => { // Show answers
     var str = pl.format_answer(x);
@@ -725,6 +726,8 @@ session.answers(x => { // Show answers
     }
     
 });
+
+*/
 
 
 
