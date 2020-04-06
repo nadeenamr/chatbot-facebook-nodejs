@@ -233,8 +233,11 @@ var program =
       */
       /*--- getSchedule2() ---*/
 
-      "getSchedule2(StudentID,Courses,ExtraHours):-"+
-            "getSchedule2Helper(StudentID,Courses,ExtraHours)."+
+      "getSchedules(StudentID,Schedules):-"+
+            "setof([X,Y],getSchedule2(StudentID,X,Y),Schedules). "+
+
+      "getSchedule2(StudentID,Courses,ExtraHours):- "+
+            "getSchedule2Helper(StudentID,Courses,ExtraHours). "+
 
       "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+
             "student(StudentID,_,cs,CurrentSemester,_),"+
@@ -700,7 +703,6 @@ session.consult(program+transcript);
 
 // Query the goal
 session.query("getSchedule2(43-7148,Schedule,ExtraHours).");
-//session.query("permutation([1,3,4,2], [X,Z,V,Y]).");
 
 // Show answers
 //session.answers(x => console.log(pl.format_answer(x)));
@@ -723,6 +725,7 @@ session.answers(x => { // Show answers
     }
     
 });
+
 
 
 

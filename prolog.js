@@ -664,20 +664,8 @@ function executeQuery(program, thisQuery) {
 
   var list = "";
 
-  session.answers(x => { // Show answers
-      /*
-    var str = pl.format_answer(x);
-    console.log("QUERY ENTERED: "+thisQuery);
-    console.log("UNFORMATED PROLOG ANSWER---> "+str);
-    var res = str.split("=");
-    if(str!="false." && str!="limit exceeded ;"){
-      str = res[1].split("[");
-      var length = str[1].length;
-      var substring = str[1].substring(0,length-3);
-      schedule = substring;
-    }
-    */
-   var str = pl.format_answer(x);
+  session.answers(async x => { // Show answers
+    var str = await pl.format_answer(x);
     //console.log("QUERY ENTERED: "+thisQuery);
     console.log("UNFORMATED PROLOG ANSWER---> "+str);
     var temp1 = str.split("[");
@@ -689,10 +677,10 @@ function executeQuery(program, thisQuery) {
           var extraHours = temp2[0];
           if(extraHours>0){
                 console.log("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
-            list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours";
+            list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours\n";
           }else{
             console.log("schedule is ["+schedule+"] with no extra credit hours");
-            list += "\n - schedule is ["+schedule+"] with no extra credit hours";
+            list += "\n - schedule is ["+schedule+"] with no extra credit hours\n";
           }  
           console.log("LIST NOW --> "+list);
     }else{
@@ -711,7 +699,7 @@ module.exports = {
   getStudentNextSchedule: function(callback, studentIDAndTranscript) {
     var scheduleQuery = "getSchedule2("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
     var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
-    console.log("ouput schedules --> "+outputSchedules);
+    console.log("output schedules --> "+outputSchedules);
     callback(outputSchedules);                         
   }
   
