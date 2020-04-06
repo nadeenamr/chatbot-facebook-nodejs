@@ -695,6 +695,8 @@ function executeQuery(program, thisQuery) {
             list += "\n - schedule is ["+schedule+"] with no extra credit hours";
           }  
           console.log("LIST NOW --> "+list);
+    }else{
+          list += "";
     }
   });
 
