@@ -665,7 +665,7 @@ function executeQuery(program, thisQuery) {
   var list = "";
 
   session.answers(async x => { // Show answers
-    var str = await pl.format_answer(x);
+    var str = pl.format_answer(x);
     //console.log("QUERY ENTERED: "+thisQuery);
     console.log("UNFORMATED PROLOG ANSWER---> "+str);
     var temp1 = str.split("[");
