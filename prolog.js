@@ -705,8 +705,8 @@ async function executeQuery(program, thisQuery) {
             let temp1 = str.split("[");
             let temp2 = temp1[1].split("]");
             let schedule = temp2[0];
-            console.log("LIST NOW --> "+list);
             list.push(schedule);
+            console.log("LIST NOW --> "+list);
       }
       
     });
@@ -751,7 +751,7 @@ module.exports = {
   getStudentNextSchedule: function(callback, studentIDAndTranscript) {
     //var scheduleQuery = "getSchedule2("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
     var scheduleQuery = "getSchedule("+studentIDAndTranscript[0]+",Courses).";
-    var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+    var outputSchedule = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
     /*
     executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery).then(function(outputSchedules){ 
           console.log("output schedules --> "+outputSchedules);
@@ -759,7 +759,7 @@ module.exports = {
       });
       */
     //console.log("output schedules --> "+outputSchedules);
-    callback(outputSchedules);                         
+    callback(outputSchedule);                         
   }
   
 }
