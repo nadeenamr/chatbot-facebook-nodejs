@@ -707,8 +707,9 @@ async function executeQuery(program, thisQuery) {
             let schedule = temp2[0];
             list += schedule;
             console.log("LIST NOW --> "+list);
-            return list;
       }
+      
+      return list;
       
     });
 
@@ -759,7 +760,7 @@ module.exports = {
           callback(outputSchedules);  
       });
       */
-    //console.log("output schedules --> "+outputSchedules);
+    console.log("output schedules --> "+outputSchedules);
     callback(outputSchedule);                         
   }
   
