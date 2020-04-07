@@ -695,7 +695,7 @@ async function executeQuery(program, thisQuery) {
 
   session.query(thisQuery); // Query the goal
 
-  var list = "";
+  let list = "";
 
   session.answers( x => { // Show answers
       let str = pl.format_answer(x);
