@@ -186,7 +186,7 @@ var program =
             "setof(X,Y^failed_course(StudentID,X,Y),Courses). "+
 
       /*--- getSchedule ---*/
-      /*
+      
 
       "getSchedule(StudentID,Courses):- "+
             "getScheduleHelper(StudentID,Courses). "+
@@ -222,7 +222,7 @@ var program =
             "filterSameSemesterCategory(PossibleCourses,WantedSemester,PossibleFilteredCourses), "+
             "addCSCourses(StudentID,LangCourses,PossibleFilteredCourses,Courses). "+
 
-      */
+      
       /*--- getSchedule2() ---*/
 
       "getSchedule2(StudentID,Courses,ExtraHours):-"+
@@ -456,7 +456,7 @@ var program =
             "cannotAddMore(Acc,MaxCH,T)."+
 
       /*--- addCSCourses ---*/
-      /*
+      
       "addCSCourses(_,List,[],List). "+
 
       "addCSCourses(StudentID,List,[Course|T2],Courses):- "+ 
@@ -475,7 +475,7 @@ var program =
             "Temp=<MaxHours, "+
             "addCSCourses(StudentID,[Course|List],T2,Courses). "+
 
-      */
+      
       /*--- isSameSemesterCategory ---*/
 
       "isSameSemesterCategory(CourseSemesterNumber,CurrentSemesterNumber,1):- "+
@@ -526,6 +526,39 @@ var program =
             "Temp>34. "+
 
       "getMaxHours(StudentID,Semester,TotalHours):- "+
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA=<3.7, "+
+            "belongingCHSemester(StudentID,Semester),"+
+            "cs_semester(Semester,SemesterHours), "+
+            "TotalHours is SemesterHours+3, "+
+            "TotalHours=<34. "+
+
+      /* gteMAXHours used in addCSCourses */
+      
+      "getMaxHours(StudentID,SemesterHours):- "+ // probation students get no extra credit hours
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA>3.7, "+
+            "belongingCHSemester(StudentID,Semester),"+
+            "cs_semester(Semester,SH), "+
+            "SemesterHours is SH*0.75."+
+            
+      "getMaxHours(StudentID,SemesterHours):- "+ 
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA=<3.7, "+
+            "belongingCHSemester(StudentID,Semester),"+
+            "cs_semester(Semester,SemesterHours), "+
+            "SemesterHours>=34. "+
+
+      "getMaxHours(StudentID,34):- "+
+            "student(StudentID,_,cs,_,StudentGPA), "+
+            "StudentGPA=<3.7, "+
+            "belongingCHSemester(StudentID,Semester),"+
+            "cs_semester(Semester,SemesterHours), "+
+            "Temp is SemesterHours+3, "+
+            "SemesterHours<34,"+
+            "Temp>34. "+
+
+      "getMaxHours(StudentID,TotalHours):- "+
             "student(StudentID,_,cs,_,StudentGPA), "+
             "StudentGPA=<3.7, "+
             "belongingCHSemester(StudentID,Semester),"+
@@ -665,6 +698,19 @@ async function executeQuery(program, thisQuery) {
   var list = [];
 
   session.answers( x => { // Show answers
+      let str = pl.format_answer(x);
+      console.log("QUERY ENTERED: "+thisQuery);
+      console.log("UNFORMATED PROLOG ANSWER---> "+str);
+      let temp1 = str.split("[");
+      let temp2 = temp1[1].split("]");
+      let schedule = temp2[0];
+      console.log("LIST NOW --> "+list);
+      list.push(schedule);
+    });
+
+  /*
+
+  session.answers( x => { // Show answers
     let str = pl.format_answer(x);
     //console.log("QUERY ENTERED: "+thisQuery);
     console.log("UNFORMATED PROLOG ANSWER---> "+str);
@@ -685,8 +731,10 @@ async function executeQuery(program, thisQuery) {
           console.log("LIST NOW --> "+list);
     }
 
-
   });
+
+  */
+
   
   //setTimeout(function(){console.log( "FORMATED PROLOG ANSWER---> " +list);},2000);
   
@@ -698,14 +746,17 @@ async function executeQuery(program, thisQuery) {
 module.exports = {
 
   getStudentNextSchedule: function(callback, studentIDAndTranscript) {
-    var scheduleQuery = "getSchedule2("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
-    //var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+    //var scheduleQuery = "getSchedule2("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
+    var scheduleQuery = "getSchedule("+studentIDAndTranscript[0]+",Courses).";
+    var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+    /*
     executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery).then(function(outputSchedules){ 
           console.log("output schedules --> "+outputSchedules);
           callback(outputSchedules);  
       });
+      */
     //console.log("output schedules --> "+outputSchedules);
-    //callback(outputSchedules);                         
+    callback(outputSchedules);                         
   }
   
 }

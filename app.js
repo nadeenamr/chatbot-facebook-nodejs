@@ -398,14 +398,26 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "mySchedule":
 			students.getStudentTranscript(function(studentIDAndTranscript){
-				prolog.getStudentNextSchedule(function(SchedulesAndExtraHours){
-					console.log("ANSWER FROM PROLOG.JS ------------------------------------------> "+SchedulesAndExtraHours);
-					let reply = "Here are the suggested schedules for the next semester 😉"+"\n"+SchedulesAndExtraHours;
+				prolog.getStudentNextSchedule(function(Courses){
+					console.log("ANSWER FROM PROLOG.JS ------------------------------------------> "+Courses);
+					let reply = "Here are the suggested courses for the next semester 😉"+"\n"+Courses;
 					sendTextMessage(sender, reply);
-					//sendGifMessage("https://media.giphy.com/media/g0NZy8CjNDQ2K2DnG5/giphy.gif",sender);
+					sendGifMessage("https://media.giphy.com/media/g0NZy8CjNDQ2K2DnG5/giphy.gif",sender);
 				}, studentIDAndTranscript);
 			}, sender);
 			break;
+/*
+			case "mySchedule":
+				students.getStudentTranscript(function(studentIDAndTranscript){
+					prolog.getStudentNextSchedule(function(SchedulesAndExtraHours){
+						console.log("ANSWER FROM PROLOG.JS ------------------------------------------> "+SchedulesAndExtraHours);
+						let reply = "Here are the suggested schedules for the next semester 😉"+"\n"+SchedulesAndExtraHours;
+						sendTextMessage(sender, reply);
+						//sendGifMessage("https://media.giphy.com/media/g0NZy8CjNDQ2K2DnG5/giphy.gif",sender);
+					}, studentIDAndTranscript);
+				}, sender);
+				break;
+				*/
 		case "welcomeUser":
 				students.newOrRegularStudent(function(isRegular){
 					let reply;
