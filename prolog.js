@@ -700,7 +700,10 @@ module.exports = {
   getStudentNextSchedule: function(callback, studentIDAndTranscript) {
     var scheduleQuery = "getSchedule2("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
     //var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
-    executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery).then(function(outputSchedules){ callback(outputSchedules)});
+    executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery).then(function(outputSchedules){ 
+          console.log("output schedules --> "+outputSchedules);
+          callback(outputSchedules);  
+      });
     //console.log("output schedules --> "+outputSchedules);
     //callback(outputSchedules);                         
   }
