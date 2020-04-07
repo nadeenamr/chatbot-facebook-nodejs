@@ -650,7 +650,7 @@ var program =
 
       "\n\n failed_course(123,csen102,o).";  
 
-function executeQuery(program, thisQuery) {
+async function executeQuery(program, thisQuery) {
 
   var pl = require("tau-prolog"); // Import Tau Prolog core
   
@@ -662,7 +662,7 @@ function executeQuery(program, thisQuery) {
 
   session.query(thisQuery); // Query the goal
 
-  var list = "";
+  var list = [];
 
   session.answers( x => { // Show answers
     let str = pl.format_answer(x);
@@ -676,25 +676,23 @@ function executeQuery(program, thisQuery) {
           temp2 = temp1[1].split(" ;");
           let extraHours = temp2[0];
           if(extraHours>0){
-                console.log("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
-            list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours\n";
+                list.push("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
+                //list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours\n";
           }else{
-            console.log("schedule is ["+schedule+"] with no extra credit hours");
-            list += "\n - schedule is ["+schedule+"] with no extra credit hours\n";
+                list.push("schedule is ["+schedule+"] with no extra credit hours");
+                //list += "\n - schedule is ["+schedule+"] with no extra credit hours\n";
           }  
           console.log("LIST NOW --> "+list);
-    }else{
-          list += "";
     }
 
-  });
 
+  });
   
   //setTimeout(function(){console.log( "FORMATED PROLOG ANSWER---> " +list);},2000);
   
+  return list;
   
-  
-setTimeout(function(){return list.length;},3000);
+//setTimeout(function(){return list.length;},3000);
 
 } 
 
