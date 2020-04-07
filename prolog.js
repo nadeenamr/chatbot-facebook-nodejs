@@ -760,7 +760,7 @@ module.exports = {
           callback(outputSchedules);  
       });
       */
-    console.log("output schedules --> "+outputSchedules);
+    console.log("output schedules --> "+outputSchedule);
     callback(outputSchedule);                         
   }
   
