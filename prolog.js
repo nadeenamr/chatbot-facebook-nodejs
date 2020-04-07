@@ -701,11 +701,14 @@ async function executeQuery(program, thisQuery) {
       let str = pl.format_answer(x);
       console.log("QUERY ENTERED: "+thisQuery);
       console.log("UNFORMATED PROLOG ANSWER---> "+str);
-      let temp1 = str.split("[");
-      let temp2 = temp1[1].split("]");
-      let schedule = temp2[0];
-      console.log("LIST NOW --> "+list);
-      list.push(schedule);
+      if(str.substring(0,1)=='C'){
+            let temp1 = str.split("[");
+            let temp2 = temp1[1].split("]");
+            let schedule = temp2[0];
+            console.log("LIST NOW --> "+list);
+            list.push(schedule);
+      }
+      
     });
 
   /*
