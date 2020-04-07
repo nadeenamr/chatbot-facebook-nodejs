@@ -683,7 +683,7 @@ var program =
 
       "\n\n failed_course(123,csen102,o).";  
 
-async function executeQuery(program, thisQuery) {
+function executeQuery(program, thisQuery) {
 
   var pl = require("tau-prolog"); // Import Tau Prolog core
   
