@@ -453,7 +453,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "howAreYou": 
 				sendGifMessage("https://media.giphy.com/media/j6xCsZQP9LRIHE4cvC/giphy.gif", sender);
-				setTimeout(function(){ sendTextMessage(sender, "How are you feeling?"); }, 7000);
+				setTimeout(function(){ sendTextMessage(sender, "How are you feeling today?"); }, 7000);
 			break;
 		case "getCoursePrerequisite": 
 			courses.readCoursePrereqs(function(codes){
