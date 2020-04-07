@@ -707,6 +707,7 @@ async function executeQuery(program, thisQuery) {
             let schedule = temp2[0];
             list += schedule;
             console.log("LIST NOW --> "+list);
+            return list;
       }
       
     });
@@ -741,7 +742,7 @@ async function executeQuery(program, thisQuery) {
   
   //setTimeout(function(){console.log( "FORMATED PROLOG ANSWER---> " +list);},2000);
   
-  return list;
+  //return list;
   
 
 } 
