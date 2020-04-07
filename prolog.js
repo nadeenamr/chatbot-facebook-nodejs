@@ -692,7 +692,6 @@ async function executeQuery(program, thisQuery) {
   
   return list;
   
-//setTimeout(function(){return list.length;},3000);
 
 } 
 
