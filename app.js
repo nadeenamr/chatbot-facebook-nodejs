@@ -192,6 +192,18 @@ function handleEcho(messageId, appId, metadata) { //https://developers.facebook.
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "summerStart":
+				students.isStudentFreshman(function(Freshman){
+					if(Freshman){
+						sendTextMessage(sender, "The last final held for enrolled students will be on the 14th of June");
+						sendGifMessage("https://media.giphy.com/media/1wR4V5Y0Wqjn0Jgh2k/giphy.gif", sender);
+						
+					}else{
+						sendTextMessage(sender, "The last final held for enrolled students will be on the 21st of May");
+						sendGifMessage("https://media.giphy.com/media/1wR4V5Y0Wqjn0Jgh2k/giphy.gif", sender);
+					}
+				}, sender);
+			break;
 		case "finalsStart":
 				students.isStudentFreshman(function(Freshman){
 					if(Freshman){
@@ -209,7 +221,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					if(Freshman){
 						sendTextMessage(sender, "English & Scientific Method midterms start from 21st till 30th of March.\nThe revision week for midterms lasts from 28th of March till the 2nd of April.\nThe core midterms start from the 4th till 9th of April.\nCheck your GUC mail to recieve the detailed midterm schedule 👍🏼");
 					}else{
-						sendTextMessage(sender, "English & Scientific Method midterms start from 17th till 23rd of March.\nThe core midterms start from the 7th till 16th of March.\nCheck your GUC mail to recieve the detailed midterm schedule 👍🏼");
+						sendTextMessage(sender, "There is no revision week for enrolled students unfortunately.\nEnglish & Scientific Method midterms start from 17th till 23rd of March.\nThe core midterms start from the 7th till 16th of March.\nCheck your GUC mail to recieve the detailed midterm schedule 👍🏼");
 					}
 				}, sender);
 			break;
