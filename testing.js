@@ -702,10 +702,12 @@ failed_course(43-7148,de202,a).`;
 session.consult(program+transcript);
 
 // Query the goal
-session.query("getSchedule2(43-7148,Schedule,ExtraHours).");
+session.query("getSchedule(43-7148,Schedules,ExtraHours).");
 
 // Show answers
 //session.answers(x => console.log(pl.format_answer(x)));
+
+
 
 var myArray = "";
 
@@ -720,14 +722,17 @@ session.answers(x => { // Show answers
           let extraHours = temp2[0];
           if(extraHours>0){
             myArray += "schedule is ["+schedule+"] with "+extraHours+" extra credit hours";
+            console.log("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
           }else{
             myArray += "schedule is ["+schedule+"] with no extra credit hours";
+            console.log("schedule is ["+schedule+"] with no extra credit hours");
           }  
     }
     
 });
 
-setTimeout(function(){console.log("outside answer ==> "+myArray);},3000);
+console.log("outside answer ==> "+myArray);
+
 
 
 
