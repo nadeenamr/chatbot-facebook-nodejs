@@ -695,7 +695,7 @@ async function executeQuery(program, thisQuery) {
 
   session.query(thisQuery); // Query the goal
 
-  var list = [];
+  var list = "";
 
   session.answers( x => { // Show answers
       let str = pl.format_answer(x);
@@ -705,7 +705,7 @@ async function executeQuery(program, thisQuery) {
             let temp1 = str.split("[");
             let temp2 = temp1[1].split("]");
             let schedule = temp2[0];
-            list.push(schedule);
+            list += schedule;
             console.log("LIST NOW --> "+list);
       }
       
