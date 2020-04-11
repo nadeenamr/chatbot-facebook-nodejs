@@ -1,8 +1,9 @@
+const mainApp = require('./app');
 
 var pl = require("tau-prolog");
 require("tau-prolog/modules/lists")( pl );
 
-var session = pl.create( 1000 );
+var session = pl.create();
 
 // Load the program
 
@@ -231,12 +232,10 @@ var program =
             "addCSCourses(StudentID,LangCourses,PossibleFilteredCourses,Courses). "+
 
       */
-      /*--- getSchedule2() ---*/
 
-      "getSchedules(StudentID,Schedules):-"+
-            "setof([X,Y],getSchedule2(StudentID,X,Y),Schedules). "+
+      /*--- getSchedules() ---*/
 
-      "getSchedule2(StudentID,Courses,ExtraHours):- "+
+      "getSchedules(StudentID,Courses,ExtraHours):- "+
             "getSchedule2Helper(StudentID,Courses,ExtraHours). "+
 
       "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+
@@ -702,37 +701,28 @@ failed_course(43-7148,de202,a).`;
 session.consult(program+transcript);
 
 // Query the goal
-session.query("getSchedule(43-7148,Schedules,ExtraHours).");
+session.query("getSchedules(43-7148,Schedule,ExtraHours).");
 
 // Show answers
 //session.answers(x => console.log(pl.format_answer(x)));
 
+var list = [];
 
-
-var myArray = "";
-
-session.answers(x => { // Show answers
-    let str = pl.format_answer(x);
-    let temp1 = str.split("[");
-    if(temp1[0].substring(0,1)=='S'){
-          let temp2 = temp1[1].split("]");
-          let schedule = temp2[0];
-          temp1 = temp2[1].split("= ");
-          temp2 = temp1[1].split(" ;");
-          let extraHours = temp2[0];
-          if(extraHours>0){
-            myArray += "schedule is ["+schedule+"] with "+extraHours+" extra credit hours";
-            console.log("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
-          }else{
-            myArray += "schedule is ["+schedule+"] with no extra credit hours";
-            console.log("schedule is ["+schedule+"] with no extra credit hours");
-          }  
-    }
-    
+session.answers( function(x) { // Show answers
+      let str = pl.format_answer(x);
+      console.log(str);
+      list.push(str);
+      mainApp.sendMyTextMessage(sender,str);
 });
 
-console.log("outside answer ==> "+myArray);
+console.log("LIST NOW --> " + list);
 
+
+// Query the goal
+//session.query("bagof([Schedule,ExtraHours],getSchedules(43-7148,Schedule,ExtraHours),List).");
+
+// Show answers
+//session.answers( x => console.log( pl.format_answer(x) ) );
 
 
 

@@ -1,3 +1,5 @@
+const mainApp = require('./app');
+
 var program = 
     
       ":- use_module(library(lists))." + // Load the lists module
@@ -223,9 +225,9 @@ var program =
             "addCSCourses(StudentID,LangCourses,PossibleFilteredCourses,Courses). "+
 
       
-      /*--- getSchedule2() ---*/
+      /*--- getSchedules() ---*/
 
-      "getSchedule2(StudentID,Courses,ExtraHours):-"+
+      "getSchedules(StudentID,Courses,ExtraHours):-"+
             "getSchedule2Helper(StudentID,Courses,ExtraHours)."+
 
       "getSchedule2Helper(StudentID,Courses,ExtraHours):-"+
@@ -683,7 +685,7 @@ var program =
 
       "\n\n failed_course(123,csen102,o).";  
 
-function executeQuery(program, thisQuery) {
+function executeQuery(sender, program, thisQuery) {
 
   var pl = require("tau-prolog"); // Import Tau Prolog core
   
@@ -695,74 +697,82 @@ function executeQuery(program, thisQuery) {
 
   session.query(thisQuery); // Query the goal
 
-  let list = "";
+  //session.answers(x => console.log(pl.format_answer(x)));
+  
+  //return list;
 
-  session.answers( x => { // Show answers
+  session.answers( function(x) { // Show answers
       let str = pl.format_answer(x);
-      console.log("QUERY ENTERED: "+thisQuery);
-      console.log("UNFORMATED PROLOG ANSWER---> "+str);
-      if(str.substring(0,1)=='C'){
-            let temp1 = str.split("[");
-            let temp2 = temp1[1].split("]");
-            let schedule = temp2[0];
-            list += schedule;
-            console.log("LIST NOW --> "+list);
-      }else{
-            list =+ "";
-      }
-      //return list;
-      
-    });
-
-  /*
-
-  session.answers( x => { // Show answers
-    let str = pl.format_answer(x);
-    //console.log("QUERY ENTERED: "+thisQuery);
-    console.log("UNFORMATED PROLOG ANSWER---> "+str);
-    let temp1 = str.split("[");
-    if(temp1[0].substring(0,1)=='S'){
-          let temp2 = temp1[1].split("]");
-          let schedule = temp2[0];
-          temp1 = temp2[1].split("= ");
-          temp2 = temp1[1].split(" ;");
-          let extraHours = temp2[0];
-          if(extraHours>0){
-                list.push("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
-                //list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours\n";
-          }else{
-                list.push("schedule is ["+schedule+"] with no extra credit hours");
-                //list += "\n - schedule is ["+schedule+"] with no extra credit hours\n";
-          }  
-          console.log("LIST NOW --> "+list);
-    }
-
-  });
-
-  */
-
-  
-  //setTimeout(function(){console.log( "FORMATED PROLOG ANSWER---> " +list);},2000);
-  
-  return list;
-  
+      console.log(str);
+      list.push(str);
+      mainApp.sendMyTextMessage(sender,str);
+});
 
 } 
 
 module.exports = {
 
   getStudentNextSchedule: function(callback, studentIDAndTranscript) {
-    //var scheduleQuery = "getSchedule2("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
-    var scheduleQuery = "getSchedule("+studentIDAndTranscript[0]+",Courses).";
-    var outputSchedule = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
-    /*
-    executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery).then(function(outputSchedules){ 
-          console.log("output schedules --> "+outputSchedules);
-          callback(outputSchedules);  
+      var scheduleQuery = "getSchedule("+studentIDAndTranscript[0]+",Courses).";
+      var outputSchedule = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+      console.log("output schedules --> "+outputSchedule);
+
+      /*
+      session.answers( x => { // Show answers
+            let str = pl.format_answer(x);
+            console.log("QUERY ENTERED: "+thisQuery);
+            console.log("UNFORMATED PROLOG ANSWER---> "+str);
+            if(str.substring(0,1)=='C'){
+                  let temp1 = str.split("[");
+                  let temp2 = temp1[1].split("]");
+                  let schedule = temp2[0];
+                  list += schedule;
+                  console.log("LIST NOW --> "+list);
+            }else{
+                  list =+ "";
+            }
+            //return list;
+            
       });
       */
-    console.log("output schedules --> "+outputSchedule);
-    callback(outputSchedule);                         
+
+      callback(outputSchedule);                       
+  },
+
+  getPossibleSchedules: function(sender, studentIDAndTranscript){
+      var scheduleQuery = "getSchedules("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
+      //var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+      executeQuery(sender,program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+      //console.log("output schedules --> "+outputSchedules);
+
+      /*
+
+      session.answers( x => { // Show answers
+      let str = pl.format_answer(x);
+      //console.log("QUERY ENTERED: "+thisQuery);
+      console.log("UNFORMATED PROLOG ANSWER---> "+str);
+      let temp1 = str.split("[");
+      if(temp1[0].substring(0,1)=='S'){
+            let temp2 = temp1[1].split("]");
+            let schedule = temp2[0];
+            temp1 = temp2[1].split("= ");
+            temp2 = temp1[1].split(" ;");
+            let extraHours = temp2[0];
+            if(extraHours>0){
+                  list.push("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
+                  //list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours\n";
+            }else{
+                  list.push("schedule is ["+schedule+"] with no extra credit hours");
+                  //list += "\n - schedule is ["+schedule+"] with no extra credit hours\n";
+            }  
+            console.log("LIST NOW --> "+list);
+      }
+
+      });
+
+      */
+
+      //callback(outputSchedules); 
   }
   
 }
