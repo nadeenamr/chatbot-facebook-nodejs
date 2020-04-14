@@ -733,7 +733,7 @@ module.exports = {
   getStudentNextSchedule: function(callback, studentIDAndTranscript) {
       var scheduleQuery = "getSchedule("+studentIDAndTranscript[0]+",Courses).";
       var outputSchedule = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
-      console.log("output schedules --> "+outputSchedule);
+      console.log("output schedule --> "+outputSchedule);
 
       /*
       session.answers( x => { // Show answers

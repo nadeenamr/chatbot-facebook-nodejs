@@ -441,13 +441,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "getPossibleSchedules":
 			students.getStudentTranscript(function(studentIDAndTranscript){
-				prolog.getStudentNextSchedule(function(){
+				prolog.getStudentNextSchedule(function(SchedulesAndExtraHours){
 					console.log("ANSWER FROM PROLOG.JS ------------------------------------------> "+SchedulesAndExtraHours);
-					let reply = "Here are the suggested schedules for the next semester 😉";
-					//let reply = "Here are the suggested schedules for the next semester 😉"+"\n"+SchedulesAndExtraHours;
+					let reply = "Here are the suggested schedules for the next semester 😉"+"\n"+SchedulesAndExtraHours;
 					sendTextMessage(sender, reply);
-					sendGifMessage("https://media.giphy.com/media/g0NZy8CjNDQ2K2DnG5/giphy.gif",sender);
-				}, sender, studentIDAndTranscript);
+					//sendGifMessage("https://media.giphy.com/media/g0NZy8CjNDQ2K2DnG5/giphy.gif",sender);
+				}, studentIDAndTranscript);
 			}, sender);
 			break;
 		case "welcomeUser":
