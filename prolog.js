@@ -685,7 +685,7 @@ var program =
 
       "\n\n failed_course(123,csen102,o).";  
 
-function executeQuery(program, thisQuery) {
+function getMultipleSchedules(program, thisQuery) {
 
       var pl = require("tau-prolog"); // Import Tau Prolog core
       
@@ -713,10 +713,10 @@ function executeQuery(program, thisQuery) {
                   temp2 = temp1[1].split(" ;");
                   let extraHours = temp2[0];
                   if(extraHours>0){
-                        list.push("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
+                        list.push("- schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
                         //list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours\n";
                   }else{
-                        list.push("schedule is ["+schedule+"] with no extra credit hours");
+                        list.push("- schedule is ["+schedule+"] with no extra credit hours");
                         //list += "\n - schedule is ["+schedule+"] with no extra credit hours\n";
                   }  
                   console.log("LIST NOW --> "+list);
@@ -728,15 +728,23 @@ function executeQuery(program, thisQuery) {
 
 } 
 
-module.exports = {
+function getOneSchedule(program, thisQuery) {
 
-  getStudentNextSchedule: function(callback, studentIDAndTranscript) {
-      var scheduleQuery = "getSchedule("+studentIDAndTranscript[0]+",Courses).";
-      var outputSchedule = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
-      console.log("output schedule --> "+outputSchedule);
+      var pl = require("tau-prolog"); // Import Tau Prolog core
+      
+      require("tau-prolog/modules/lists")(pl); // Import and apply the lists module
 
-      /*
-      session.answers( x => { // Show answers
+      var session = pl.create(1000); // Create a session
+
+      session.consult(program);
+
+      session.query(thisQuery); // Query the goal
+
+      //session.answers(x => console.log(pl.format_answer(x)));
+  
+      var list = [];
+
+      session.answers( function(x) { // Show answers
             let str = pl.format_answer(x);
             console.log("QUERY ENTERED: "+thisQuery);
             console.log("UNFORMATED PROLOG ANSWER---> "+str);
@@ -752,15 +760,23 @@ module.exports = {
             //return list;
             
       });
-      */
 
+      return list;
+
+} 
+
+module.exports = {
+
+  getStudentNextSchedule: function(callback, studentIDAndTranscript) {
+      var scheduleQuery = "getSchedule("+studentIDAndTranscript[0]+",Courses).";
+      var outputSchedule = getOneSchedule(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+      console.log("output schedule --> "+outputSchedule);
       callback(outputSchedule);                       
   },
 
   getPossibleNextSchedules: function(callback, studentIDAndTranscript){
       var scheduleQuery = "getSchedules("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
-      //var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
-      var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+      var outputSchedules = getMultipleSchedules(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
       console.log("output schedules --> "+outputSchedules);
       callback(outputSchedules); 
   }
