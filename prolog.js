@@ -685,28 +685,46 @@ var program =
 
       "\n\n failed_course(123,csen102,o).";  
 
-function executeQuery(sender, program, thisQuery) {
+function executeQuery(program, thisQuery) {
 
-  var pl = require("tau-prolog"); // Import Tau Prolog core
+      var pl = require("tau-prolog"); // Import Tau Prolog core
+      
+      require("tau-prolog/modules/lists")(pl); // Import and apply the lists module
+
+      var session = pl.create(1000); // Create a session
+
+      session.consult(program);
+
+      session.query(thisQuery); // Query the goal
+
+      //session.answers(x => console.log(pl.format_answer(x)));
   
-  require("tau-prolog/modules/lists")(pl); // Import and apply the lists module
+      var list = [];
 
-  var session = pl.create(1000); // Create a session
+      session.answers( function(x) { // Show answers
+            let str = pl.format_answer(x);
+            //console.log("QUERY ENTERED: "+thisQuery);
+            console.log("UNFORMATED PROLOG ANSWER---> "+str);
+            let temp1 = str.split("[");
+            if(temp1[0].substring(0,1)=='S'){
+                  let temp2 = temp1[1].split("]");
+                  let schedule = temp2[0];
+                  temp1 = temp2[1].split("= ");
+                  temp2 = temp1[1].split(" ;");
+                  let extraHours = temp2[0];
+                  if(extraHours>0){
+                        list.push("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
+                        //list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours\n";
+                  }else{
+                        list.push("schedule is ["+schedule+"] with no extra credit hours");
+                        //list += "\n - schedule is ["+schedule+"] with no extra credit hours\n";
+                  }  
+                  console.log("LIST NOW --> "+list);
+            }
+      
+      });
 
-  session.consult(program);
-
-  session.query(thisQuery); // Query the goal
-
-  //session.answers(x => console.log(pl.format_answer(x)));
-  
-  //return list;
-
-  session.answers( function(x) { // Show answers
-      let str = pl.format_answer(x);
-      console.log(str);
-      list.push(str);
-      mainApp.sendMyTextMessage(sender,str);
-});
+      return list;
 
 } 
 
@@ -739,40 +757,12 @@ module.exports = {
       callback(outputSchedule);                       
   },
 
-  getPossibleSchedules: function(sender, studentIDAndTranscript){
+  getPossibleSchedules: function(studentIDAndTranscript){
       var scheduleQuery = "getSchedules("+studentIDAndTranscript[0]+",Schedule,ExtraHours).";
       //var outputSchedules = executeQuery(program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
-      executeQuery(sender,program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
-      //console.log("output schedules --> "+outputSchedules);
-
-      /*
-
-      session.answers( x => { // Show answers
-      let str = pl.format_answer(x);
-      //console.log("QUERY ENTERED: "+thisQuery);
-      console.log("UNFORMATED PROLOG ANSWER---> "+str);
-      let temp1 = str.split("[");
-      if(temp1[0].substring(0,1)=='S'){
-            let temp2 = temp1[1].split("]");
-            let schedule = temp2[0];
-            temp1 = temp2[1].split("= ");
-            temp2 = temp1[1].split(" ;");
-            let extraHours = temp2[0];
-            if(extraHours>0){
-                  list.push("schedule is ["+schedule+"] with "+extraHours+" extra credit hours");
-                  //list += "\n - schedule is ["+schedule+"] with "+extraHours+" extra credit hours\n";
-            }else{
-                  list.push("schedule is ["+schedule+"] with no extra credit hours");
-                  //list += "\n - schedule is ["+schedule+"] with no extra credit hours\n";
-            }  
-            console.log("LIST NOW --> "+list);
-      }
-
-      });
-
-      */
-
-      //callback(outputSchedules); 
+      var outputSchedules = executeQuery(sender,program+"\n\n"+studentIDAndTranscript[1],scheduleQuery);
+      console.log("output schedules --> "+outputSchedules);
+      callback(outputSchedules); 
   }
   
 }

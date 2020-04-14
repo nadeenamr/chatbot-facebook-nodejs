@@ -1,4 +1,3 @@
-const mainApp = require('./app');
 
 var pl = require("tau-prolog");
 require("tau-prolog/modules/lists")( pl );
@@ -704,18 +703,7 @@ session.consult(program+transcript);
 session.query("getSchedules(43-7148,Schedule,ExtraHours).");
 
 // Show answers
-//session.answers(x => console.log(pl.format_answer(x)));
-
-var list = [];
-
-session.answers( function(x) { // Show answers
-      let str = pl.format_answer(x);
-      console.log(str);
-      list.push(str);
-      mainApp.sendMyTextMessage(sender,str);
-});
-
-console.log("LIST NOW --> " + list);
+session.answers(x => console.log(pl.format_answer(x)));
 
 
 // Query the goal
