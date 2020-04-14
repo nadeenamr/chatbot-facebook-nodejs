@@ -441,7 +441,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "getPossibleSchedules":
 			students.getStudentTranscript(function(studentIDAndTranscript){
-				prolog.getStudentNextSchedule(function(SchedulesAndExtraHours){
+				prolog.getPossibleNextSchedules(function(SchedulesAndExtraHours){
 					console.log("ANSWER FROM PROLOG.JS ------------------------------------------> "+SchedulesAndExtraHours);
 					let reply = "Here are the suggested schedules for the next semester 😉"+"\n"+SchedulesAndExtraHours;
 					sendTextMessage(sender, reply);
