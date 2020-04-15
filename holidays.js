@@ -30,6 +30,7 @@ module.exports = {
             if(snap.val()) {
                 for(let i=0; i<snap.val();i++){
                     holidaysList.push(snap.val());
+                    console.log(JSON.stringify(snap.val()));
                 }
             }
         });
