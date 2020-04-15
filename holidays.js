@@ -30,6 +30,7 @@ module.exports = {
         holidaysRef.on('value', snap => {
             if(snap.val()) {
                 console.log(JSON.stringify(snap.val()));
+                console.log(snap.val().length);
                 for(let i=0; i<snap.val();i++){
                     holidaysList.push(snap.val());
                     console.log(JSON.stringify(snap.val()));
