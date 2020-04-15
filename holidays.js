@@ -25,13 +25,15 @@ module.exports = {
     getAllHolidays: function(callback){
         let holidaysList = [];
         let holidaysRef = rootRef.child('holidays');
+
+        var allholidays,x;
         
         console.log(JSON.stringify(holidaysRef));
         holidaysRef.on('value', snap => {
             if(snap.val()) {
-                console.log(JSON.stringify(snap.val()));
-                console.log(snap.val());
-                for (x in snap.val()) {
+                allholidays = snap.val();
+                console.log(JSON.stringify(allholidays));
+                for (x in allholidays) {
                     holidaysList.push(x);
                     console.log(x);
                 }
