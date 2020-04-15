@@ -3,7 +3,7 @@
 const firebase = require('firebase-admin');
 
 //--connect to firebase db--
-const serviceAccount =require('./config/serviceAccountKey.json'); 
+const serviceAccount =require('./serviceAccountKey.json'); 
 
 console.log(serviceAccount.type);
 
