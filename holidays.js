@@ -28,7 +28,7 @@ module.exports = {
         let holidaysRef = rootRef.child('holidays');
         holidaysRef.on(value, snap => {
             if(snap.val()) {
-                for(let i=0; i<snap.val().CS;i++){
+                for(let i=0; i<snap.val();i++){
                     holidaysList.push(snap.val());
                 }
             }
