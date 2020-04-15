@@ -1,6 +1,6 @@
 'use strict';
 const request = require('request');
-const config = require('./config');
+const config = require('./config/config');
 const pg = require('pg');
 const prolog = require('./prolog');
 pg.defaults.ssl = true;
