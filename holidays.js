@@ -5,10 +5,40 @@ const pg = require('pg');
 const prolog = require('./prolog');
 pg.defaults.ssl = true;
 
+//--import firebase db--
+const firebase = require('firebase-admin');
+
+//--connect to firebase db--
+const serviceAccount =require('./config/serviceAccountKey.json'); 
+
+console.log(serviceAccount.type);
+
+firebase.initializeApp({
+  credential: firebase.credential.cert(serviceAccount),
+  databaseURL: "https://advisingagent-bbwsrq.firebaseio.com"
+});
+
+const rootRef = firebase.database().ref();
 
 module.exports = {
 
     getAllHolidays: function(callback){
+
+        let holidaysList = [];
+        let holidaysRef = rootRef.child('holidays');
+        holidaysRef.on(function(value){
+            if(snap.val()) {
+                for(let i=0; i<snap.val().CS;i++){
+                    holidaysList.push(snap.val());
+                }
+            }
+        });
+
+        callback(holidaysList);
+        
+    },
+        /*
+
         var pool = new pg.Pool(config.PG_CONFIG);
         pool.connect(function(err, client, done) {
             if (err) {
@@ -42,7 +72,7 @@ module.exports = {
         });
         pool.end();
 
-    },
+        */
 
     getSpecificHoliday: function(callback, holidayName){
         var pool = new pg.Pool(config.PG_CONFIG);
@@ -165,7 +195,7 @@ module.exports = {
         });
         pool.end();
 
-    },
+    }
 
 
 }

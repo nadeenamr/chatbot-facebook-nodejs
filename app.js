@@ -306,8 +306,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			break;
 		case "getAllHolidays":
 			holidays.getAllHolidays(function(AllHolidays){
-				sendTextMessage(sender, "Here's a list of the upcoming Holidays/Days Off:"+AllHolidays);
-				sendGifMessage("https://media.giphy.com/media/l4EoR5ozddwYTjMGY/giphy.gif", sender);
+				sendTextMessage(sender, "Here's a list of the upcoming Holidays/Days Off:\n"+AllHolidays);
+				//sendGifMessage("https://media.giphy.com/media/l4EoR5ozddwYTjMGY/giphy.gif", sender);
 			});
 			break;
 		case "getMakeupDates":

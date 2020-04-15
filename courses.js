@@ -497,10 +497,6 @@ module.exports = {
             console.log("FILTERED COURSES DATES --> "+courseQuizDates);
             console.log("FILTERED COURSES --> "+courseQuizCodes);
 
-            //callback([courseQuizCodes,courseQuizDates]);
-
-            
-
             let index = 0;
             let minDate = courseQuizDates[index];
             while(minDate==undefined){
@@ -513,17 +509,14 @@ module.exports = {
                     temp1 = minDate.split("/");
                     today = courseQuizDates[i].split("/");
                     if(parseInt(temp1[2])>parseInt(today[2])){ // year is smaller
-                        //console.log(minDate+" > "+courseQuizDates[i] + " FIRST IF STAT");
                         minDate = courseQuizDates[i];
                         minDateIndex = i;
                     }else{
                         if(parseInt(temp1[2])==parseInt(today[2]) && parseInt(temp1[1])>parseInt(today[1])){ // same year, month is smaller
-                            //console.log(minDate+" > "+courseQuizDates[i] + " SECOND IF STAT");
                             minDate = courseQuizDates[i];
                             minDateIndex = i;
                         }else{
                             if(parseInt(temp1[2])==parseInt(today[2]) && parseInt(temp1[1])==parseInt(today[1]) && parseInt(temp1[0])>parseInt(today[0])){ // same year, same month, day is smaller
-                                //console.log(minDate+" > "+courseQuizDates[i]  + " THIRD IF STAT");
                                 minDate = courseQuizDates[i];
                                 minDateIndex = i;
                             }else{
