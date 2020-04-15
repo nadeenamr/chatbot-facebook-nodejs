@@ -23,7 +23,6 @@ const rootRef = firebase.database().ref();
 module.exports = {
 
     getAllHolidays: function(callback){
-
         let holidaysList = [];
         let holidaysRef = rootRef.child('holidays');
         holidaysRef.on('value', snap => {
@@ -34,9 +33,7 @@ module.exports = {
                 }
             }
         });
-
-        callback(holidaysList);
-        
+        callback(holidaysList); 
     },
         /*
 
